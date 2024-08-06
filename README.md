@@ -1,2 +1,2 @@
-# Proyecto Juego Ajedrez
+# Juego Ajedrez
 ## Juan Cruz Rupcic
