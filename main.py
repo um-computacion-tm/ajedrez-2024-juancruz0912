@@ -1,1 +1,2 @@
-print('Hola mundo')
+def ajedrez():
+    return "Juego del Ajedrez"
