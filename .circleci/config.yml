@@ -21,3 +21,7 @@ jobs:
           name: Upload Code Climate coverage report
           command: |
             ./cc-test-reporter after-build
+      -run:
+          name: Upload CodeClimate coverage report
+          command: |
+            ./cc-test-reporter after-build
