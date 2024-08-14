@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [1.0.2] - 14-08-2024
+
+
+### Agregados
+- Archivo Tablero.py: archivo de la clase Tablero
+- Archivo TestTablero.py: tests de la clase Tablero
+
+### Modificados
+- Archivo Juego.py: se agrega el objeto Tablero a los atributos y se modifica el metodo empezar_juego() para que muestre el tablero
+- Archivo TestJuego.py
+
+
 ## [1.0.1] - 13-08-2024
 
 ### Agregados
