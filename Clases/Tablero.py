@@ -8,6 +8,7 @@ class Tablero:
         self.__tablero__[8] = [" ","T", "C", "A", "Q", "K", "A", "C", "T"]
         for i in range(1,9):
             self.__tablero__[i][0] = str(i)
+        
     
     #Metodo para mostrar el tablero en la terminal
     def imprimir_tablero(self):
@@ -25,6 +26,10 @@ class Tablero:
         
         print(f'en la cela {fila},{columna} se encuentra : {mensaje}')
         return mensaje
+
+    #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover)
+    def mover_pieza(self, x, y, pieza):
+        self.__tablero__[x][y] = pieza
 
 
 
