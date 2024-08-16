@@ -1,5 +1,12 @@
 # CHANGELOG
 
+
+## [1.0.3] - 14-08-2024
+
+### Modificados
+- Archivo Tablero.py: se empieza a trabajar con las clases de cada pieza pero sin definir aun, y se empieza a programar el metodo mover_pieza()
+
+
 ## [1.0.2] - 14-08-2024
 
 

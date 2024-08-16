@@ -1,23 +1,31 @@
 import unittest
-from Juego import Juego
+from unittest.mock import patch
+from Juego import Juego 
 
 class TestJuego(unittest.TestCase):
 
-    juego = Juego('Alice', 'Bob')
+    juego = Juego('Juan', 'Pedro')
 
     def test_iniciar(self):
         self.assertEqual(self.juego.__estado__, 1)
-        self.assertEqual(self.juego.__blanco__, 'Alice')
-        self.assertEqual(self.juego.__negro__, 'Bob')
-        self.assertEqual(self.juego.__turno__, 'Alice')
+        self.assertEqual(self.juego.__blanco__, 'Juan')
+        self.assertEqual(self.juego.__negro__, 'Pedro')
+        self.assertEqual(self.juego.__turno__, 'Juan')
 
     def test_empezar_juego(self):
         self.juego.empezar_juego()
-        self.assertEqual(self.juego.__estado__, 1)
+        self.assertEqual(self.juego.__estado__, True)
 
     def test_terminar_juego(self):
         self.juego.terminar_juego()
-        self.assertEqual(self.juego.__estado__, 0)
+        self.assertEqual(self.juego.__estado__, False)
+
+    def test_cambiar_turno(self):
+        self.juego.cambiar_turno()
+        self.assertEqual(self.juego.__turno__, self.juego.__negro__)
+        self.juego.cambiar_turno()
+        self.assertEqual(self.juego.__turno__, self.juego.__blanco__)
+    
 
 if __name__ == '__main__':
     unittest.main()
