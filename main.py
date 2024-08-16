@@ -10,8 +10,9 @@ def main():
     juego = Juego(jugador1, jugador2)
     juego.empezar_juego()
     
-    while juego.__estado__ == True:
+    while juego.estado() == True:
         
+        juego.tablero()
         print(f'Ahora es el turno de {juego.__turno__}')
         
         pieza = input('Que pieza quieres mover?')
@@ -24,3 +25,7 @@ def main():
 
             juego.__tablero__.imprimir_tablero()
             juego.cambiar_turno()
+
+
+if __name__ == '__main__':
+    main()
