@@ -1,7 +1,16 @@
 # CHANGELOG
 
 
-## [1.0.3] - 14-08-2024
+## [1.0.1] - 17-08-2024
+
+## Agregados
+- La capreta piezas con todas las clases de las distintas piezas
+
+## Modificados
+- Archivo Tablero.py: se empieza  a trabajar con las piezas como objetos
+
+
+## [1.0.3] - 15-08-2024
 
 ### Modificados
 - Archivo Tablero.py: se empieza a trabajar con las clases de cada pieza pero sin definir aun, y se empieza a programar el metodo mover_pieza()
