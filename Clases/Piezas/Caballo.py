@@ -2,17 +2,13 @@ from .Pieza import Pieza
 
 class Caballo(Pieza):
 
-    def __init__(self, color, id, columna, fila):
-        super().__init__('Caballo', color, id, fila, columna)
+    def __init__(self, color, id, fila, columna):
+        super().__init__('Caballo', color, fila, columna)
+        self.__id__ = id
+
 
     def __str__(self):
-        if self.__id__ == 1: 
-            if self.__color__ == 'blanco':
-                return '♞1'
-            else:
-                return '♘1'
+        if self.__color__ == 'blanco':
+            return f'♘{self.__id__}'
         else:
-            if self.__color__ == 'blanco':
-                return '♞2'
-            else:
-                return '♘2'
+            return f'♞{self.__id__}'

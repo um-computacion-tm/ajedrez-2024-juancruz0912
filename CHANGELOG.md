@@ -1,12 +1,18 @@
 # CHANGELOG
 
 
-## [1.0.1] - 17-08-2024
+## [1.1.0] - 18-08-2024
 
-## Agregados
+### Modificados
+- Tablero.py: Se agregaron las fichas como objetos y dejaron de ser simplemente texto. 
+
+
+## [1.0.4] - 17-08-2024
+
+### Agregados
 - La capreta piezas con todas las clases de las distintas piezas
 
-## Modificados
+### Modificados
 - Archivo Tablero.py: se empieza  a trabajar con las piezas como objetos
 
 
@@ -17,7 +23,6 @@
 
 
 ## [1.0.2] - 14-08-2024
-
 
 ### Agregados
 - Archivo Tablero.py: archivo de la clase Tablero
