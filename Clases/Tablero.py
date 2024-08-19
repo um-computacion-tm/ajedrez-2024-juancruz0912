@@ -17,7 +17,7 @@ class Tablero:
     #Metodo para crear las piezas y asignarles la posicion inicial
     def crear_piezas(self):
         self.__piezas__ = {
-            'T1 negro': Torre('negro', 1, 1, 1), 
+            'TN1': Torre('negro', 1, 1, 1), 
             'CN1': Caballo('negro', 1, 1, 2),
             'AN1': Alfil('negro', 1, 1, 3), 
             'RN': Rey('negro', 1, 4), 
@@ -69,8 +69,41 @@ class Tablero:
         print(f'en la cela {fila},{columna} se encuentra : {mensaje}')
         return mensaje
 
-    # Metodo para mover una pieza en el tablero, donde le paso los parametros de que ficha quiero mover y a que posicion
+    def movimiento_recto_valido(self, x_destino, y_destino, pieza):
+        if pieza.fila == x_destino:  # Movimiento horizontal
+            paso = 1 if pieza.columna < y_destino else -1
+            for columna in range(pieza.columna + paso, y_destino, paso):
+                if self.__tablero__[pieza.fila][pieza.columna] != '  ':  # Ocupada
+                    raise ValueError(f'La casilla {pieza.fila},{pieza.columna} esta ocupada')
+            raise ValueError('El movimiento debe ser en horizontal')
+        elif pieza.columna == y_destino:  # Movimiento vertical
+            paso = 1 if pieza.fila < x_destino else -1
+            for fila in range(pieza.fila + paso, x_destino, paso):
+                if self.__tablero__[fila][pieza.columna] != '  ':  # Ocupada
+                    raise ValueError(f'La casilla {pieza.fila},{pieza.columna} esta ocupada')
+        raise ValueError('El movimiento debe ser en vertical o horizontal')
+    
+    def movimiento_diagonal_valido(self, x_destino, y_destino, pieza):
+        if abs(pieza.fila - x_destino) == abs(pieza.columna - y_destino):  # Movimiento diagonal
+            fila_paso = 1 if x_destino > pieza.fila else -1
+            columna_paso = 1 if y_destino > pieza.columna else -1
+            fila_actual, columna_actual = pieza.fila + fila_paso, pieza.columna + columna_paso
+            while fila_actual != x_destino and columna_actual != y_destino:
+                if self.__tablero__[fila_actual][columna_actual] != '  ':  # Ocupada
+                    raise ValueError(f'La casilla {fila_actual},{columna_actual} esta ocupada')
+                fila_actual += fila_paso
+                columna_actual += columna_paso
+            return True
+        raise ValueError('El movimiento debe ser en diagonal')
+
+    #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover, Ej: 'TN1')
     def mover_pieza(self, x, y, pieza):
-        pieza = self.__piezas__[pieza]    
-        self.__tablero__[x][y] = self.__tablero__[pieza.__fila__][pieza.__columna__]
-        self.__tablero__[pieza.__fila__][pieza.__columna__] = '   '
+        pieza = self.__piezas__[pieza]
+        
+        if pieza.verificar_movimiento(x, y) and self.movimiento_recto_valido(x, y, pieza):
+            raise ValueError('Movimiento invalido')
+        else:
+            self.__tablero__[pieza.fila][pieza.columna] = '  '
+            pieza.fila = x
+            pieza.columna = y    
+            self.__tablero__[x][y] = pieza

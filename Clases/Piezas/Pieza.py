@@ -1,5 +1,6 @@
+from abc import ABC, abstractmethod
 
-class Pieza:
+class Pieza(ABC):
     
     def __init__(self, nombre, color, fila, columna):
         self.__nombre__ = nombre
@@ -7,12 +8,27 @@ class Pieza:
         self.__fila__ = fila
         self.__columna__ = columna
 
-    #Metodo para poder ver la fila de la pieza
+    # Método para ver la fila de la pieza
     @property
     def fila(self):
         return self.__fila__
 
-    #Metodo para poder ver la columna de la pieza 
+    # Método para cambiar la fila de la pieza
+    @fila.setter
+    def fila(self, value):
+        self.__fila__ = value
+
+    # Método para ver la columna de la pieza 
     @property
     def columna(self):
-        return self.__columna__ 
+        return self.__columna__
+
+    # Método para cambiar la columna de la pieza
+    @columna.setter
+    def columna(self, value):
+        self.__columna__ = value
+
+    # Metodo para verificar si el movimiento de la pieza es valido
+    @abstractmethod
+    def verificar_movimiento(self, fila, columna):
+        pass

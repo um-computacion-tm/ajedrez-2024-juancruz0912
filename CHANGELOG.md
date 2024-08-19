@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.1.1] - 19-08-2024
+
+### Modificados:
+- Tablero.py: se sigue trabajando en el metodo para mover las piezas 
+- Torre.py: se sigue trabajando en el metodo para mover las piezas 
+
 
 ## [1.1.0] - 18-08-2024
 

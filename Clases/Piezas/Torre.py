@@ -12,3 +12,14 @@ class Torre(Pieza):
            return f'♖{self.__id__}'
        else:
            return f'♜{self.__id__}'
+
+    def verificar_movimiento(self, fila, columna):
+        
+        if self.__fila__ == fila and self.__columna__ == columna:
+            raise ValueError('La torre no se puede mover a la misma posición')
+        
+        elif self.__fila__ == fila or self.__columna__ == columna:
+            return True
+        
+        else:
+            raise ValueError('Movimiento invalido')
