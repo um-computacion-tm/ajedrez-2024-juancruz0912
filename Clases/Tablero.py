@@ -50,60 +50,78 @@ class Tablero:
         
     
     #Metodo para mostrar el tablero en la terminal
-    def imprimir_tablero(self):
-        print("   " + " | ".join(self.__tablero__[0][1:]) + " |")
-        for fila in self.__tablero__[1:]:
-            fila_str = [str(celda) if celda is not None else "   " for celda in fila]
-            print(" | ".join(fila_str) + " |")
-            linea = '--+' + '----+' * (len(fila) - 1)
-            print(linea)
+    def __str__(self):
+        filas = []
+
+        encabezado = "  |" + " | ".join(self.__tablero__[0][1:]) + " |"
+        filas.append(encabezado)
+        linea = "--+" + "----+" * 8
+        filas.append(linea)
+
+        for i, fila in enumerate(reversed(self.__tablero__[1:]), 1):
+            fila_numero = 9 - i  
+            fila_str = [f" {str(celda):<3}" for celda in fila[1:]] 
+            filas.append(f"{fila_numero} |" + "|".join(fila_str) + "|")
+            if fila_numero > 1:
+                linea = "--+" + "----+" * 8  
+                filas.append(linea)
+
+        linea = "--+" + "----+" * 8
+        filas.append(linea)
+
+        return "\n".join(filas)
 
 
-    #Metodo para ver el contenido de una celda en espedifico, lo inputs son el numero de fila y de columna
-    def ver_celda(self, fila, columna):
-        if self.__tablero__[fila][columna] == '  ':
-            mensaje = 'vacio'
-        else:   
-            mensaje = self.__tablero__[fila][columna]
-        
-        print(f'en la cela {fila},{columna} se encuentra : {mensaje}')
-        return mensaje
 
+    # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos rectos)
     def movimiento_recto_valido(self, x_destino, y_destino, pieza):
         if pieza.fila == x_destino:  # Movimiento horizontal
             paso = 1 if pieza.columna < y_destino else -1
             for columna in range(pieza.columna + paso, y_destino, paso):
-                if self.__tablero__[pieza.fila][pieza.columna] != '  ':  # Ocupada
+                if self.__tablero__[pieza.fila][columna] != '  ':  # Ocupada
                     raise ValueError(f'La casilla {pieza.fila},{pieza.columna} esta ocupada')
-            raise ValueError('El movimiento debe ser en horizontal')
+            return True
+        
         elif pieza.columna == y_destino:  # Movimiento vertical
             paso = 1 if pieza.fila < x_destino else -1
             for fila in range(pieza.fila + paso, x_destino, paso):
                 if self.__tablero__[fila][pieza.columna] != '  ':  # Ocupada
                     raise ValueError(f'La casilla {pieza.fila},{pieza.columna} esta ocupada')
+            return True
         raise ValueError('El movimiento debe ser en vertical o horizontal')
     
-    def movimiento_diagonal_valido(self, x_destino, y_destino, pieza):
-        if abs(pieza.fila - x_destino) == abs(pieza.columna - y_destino):  # Movimiento diagonal
-            fila_paso = 1 if x_destino > pieza.fila else -1
-            columna_paso = 1 if y_destino > pieza.columna else -1
-            fila_actual, columna_actual = pieza.fila + fila_paso, pieza.columna + columna_paso
-            while fila_actual != x_destino and columna_actual != y_destino:
-                if self.__tablero__[fila_actual][columna_actual] != '  ':  # Ocupada
-                    raise ValueError(f'La casilla {fila_actual},{columna_actual} esta ocupada')
-                fila_actual += fila_paso
-                columna_actual += columna_paso
-            return True
-        raise ValueError('El movimiento debe ser en diagonal')
-
+    # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos diagonales)
+    def movimiento_diagonal_valido(self, x_destino, y_destino, pieza):    
+        fila_paso = 1 if x_destino > pieza.fila else -1
+        columna_paso = 1 if y_destino > pieza.columna else -1
+        
+        fila_actual, columna_actual = pieza.fila + fila_paso, pieza.columna + columna_paso
+        while fila_actual != x_destino and columna_actual != y_destino:
+            if self.__tablero__[fila_actual][columna_actual] != '  ':  # Ocupada
+                raise ValueError(f'La casilla {fila_actual},{columna_actual} esta ocupada')
+            fila_actual += fila_paso
+            columna_actual += columna_paso
+        return True
+    
+    def mover_pieza_valida(self, x, y, pieza):
+        self.__tablero__[x][y] = self.__tablero__[pieza.__fila__][pieza.__columna__]
+        self.__tablero__[pieza.__fila__][pieza.__columna__] = '   '
+        pieza.fila = x 
+        pieza.columna = y
+    
+    
     #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover, Ej: 'TN1')
     def mover_pieza(self, x, y, pieza):
         pieza = self.__piezas__[pieza]
+        if pieza.verificar_movimiento(x, y) == 'Recto':
+            if self.movimiento_recto_valido(x, y, pieza):
+                self.mover_pieza_valida(x, y, pieza)
         
-        if pieza.verificar_movimiento(x, y) and self.movimiento_recto_valido(x, y, pieza):
-            raise ValueError('Movimiento invalido')
-        else:
-            self.__tablero__[pieza.fila][pieza.columna] = '  '
-            pieza.fila = x
-            pieza.columna = y    
-            self.__tablero__[x][y] = pieza
+        elif pieza.verificar_movimiento(x, y) == 'Diagonal':
+            if self.movimiento_diagonal_valido(x, y, pieza):
+                self.mover_pieza_valida(x, y, pieza)
+        
+        elif pieza.verificar_movimiento(x, y) == 'Caballo':
+            self.mover_pieza_valida(x, y, pieza)
+
+    

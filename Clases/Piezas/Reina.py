@@ -10,3 +10,6 @@ class Reina(Pieza):
             return '♕ '
         else:
             return '♛ '
+
+    def verificar_movimiento(self, fila, columna):
+        pass

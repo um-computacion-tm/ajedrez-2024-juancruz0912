@@ -1,4 +1,4 @@
-from .Tablero import Tablero
+from Tablero import Tablero
 
 class Juego:
     
@@ -19,13 +19,15 @@ class Juego:
     # Metodo que permite iniciar el juego, estableciendo el atributo estado en 1 (Jugando)
     def empezar_juego(self):
         self.__estado__ = True
-        print('Empezo el juego')
-        self.__tablero__.imprimir_tablero()
+        return self.__tablero__
 
     # Metodo que permite finalizar el juego, estableciendo el atributo estado en 0 (No Jugando) 
     def terminar_juego(self):
         self.__estado__ = False
-        print("Se termino el juego")
+        return self.__tablero__
+
+    def mover_pieza(self, x, y, pieza, turno):
+        self.__tablero__.mover_pieza(x, y, pieza, turno)
 
     #Metodo para poder ver el estado del juego (encapsulamiento)
     @property

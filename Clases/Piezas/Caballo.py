@@ -12,3 +12,6 @@ class Caballo(Pieza):
             return f'♘{self.__id__}'
         else:
             return f'♞{self.__id__}'
+
+    def verificar_movimiento(self, fila, columna):
+        pass
