@@ -26,8 +26,14 @@ class Juego:
         self.__estado__ = False
         return self.__tablero__
 
-    def mover_pieza(self, x, y, pieza, turno):
-        self.__tablero__.mover_pieza(x, y, pieza, turno)
+    # Metodo para mover pieza, donde se ingresa la posicion donde se desea mover y que pieza,
+    #lo que hace este metodo es llamar al metodo de mover_pieza_tablero para que la pieza
+    #se mueva en el tablero
+    def mover_pieza(self, x, y, pieza): 
+        turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
+        self.__tablero__.mover_pieza_tablero(x, y, pieza, turno)
+        return self.__tablero__
+
 
     #Metodo para poder ver el estado del juego (encapsulamiento)
     @property
