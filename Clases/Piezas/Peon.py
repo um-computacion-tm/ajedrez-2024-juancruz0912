@@ -13,5 +13,9 @@ class Peon(Pieza):
         else:
             return f'♟{self.__id__}'
         
-    def verificar_movimiento(self, fila, columna):
-        pass
+    def verificar_movimiento(self, fila, columna):        
+        if self.__fila__ != fila and self.__columna__ == columna:
+            return 'Recto'
+        
+        else:
+            raise ValueError('Movimiento invalido')
