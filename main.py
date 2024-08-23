@@ -11,9 +11,7 @@ def main():
     juego.empezar_juego()
     
     while juego.estado == True:
-        
-        juego.tablero.imprimir_tablero()
-        
+        print(juego.tablero)
         print(f'Ahora es el turno de {juego.__turno__}')
         pieza = input('Que pieza quieres mover?')
         
@@ -22,8 +20,10 @@ def main():
         else:    
             fila = int(input('Fila donde quieres mover la pieza: '))
             columna = int(input('Columna donde quieres mover la pieza: '))
-            juego.tablero.mover_pieza(fila, columna, pieza)
-            juego.tablero.imprimir_tablero()
+            try:
+                juego.mover_pieza(fila, columna, pieza)
+            except ValueError:
+                pass
             juego.cambiar_turno()
 
 

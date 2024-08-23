@@ -1,4 +1,4 @@
-from Tablero import Tablero
+from. Tablero import Tablero
 
 class Juego:
     

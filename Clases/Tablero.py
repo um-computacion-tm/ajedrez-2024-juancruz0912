@@ -1,9 +1,9 @@
-from Piezas.Torre import Torre
-from Piezas.Alfil import Alfil  
-from Piezas.Caballo import Caballo
-from Piezas.Reina import Reina
-from Piezas.Rey import Rey
-from Piezas.Peon import Peon
+from .Piezas.Torre import Torre
+from .Piezas.Alfil import Alfil  
+from .Piezas.Caballo import Caballo
+from .Piezas.Reina import Reina
+from .Piezas.Rey import Rey
+from .Piezas.Peon import Peon
 
 class Tablero:
     
@@ -13,6 +13,11 @@ class Tablero:
         self.__piezas__ = {}
         self.crear_piezas()
         self.colocar_piezas()
+
+    #Metodo para la primer fila
+    def primer_fila(self):
+        Fila1 = {}
+        self.tablero[0]
 
     #Metodo para crear las piezas y asignarles la posicion inicial
     def crear_piezas(self):
@@ -25,7 +30,7 @@ class Tablero:
                 'Alfil 2 negro': Alfil('negro', 2, 1, 6), 
                 'Caballo 2 negro': Caballo('negro', 2, 1, 7),
                 'Torre 2 negro': Torre('negro', 2, 1, 8),
-                'Torre 1 blanco': Torre('blanco', 2, 8, 1), 
+                'Torre 1 blanco': Torre('blanco', 1, 8, 1), 
                 'Caballo 1 blanco': Caballo('blanco', 1, 8, 2),
                 'Alfil 1 blanco': Alfil('blanco', 1, 8, 3), 
                 'Rey blanco': Rey('blanco', 8, 4), 
@@ -39,20 +44,19 @@ class Tablero:
             self.__piezas__[f'Peon {i} blanco'] = Peon('blanco', i, 7, i)
         
 
-    #Metodo para mostrar el tablero
+        #Metodo para mostrar el tablero
     def __str__(self):
         filas = []
-
         encabezado = "  |" + " | ".join(self.__tablero__[0][1:]) + " |"
         filas.append(encabezado)
         linea = "--+" + "----+" * 8
         filas.append(linea)
 
-        for i, fila in enumerate(reversed(self.__tablero__[1:]), 1):
-            fila_numero = 9 - i  
+        for i, fila in enumerate(self.__tablero__[1:], 1):
+            fila_numero = i  
             fila_str = [f" {str(celda):<3}" for celda in fila[1:]] 
             filas.append(f"{fila_numero} |" + "|".join(fila_str) + "|")
-            if fila_numero > 1:
+            if fila_numero < 8:
                 linea = "--+" + "----+" * 8  
                 filas.append(linea)
 
@@ -60,7 +64,6 @@ class Tablero:
         filas.append(linea)
 
         return "\n".join(filas)
-    
     #Metodo para colocar cada pieza con su posicion correspondiente en el tablero
     def colocar_piezas(self):
         for pieza in self.__piezas__.values():
@@ -102,7 +105,7 @@ class Tablero:
             columna_actual += columna_paso
         return True
     
-    # Metodo en el cual se mueve la pieza
+    # Metodo en el cual se mueve la pieza una vez que ya esta verificado que puede hacer el movimiento
     def mover_pieza_valida(self, x, y, pieza):
         self.__tablero__[x][y] = self.__tablero__[pieza.__fila__][pieza.__columna__]
         self.__tablero__[pieza.__fila__][pieza.__columna__] = '   '
@@ -111,15 +114,20 @@ class Tablero:
     
     #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover, Ej: 'TN1')
     def mover_pieza_tablero(self, x, y, pieza, turno):
-        pieza = self.__piezas__[pieza + ' ' + turno]
-        if pieza.verificar_movimiento(x, y) == 'Recto':
-            if self.movimiento_recto_valido(x, y, pieza):
-                self.mover_pieza_valida(x, y, pieza)
-        
-        elif pieza.verificar_movimiento(x, y) == 'Diagonal':
-            if self.movimiento_diagonal_valido(x, y, pieza):
+        if pieza in self.__piezas__.values():
+            pieza = self.__piezas__[pieza + ' ' + turno]
+            if pieza.verificar_movimiento(x, y) == 'Recto':
+                if self.movimiento_recto_valido(x, y, pieza):
+                    self.mover_pieza_valida(x, y, pieza)
+
+            elif pieza.verificar_movimiento(x, y) == 'Diagonal':
+                if self.movimiento_diagonal_valido(x, y, pieza):
+                    self.mover_pieza_valida(x, y, pieza)
+
+            elif pieza.verificar_movimiento(x, y) == 'Caballo':
                 self.mover_pieza_valida(x, y, pieza)
 
-        elif pieza.verificar_movimiento(x, y) == 'Caballo':
-            self.mover_pieza_valida(x, y, pieza)
+        else:
+            raise ValueError(f'La pieza: {pieza} no existe')
+
 
