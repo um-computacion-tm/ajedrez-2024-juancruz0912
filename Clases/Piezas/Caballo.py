@@ -14,4 +14,7 @@ class Caballo(Pieza):
             return f'♞{self.__id__}'
 
     def verificar_movimiento(self, fila, columna):
-        pass
+        if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
+            return True
+        else:
+            return False

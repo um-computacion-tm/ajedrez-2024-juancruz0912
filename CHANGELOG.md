@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [1.1.2] - 24-08-2024
+
+### Modificados:
+- Los metodos de las clases Tablero, Juego y de cada ficha en especifico que permiten el movimiento de las fichas 
+
 ## [1.1.1] - 19-08-2024
 
 ### Modificados:

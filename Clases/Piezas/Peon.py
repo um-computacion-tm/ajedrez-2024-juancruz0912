@@ -33,4 +33,3 @@ class Peon(Pieza):
                 return 'Recto'
         else:
             raise ValueError('Movimiento invalido')
-        
