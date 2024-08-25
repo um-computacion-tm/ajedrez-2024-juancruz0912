@@ -1,4 +1,4 @@
-from. Tablero import Tablero
+from .Tablero import Tablero
 
 class Juego:
     
@@ -31,10 +31,15 @@ class Juego:
     #se mueva en el tablero
     def mover_pieza(self, x, y, pieza): 
         turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
-        self.__tablero__.mover_pieza_tablero(x, y, pieza, turno)
+        pieza = pieza + ' ' + turno
+        self.__tablero__.mover_pieza_tablero(x, y, pieza)
         return self.__tablero__
 
-
+    def buscar_pieza(self, pieza):
+        turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
+        pieza = str(pieza + ' ' + turno)
+        return self.tablero.pieza_existente(pieza)   
+    
     #Metodo para poder ver el estado del juego (encapsulamiento)
     @property
     def estado(self):

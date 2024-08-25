@@ -1,5 +1,34 @@
 from Clases.Juego import Juego
 
+def jugar(juego):
+        try:
+            print(juego.tablero)
+            print(f'Ahora es el turno de {juego.__turno__}')
+            mover(juego)            
+        except Exception as e:
+            print("error", e)
+
+def mover(juego):
+    pieza = input('Que pieza quieres mover?')
+    if pieza == '0':
+        juego.terminar_juego()
+    elif juego.buscar_pieza(pieza) == True:
+        mover_pieza_valida(juego, pieza)
+    else:  
+        print(f'{pieza} no existe') 
+        mover(juego)
+
+def mover_pieza_valida(juego, pieza):
+    fila = int(input('Fila donde quieres mover la pieza: '))
+    columna = input('Columna donde quieres mover la pieza: ')
+    try:
+        juego.mover_pieza(fila, columna, pieza)
+        juego.cambiar_turno()
+    except ValueError as e:
+        print(e)
+        mover_pieza_valida(juego, pieza)
+
+
 def main():
     
     print('Bienvenidos al juego del ajedrez')
@@ -11,21 +40,8 @@ def main():
     juego.empezar_juego()
     
     while juego.estado == True:
-        print(juego.tablero)
-        print(f'Ahora es el turno de {juego.__turno__}')
-        pieza = input('Que pieza quieres mover?')
-        
-        if pieza == '0':
-            juego.terminar_juego()
-        else:    
-            fila = int(input('Fila donde quieres mover la pieza: '))
-            columna = int(input('Columna donde quieres mover la pieza: '))
-            try:
-                juego.mover_pieza(fila, columna, pieza)
-            except ValueError:
-                pass
-            juego.cambiar_turno()
-
+        jugar(juego)
+    print('Se termino el juego')
 
 if __name__ == '__main__':
     main()
