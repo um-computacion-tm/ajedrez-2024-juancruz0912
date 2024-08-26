@@ -1,5 +1,12 @@
 # CHANGELOG
 
+
+## [1.1.3] - 24-08-2024
+
+### Modificados:
+- Modificando los test correspondientes al archivo main y a las clases tablero y juego. 
+
+
 ## [1.1.2] - 24-08-2024
 
 ### Modificados:
