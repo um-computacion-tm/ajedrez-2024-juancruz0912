@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## [1.1.4] - 27-08-2024
+
+### Modificados
+- Arreglo de los metodos para mover las piezas
+
+### Agregados
+- Agregados los test para cada pieza
+
+
 ## [1.1.3] - 24-08-2024
 
 ### Modificados:

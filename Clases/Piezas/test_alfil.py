@@ -1,0 +1,27 @@
+import unittest
+from .Alfil import Alfil
+
+class TestAlfil(unittest.TestCase):
+
+    def setUp(self):
+        self.alfil_negro = Alfil('negro', 1, 1, 3)
+        self.alfil_blanco = Alfil('blanco', 1, 8, 3)
+
+    def test_inicializacion(self):
+        self.assertEqual(self.alfil_blanco.__str__(), '♗1')
+        self.assertEqual(self.alfil_negro.__str__(), '♝1')
+        self.assertEqual(self.alfil_blanco.__color__, 'blanco')
+        self.assertEqual(self.alfil_negro.__color__, 'negro')
+
+    def test_movimiento_valido(self):
+        self.assertEqual(self.alfil_blanco.verificar_movimiento(6, 5), 'Diagonal')
+        self.assertEqual(self.alfil_negro.verificar_movimiento(4, 6), 'Diagonal')
+
+    def test_movimiento_invalido(self):
+        with self.assertRaises(ValueError):
+            self.alfil_blanco.verificar_movimiento(8, 4)
+        with self.assertRaises(ValueError):
+            self.alfil_negro.verificar_movimiento(6, 3)
+
+if __name__ == '__main__':
+    unittest.main()
