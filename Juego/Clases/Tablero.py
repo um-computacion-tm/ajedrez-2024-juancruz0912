@@ -35,16 +35,16 @@ class Tablero:
                 'Torre 1 negro': Torre('negro', 1, 1, 1), 
                 'Caballo 1 negro': Caballo('negro', 1, 1, 2),
                 'Alfil 1 negro': Alfil('negro', 1, 1, 3), 
-                'Rey negro': Rey('negro', 1, 4), 
-                'Reina negro': Reina('negro', 1, 5), 
+                'Rey negro': Rey('negro', 1, 5), 
+                'Reina negro': Reina('negro', 1, 4), 
                 'Alfil 2 negro': Alfil('negro', 2, 1, 6), 
                 'Caballo 2 negro': Caballo('negro', 2, 1, 7),
                 'Torre 2 negro': Torre('negro', 2, 1, 8),
                 'Torre 1 blanco': Torre('blanco', 1, 8, 1), 
                 'Caballo 1 blanco': Caballo('blanco', 1, 8, 2),
                 'Alfil 1 blanco': Alfil('blanco', 1, 8, 3), 
-                'Rey blanco': Rey('blanco', 8, 4), 
-                'Reina blanco': Reina('blanco', 8, 5), 
+                'Rey blanco': Rey('blanco', 8, 5), 
+                'Reina blanco': Reina('blanco', 8, 4), 
                 'Alfil 2 blanco': Alfil('blanco', 2, 8, 6), 
                 'Caballo 2 blanco': Caballo('blanco', 2, 8, 7),
                 'Torre 2 blanco': Torre('blanco', 2, 8, 8)
@@ -87,6 +87,44 @@ class Tablero:
     # Metodo para verificar si la pieza ingresada por el usuario existe
     def pieza_existente(self, pieza):
         return pieza in self.__piezas__
+    
+    #Metodo para verificar si quedan piezas de un color, para ver si el juego se termina o sigue
+    def quedan_piezas(self):
+        contador_blanco = 0
+        contador_negro = 0
+        for pieza in self.__piezas__:
+            if pieza.color == 'blanco':
+                contador_blanco += 1 
+            else:
+                contador_negro += 1
+        if contador_blanco == 0: 
+            return 'Blanco'
+        else:
+            return 'Negro'
+              
+
+    #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover, Ej: 'TN1')
+    def mover_pieza_tablero(self, x, y, pieza):
+        y = self.__fila1__[y]
+        pieza = self.__piezas__[pieza]
+        movimiento = pieza.verificar_movimiento(x, y)
+        if self.mismo_lugar(x, y, pieza):
+            if movimiento == 'Recto':
+                self.movimiento_recto_valido(x, y, pieza)
+            elif movimiento == 'Diagonal':
+                self.movimiento_diagonal_valido(x, y, pieza)
+            elif movimiento == 'Caballo':
+                self.mover_pieza_valida(x, y, pieza)
+        else:
+            raise ValueError("Movimiento no válido")
+    
+
+    # Metodo para verificar si la pieza se movio al mismo lugar
+    def mismo_lugar(self, x, y, pieza):
+        if pieza.fila == x and pieza.columna == y:
+            raise ValueError('La pieza no se ha movido')
+        else:
+            return True
 
     # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos rectos)
     def movimiento_recto_valido(self, x, y, pieza):
@@ -95,13 +133,14 @@ class Tablero:
             for columna in range(pieza.columna + paso, y, paso):
                 if self.__tablero__[pieza.fila][columna] != '  ':  # Ocupada
                     raise ValueError(f'La casilla {pieza.fila},{pieza.columna} esta ocupada')
+            self.mover_pieza_valida(x, y, pieza)
             return True
-        
         elif pieza.columna == y:  # Movimiento vertical
             paso = 1 if pieza.fila < x else -1
             for fila in range(pieza.fila + paso, x, paso):
                 if self.__tablero__[fila][pieza.columna] != '  ':  # Ocupada
                     raise ValueError(f'La casilla {pieza.fila},{pieza.columna} esta ocupada')
+            self.mover_pieza_valida(x, y, pieza)
             return True
         raise ValueError('El movimiento debe ser en vertical o horizontal')
     
@@ -112,29 +151,36 @@ class Tablero:
         fila_actual, columna_actual = pieza.fila + fila_paso, pieza.columna + columna_paso
         while fila_actual != x and columna_actual != y:
             if self.__tablero__[fila_actual][columna_actual] != '  ':  # Ocupada
-                raise ValueError(f'La casilla {fila_actual},{columna_actual} esta ocupada')
+                self.comer_pieza(fila_actual, columna_actual, pieza)
             fila_actual += fila_paso
             columna_actual += columna_paso
-        return True
+        self.mover_pieza_valida(x, y, pieza)
+
+    # Metodo para comer una pieza 
+    def comer_pieza(self, x, y, pieza):
+        pieza_comida = self.__tablero__[x][y]
+        if self.__tablero__[x][y].color != pieza_comida.color:
+            self.__piezas__.pop(pieza_comida)
+            self.mover_pieza_valida(x, y, pieza)
+        else:
+            raise ValueError(f'La casilla {x},{y} esta ocupada')
     
     # Metodo en el cual se mueve la pieza una vez que ya esta verificado que puede hacer el movimiento
     def mover_pieza_valida(self, x, y, pieza):
-        self.__tablero__[x][y] = self.__tablero__[pieza.__fila__][pieza.__columna__]
-        self.__tablero__[pieza.__fila__][pieza.__columna__] = '   '
+        self.__tablero__[pieza.fila][pieza.columna] = '  '
         pieza.fila = x 
         pieza.columna = y
+        self.__tablero__[x][y] = pieza
+
+
+    @property
+    def tablero(self):
+        return self.__tablero__
+
+    @property
+    def piezas(self):
+        return self.__piezas__
     
-    #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover, Ej: 'TN1')
-    def mover_pieza_tablero(self, x, y, pieza):
-        y = self.__fila1__[y]
-        pieza = self.__piezas__[pieza]
-        if pieza.verificar_movimiento(x, y) == 'Recto':
-            if self.movimiento_recto_valido(x, y, pieza):
-                self.mover_pieza_valida(x, y, pieza)
-        elif pieza.verificar_movimiento(x, y) == 'Diagonal':
-            if self.movimiento_diagonal_valido(x, y, pieza):
-                self.mover_pieza_valida(x, y, pieza)
-        elif pieza.verificar_movimiento(x, y) == 'Caballo':
-            self.mover_pieza_valida(x, y, pieza)
-
-
+    @piezas.setter
+    def piezas(self, valor):
+        self.__piezas__ = valor

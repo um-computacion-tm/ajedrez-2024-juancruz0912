@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.1.4] - 27-08-2024
+
+### Modificados
+- Se modifica la organizacion de los archivos en una carpeta para el juego, donde estan los test por un lado y las clases por otro
+- Se agrego el metodo para comer una pieza
+
 
 ## [1.1.4] - 27-08-2024
 
