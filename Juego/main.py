@@ -9,11 +9,12 @@ def jugar(juego):
             print("error", e)
 
 def mover(juego):
-    pieza = input('Que pieza quieres mover?')
+    pieza = input('Que pieza quieres mover?: ')
     if pieza == '0':
         juego.terminar_juego()
     elif juego.buscar_pieza(pieza) == True:
         mover_pieza_valida(juego, pieza)
+        juego.ganar_juego()
     else:  
         print(f'{pieza} no existe') 
         mover(juego)

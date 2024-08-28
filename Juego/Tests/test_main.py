@@ -36,12 +36,13 @@ class TestJuegoAjedrez(unittest.TestCase):
         self.assertEqual(mock_mover_pieza.call_count, 0)
 
     @patch('builtins.input', side_effect=['Torre1', '0'])
-    def test_mover_pieza_invalida(self, mock_input):
+    def test_mover_pieza_pieza_invalida(self, mock_input):
         self.juego.buscar_pieza = MagicMock(return_value=False)
 
         with patch('builtins.print') as mock_print:
             mover(self.juego)
             mock_print.assert_called_with('Torre1 no existe')
+    
 
     @patch('builtins.input', side_effect=['Torre1', '3', 'B'])
     def test_mover_pieza_valida(self, mock_input):
@@ -63,5 +64,26 @@ class TestJuegoAjedrez(unittest.TestCase):
             main()
             mock_print.assert_any_call('Se termino el juego')
 
+    @patch('builtins.print')
+    @patch('main.mover')
+    def test_jugar(self, mock_mover, mock_print):
+        juego = MagicMock()
+        juego.__turno__ = 'Jugador1'
+        juego.tablero = 'Tablero Mock'
+        jugar(juego)
+        mock_print.assert_any_call('Tablero Mock')
+        mock_print.assert_any_call('Ahora es el turno de Jugador1')
+        mock_mover.assert_called_once_with(juego)
+    
+    @patch('builtins.input', side_effect=['Torre1', '0'])
+    @patch('main.mover_pieza_valida')
+    @patch('main.print')
+    def test_mover_pieza_valida_correcta(self, mock_print, mock_mover_pieza_valida, mock_input):
+        juego = MagicMock()
+        juego.buscar_pieza = MagicMock(return_value=True)
+        juego.terminar_juego = MagicMock()
+        mover(juego)
+        mock_mover_pieza_valida.assert_called_once_with(juego, 'Torre1')
+    
 if __name__ == '__main__':
     unittest.main()
