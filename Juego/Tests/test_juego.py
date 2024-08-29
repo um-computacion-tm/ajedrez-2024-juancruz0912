@@ -1,8 +1,7 @@
 import unittest
-from unittest.mock import patch
-from .Juego import Juego 
-from .Tablero import Tablero
-from .Piezas.Peon import Peon
+from Juego.Clases.Juego import Juego 
+from Juego.Clases.Tablero import Tablero
+from Juego.Clases.Piezas.Peon import Peon
 
 class TestJuego(unittest.TestCase):
 
@@ -17,17 +16,42 @@ class TestJuego(unittest.TestCase):
         self.assertEqual(self.juego.__negro__, "Pedro")
         self.assertEqual(self.juego.__turno__, "Juan")
 
-    # Test para el metodo empezar_juego
+    # Test para el método empezar_juego
     def test_empezar_juego(self):
         self.juego.empezar_juego()
         self.assertEqual(self.juego.__estado__, True)
 
-    # Test para el metodo terminar_juego
+    # Test para el método terminar_juego
     def test_terminar_juego(self):
         self.juego.terminar_juego()
         self.assertEqual(self.juego.__estado__, False)
 
-    # Test para el metodo cambiar_turno
+    # Simula que el tablero indica que solo quedan piezas blancas
+    def test_ganar_juego_blanco(self):
+        self.juego.tablero.colocar_piezas() 
+        piezas_a_remover = [nombre for nombre, pieza in self.juego.tablero.piezas.items() if pieza.color == 'negro']  # Remover todas las piezas negras
+        for pieza in piezas_a_remover:
+            del self.juego.tablero.piezas[pieza]
+        resultado = self.juego.ganar_juego()
+        self.assertEqual(resultado, 'Juan es el ganador')
+
+    # Simula que el tablero indica que solo quedan piezas negras
+    def test_ganar_juego_negro(self):   
+        self.juego.tablero.colocar_piezas() 
+        piezas_a_remover = [nombre for nombre, pieza in self.juego.tablero.piezas.items() if pieza.color == 'blanco']  # Remover todas las piezas blancas
+        for pieza in piezas_a_remover:
+            del self.juego.tablero.piezas[pieza]
+        resultado = self.juego.ganar_juego()
+        self.assertEqual(resultado, 'Pedro es el ganador')
+
+
+    # Simula que el tablero indica que aún hay piezas de ambos colores
+    def test_ganar_juego_sin_ganador(self):
+        self.juego.tablero.colocar_piezas()  # Coloca las piezas en el tablero
+        resultado = self.juego.ganar_juego()
+        self.assertIsNone(resultado)
+
+    # Test para el método cambiar_turno
     def test_cambiar_turno(self):
         self.juego.cambiar_turno()
         self.assertEqual(self.juego.__turno__, self.juego.__negro__)
@@ -35,9 +59,10 @@ class TestJuego(unittest.TestCase):
         self.assertEqual(self.juego.__turno__, self.juego.__blanco__)
     
     def test_mover_pieza(self):
+        self.juego.tablero.colocar_piezas()
         self.juego.empezar_juego()
-        self.juego.mover_pieza(5, 'A', 'Peon 1')
-        self.assertIsInstance(self.juego.tablero.tablero[5][1], Peon)
+        self.juego.mover_pieza(6, 'A', 'Peon 1')  
+        self.assertIsInstance(self.juego.tablero.tablero[6][1], Peon)
 
     def test_buscar_pieza_existente(self):
         self.juego.empezar_juego()
@@ -50,5 +75,4 @@ class TestJuego(unittest.TestCase):
         self.assertFalse(existe)
 
 if __name__ == '__main__':
-
     unittest.main()

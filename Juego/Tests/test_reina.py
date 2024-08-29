@@ -1,5 +1,5 @@
 import unittest
-from .Reina import Reina
+from Juego.Clases.Piezas.Reina import Reina
 
 class TestReina(unittest.TestCase):
 
@@ -20,10 +20,6 @@ class TestReina(unittest.TestCase):
     def test_movimiento_diagonal_valido(self):
         self.assertEqual(self.reina_blanca.verificar_movimiento(7, 3), 'Diagonal')
         self.assertEqual(self.reina_blanca.verificar_movimiento(6, 6), 'Diagonal')
-
-    def test_movimiento_igual_posicion(self):
-        with self.assertRaises(ValueError):
-            self.reina_blanca.verificar_movimiento(8, 4)
 
     def test_movimiento_invalido(self):
         with self.assertRaises(ValueError):

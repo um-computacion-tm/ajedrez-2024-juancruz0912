@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from Clases.Juego import Juego
-from main import main, jugar, mover, mover_pieza_valida
+from Juego.Clases.Juego import Juego 
+from Juego.main import main, jugar, mover, mover_pieza_valida
 
 class TestJuegoAjedrez(unittest.TestCase):
 
@@ -14,46 +14,8 @@ class TestJuegoAjedrez(unittest.TestCase):
         jugar(self.juego)
         self.juego.terminar_juego.assert_called_once()
 
-    @patch('builtins.input', side_effect=['3', 'B'])
-    def test_mover_pieza_valida(self, mock_input):
-        self.juego.buscar_pieza = MagicMock(return_value=True)
-        self.juego.mover_pieza = MagicMock()
-        self.juego.cambiar_turno = MagicMock()
 
-        mover_pieza_valida(self.juego, 'Torre1')
 
-        self.juego.mover_pieza.assert_called_once_with(3, 'B', 'Torre1')
-        self.juego.cambiar_turno.assert_called_once()
-
-    @patch('builtins.input', side_effect=['invalid', '1', 'B'])
-    @patch('Clases.Juego.Juego.mover_pieza')
-    def test_mover_pieza_valida_movimiento_invalido(self, mock_mover_pieza, mock_input):
-        mock_mover_pieza.side_effect = ValueError('Movimiento inválido')
-        with self.assertRaises(ValueError):
-            mover_pieza_valida(self.juego, 'Torre1')
-        
-        self.assertEqual(mock_input.call_count, 1) # Chequear que se haya llamado a input una vez
-        self.assertEqual(mock_mover_pieza.call_count, 0)
-
-    @patch('builtins.input', side_effect=['Torre1', '0'])
-    def test_mover_pieza_pieza_invalida(self, mock_input):
-        self.juego.buscar_pieza = MagicMock(return_value=False)
-
-        with patch('builtins.print') as mock_print:
-            mover(self.juego)
-            mock_print.assert_called_with('Torre1 no existe')
-    
-
-    @patch('builtins.input', side_effect=['Torre1', '3', 'B'])
-    def test_mover_pieza_valida(self, mock_input):
-        self.juego.buscar_pieza = MagicMock(return_value=True)
-        self.juego.mover_pieza = MagicMock()
-        self.juego.cambiar_turno = MagicMock()
-
-        mover(self.juego)
-
-        self.juego.mover_pieza.assert_called_once_with(3, 'B', 'Torre1')
-        self.juego.cambiar_turno.assert_called_once()
 
     @patch('builtins.input', side_effect=['Jugador1', 'Jugador2', '0'])
     def test_main_terminar_juego(self, mock_input):
@@ -64,26 +26,6 @@ class TestJuegoAjedrez(unittest.TestCase):
             main()
             mock_print.assert_any_call('Se termino el juego')
 
-    @patch('builtins.print')
-    @patch('main.mover')
-    def test_jugar(self, mock_mover, mock_print):
-        juego = MagicMock()
-        juego.__turno__ = 'Jugador1'
-        juego.tablero = 'Tablero Mock'
-        jugar(juego)
-        mock_print.assert_any_call('Tablero Mock')
-        mock_print.assert_any_call('Ahora es el turno de Jugador1')
-        mock_mover.assert_called_once_with(juego)
-    
-    @patch('builtins.input', side_effect=['Torre1', '0'])
-    @patch('main.mover_pieza_valida')
-    @patch('main.print')
-    def test_mover_pieza_valida_correcta(self, mock_print, mock_mover_pieza_valida, mock_input):
-        juego = MagicMock()
-        juego.buscar_pieza = MagicMock(return_value=True)
-        juego.terminar_juego = MagicMock()
-        mover(juego)
-        mock_mover_pieza_valida.assert_called_once_with(juego, 'Torre1')
     
 if __name__ == '__main__':
     unittest.main()

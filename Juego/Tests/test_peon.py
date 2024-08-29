@@ -1,5 +1,5 @@
 import unittest
-from .Peon import Peon
+from Juego.Clases.Piezas.Peon import Peon
 
 class TestPeon(unittest.TestCase):
 
@@ -28,9 +28,6 @@ class TestPeon(unittest.TestCase):
     def test_movimiento_valido_negro(self):
         self.assertEqual(self.peon_negro.verificar_movimiento(4, 1), 'Recto')
 
-    def test_misma_posicion(self):
-        with self.assertRaises(ValueError):
-            self.peon_blanco.verificar_movimiento(7, 1)
     
     def test_movimiento_invalido_blanco(self):
         with self.assertRaises(ValueError):

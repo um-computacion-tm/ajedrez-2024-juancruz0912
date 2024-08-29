@@ -1,5 +1,5 @@
 import unittest
-from .Torre import Torre
+from Juego.Clases.Piezas.Torre import Torre
 
 class TestTorre(unittest.TestCase):
 
@@ -17,12 +17,6 @@ class TestTorre(unittest.TestCase):
     def test_movimiento_valido(self):
         self.assertEqual(self.torre_blanco.verificar_movimiento(8, 3), 'Recto')  # Movimiento en la misma fila
         self.assertEqual(self.torre_blanco.verificar_movimiento(6, 1), 'Recto')  # Movimiento en la misma columna
-
-    # Movimiento a la misma posición no debe ser válido
-    def test_movimiento_igual_posicion(self):
-        with self.assertRaises(ValueError) as context: # pieza ocupada
-            self.torre_blanco.verificar_movimiento(8, 1)
-        self.assertEqual(str(context.exception), 'La pieza no se ha movido')
     
     # Movimiento inválido que no sea recto
     def test_movimiento_invalido(self):

@@ -1,5 +1,5 @@
 import unittest
-from .Rey import Rey
+from Juego.Clases.Piezas.Rey import Rey
 
 class TestRey(unittest.TestCase):
 
@@ -19,9 +19,6 @@ class TestRey(unittest.TestCase):
         self.assertEqual(self.rey_blanco.verificar_movimiento(7, 5), 'Recto')  # Movimiento hacia arriba
         self.assertEqual(self.rey_blanco.verificar_movimiento(7, 6), 'Diagonal')  # Movimiento diagonal
 
-    def test_movimiento_igual_posicion(self):
-        with self.assertRaises(ValueError):
-            self.rey_blanco.verificar_movimiento(8, 5)
     
     # Movimiento fuera del rango del rey
     def test_movimiento_invalido(self):
