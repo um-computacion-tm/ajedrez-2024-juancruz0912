@@ -53,8 +53,6 @@ class Tablero:
             self.__piezas__[f'Peon {i} negro'] = Peon('negro', i, 2, i) 
             self.__piezas__[f'Peon {i} blanco'] = Peon('blanco', i, 7, i)
         
-
-        #Metodo para mostrar el tablero
     def __str__(self):
         filas = []
         encabezado = "  |" + "| ".join(self.__tablero__[0][1:]) + " |"
@@ -92,15 +90,17 @@ class Tablero:
     def quedan_piezas(self):
         contador_blanco = 0
         contador_negro = 0
-        for pieza in self.__piezas__:
+        for pieza in self.__piezas__.values():
             if pieza.color == 'blanco':
                 contador_blanco += 1 
             else:
                 contador_negro += 1
         if contador_blanco == 0: 
             return 'Blanco'
-        else:
+        elif contador_negro == 0:
             return 'Negro'
+        else:
+            return None
               
 
     #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover, Ej: 'TN1')
@@ -114,9 +114,11 @@ class Tablero:
             elif movimiento == 'Diagonal':
                 self.movimiento_diagonal_valido(x, y, pieza)
             elif movimiento == 'Caballo':
-                self.mover_pieza_valida(x, y, pieza)
-        else:
-            raise ValueError("Movimiento no válido")
+                if self.tablero[x][y] == '  ':
+                    self.mover_pieza_valida(x, y, pieza)
+                else:
+                    self.comer_pieza(x, y, pieza)
+                    
     
 
     # Metodo para verificar si la pieza se movio al mismo lugar
@@ -132,14 +134,14 @@ class Tablero:
             paso = 1 if pieza.columna < y else -1
             for columna in range(pieza.columna + paso, y, paso):
                 if self.__tablero__[pieza.fila][columna] != '  ':  # Ocupada
-                    raise ValueError(f'La casilla {pieza.fila},{pieza.columna} esta ocupada')
+                    self.comer_pieza(x, columna, pieza)
             self.mover_pieza_valida(x, y, pieza)
             return True
         elif pieza.columna == y:  # Movimiento vertical
             paso = 1 if pieza.fila < x else -1
             for fila in range(pieza.fila + paso, x, paso):
                 if self.__tablero__[fila][pieza.columna] != '  ':  # Ocupada
-                    raise ValueError(f'La casilla {pieza.fila},{pieza.columna} esta ocupada')
+                    self.comer_pieza(fila, y, pieza)
             self.mover_pieza_valida(x, y, pieza)
             return True
         raise ValueError('El movimiento debe ser en vertical o horizontal')
@@ -156,14 +158,21 @@ class Tablero:
             columna_actual += columna_paso
         self.mover_pieza_valida(x, y, pieza)
 
-    # Metodo para comer una pieza 
+    # Metodo para comer una pieza
     def comer_pieza(self, x, y, pieza):
         pieza_comida = self.__tablero__[x][y]
-        if self.__tablero__[x][y].color != pieza_comida.color:
-            self.__piezas__.pop(pieza_comida)
+        if pieza.color != pieza_comida.color:
+            clave_a_eliminar = None
+            for clave, obj in self.__piezas__.items():
+                if obj == pieza_comida:
+                    clave_a_eliminar = clave
+                    break
+            if clave_a_eliminar:
+                self.__piezas__.pop(clave_a_eliminar)  # Elimina la pieza comida del diccionario
             self.mover_pieza_valida(x, y, pieza)
         else:
-            raise ValueError(f'La casilla {x},{y} esta ocupada')
+            raise ValueError(f'La casilla {x},{y} esta ocupada por una pieza del mismo color')
+
     
     # Metodo en el cual se mueve la pieza una vez que ya esta verificado que puede hacer el movimiento
     def mover_pieza_valida(self, x, y, pieza):
@@ -184,3 +193,4 @@ class Tablero:
     @piezas.setter
     def piezas(self, valor):
         self.__piezas__ = valor
+
