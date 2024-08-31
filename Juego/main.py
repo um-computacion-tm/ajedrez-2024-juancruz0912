@@ -35,8 +35,8 @@ def main():
     print('Bienvenidos al juego del ajedrez')
     print('Ingresar los nombres de los jugadores')
     
-    jugador1 = input('Jugador 1: ')
-    jugador2 = input('Jugador 2: ')
+    jugador1 = input('Jugador 1 (Blancas): ')
+    jugador2 = input('Jugador 2 (Negras): ')
     juego = Juego(jugador1, jugador2)
     juego.empezar_juego()
     

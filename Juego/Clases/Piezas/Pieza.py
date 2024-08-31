@@ -8,6 +8,7 @@ class Pieza(ABC):
         self.__fila__ = fila
         self.__columna__ = columna
 
+
     # Método para ver la fila de la pieza
     @property
     def fila(self):
@@ -28,6 +29,10 @@ class Pieza(ABC):
     def columna(self, value):
         self.__columna__ = value
 
+    @property
+    def color(self):
+        return self.__color__
+    
     # Metodo para verificar si el movimiento de la pieza es valido
     @abstractmethod
     def verificar_movimiento(self, fila, columna):

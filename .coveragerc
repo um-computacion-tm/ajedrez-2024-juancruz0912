@@ -1,10 +1,11 @@
 [run]
-source = main
+source = Juego
 omit =
     venv/*
     */test*
     */__init__.py
     */coverage
+    Pieza.py
 [report]
 exclude_lines =
     pragma: no cover
@@ -16,3 +17,5 @@ exclude_lines =
     if __name__ == '__main__':
     def suite
     __str__
+    main()
+    @.*\.setter

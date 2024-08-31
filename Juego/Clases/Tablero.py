@@ -118,7 +118,8 @@ class Tablero:
                     self.mover_pieza_valida(x, y, pieza)
                 else:
                     self.comer_pieza(x, y, pieza)
-                    
+            elif movimiento == 'Comer':
+                self.movimiento_peon_comer(x, y, pieza)       
     
 
     # Metodo para verificar si la pieza se movio al mismo lugar
@@ -127,6 +128,12 @@ class Tablero:
             raise ValueError('La pieza no se ha movido')
         else:
             return True
+
+    def movimiento_peon_comer(self, x, y, pieza):
+        if self.__tablero__[x][y] != '  ':
+            self.comer_pieza(x, y, pieza)
+        else:
+            raise ValueError('El peon solo se puede mover en línea recta')
 
     # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos rectos)
     def movimiento_recto_valido(self, x, y, pieza):
@@ -180,7 +187,7 @@ class Tablero:
         pieza.fila = x 
         pieza.columna = y
         self.__tablero__[x][y] = pieza
-
+        return True
 
     @property
     def tablero(self):

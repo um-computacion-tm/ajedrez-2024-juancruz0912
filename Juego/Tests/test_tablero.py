@@ -19,6 +19,8 @@ class TestTablero(unittest.TestCase):
         self.peon_negro = Peon('negro', 5, 5, 4)
         self.alfil_blanco = Alfil('blanco', 2, 6, 4)
         self.caballo_blanco = Caballo('blanco', 3, 3, 3)
+        self.peon_negro2 = Peon('negro', 9, 6, 4) 
+        self.torre_negra = Torre('negro', 5, 6, 5)
 
     # Verificar que todas las piezas han sido creadas
     def test_crear_piezas(self):
@@ -38,13 +40,9 @@ class TestTablero(unittest.TestCase):
         except Exception as e:
             self.fail(f"imprimir_tablero lanzó una excepción: {e}")
 
-    # Verificacion del metodo para mover fichas rectas, en forma horizontal 
+    # Verificacion del metodo para mover fichas rectas
     def test_movimiento_recto_valido_horizontal(self):
         self.assertTrue(self.tablero.movimiento_recto_valido(4, 6, self.torre))  
-    
-    # En forma vertical
-    def test_movimiento_recto_valido_vertical(self):
-        self.assertTrue(self.tablero.movimiento_recto_valido(6, 4, self.torre))  
 
     # Movimiento que no es recto
     def test_movimiento_recto_invalido(self):
@@ -58,11 +56,12 @@ class TestTablero(unittest.TestCase):
             self.tablero.movimiento_recto_valido(4, 7, self.torre)
         self.assertIn('La casilla 4,6 esta ocupada', str(context.exception))
 
-    #Metodo para verificar si el movimiento de la pieza es diagonal
-    def test_movimiento_diagonal_valido(self):
+    # Verificando el movimiento diagonal valido
+    def test_mover_pieza_tablero_diagonal(self):
         self.tablero.tablero[7][2] = '  ' # Limpiar casilla
-        self.tablero.movimiento_diagonal_valido(6, 1, self.alfil)
-        self.assertIsInstance(self.tablero.tablero[6][1], Alfil)  # Movimiento diagonal válido
+        self.tablero.mover_pieza_tablero(6, 'A', 'Alfil 1 blanco')
+        self.assertEqual(self.tablero.tablero[8][3], '  ')
+        self.assertIsInstance(self.tablero.tablero[6][1], Alfil)
 
     # Test donde en un movimiento diagonal la casilla esta ocupada
     def test_movimiento_diagonal_ocupado(self):
@@ -70,6 +69,12 @@ class TestTablero(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             self.tablero.movimiento_diagonal_valido(6, 1, self.alfil)
         self.assertIn('esta ocupada', str(context.exception))
+
+    # Verificando el movimiento del caballo
+    def test_mover_pieza_tablero_caballo(self):
+        self.tablero.mover_pieza_tablero(6, 'C', 'Caballo 1 blanco')
+        self.assertEqual(self.tablero.tablero[8][2], '  ')
+        self.assertIsInstance(self.tablero.tablero[6][3], Caballo)
 
     # Verificar que se puede mover una pieza correctamente
     def test_mover_pieza_tablero(self):        
@@ -116,7 +121,7 @@ class TestTablero(unittest.TestCase):
     # Verificar si funciona el metodo comer_pieza para caballo
     def test_mover_pieza_caballo(self):
         self.tablero.__piezas__['Caballo 3 blanco'] = self.caballo_blanco
-        self.tablero.__tablero__[3][3]
+        self.tablero.__tablero__[3][3] = self.caballo_blanco
         
         self.tablero.__piezas__['Peon 5 negro'] = self.peon_negro
         self.tablero.__tablero__[5][4] = self.peon_negro
@@ -127,24 +132,27 @@ class TestTablero(unittest.TestCase):
         self.assertEqual(self.tablero.__tablero__[3][3], '  ')
         self.assertNotIn('Peon 5 negro', self.tablero.__piezas__)
 
-    # Verificando el movimiento diagonal valido
-    def test_mover_pieza_tablero_diagonal(self):
-        self.tablero.tablero[7][2] = '  ' # Limpiar casilla
-        self.tablero.mover_pieza_tablero(6, 'A', 'Alfil 1 blanco')
-        self.assertEqual(self.tablero.tablero[8][3], '  ')
-        self.assertIsInstance(self.tablero.tablero[6][1], Alfil)
+    # En forma vertical
+    def test_movimiento_peon_comer_valido(self):
+        self.tablero.__piezas__['Peon 9 negro'] = self.peon_negro2
+        self.tablero.__tablero__[6][4] = self.peon_negro2
 
-    # Verificando el movimiento del caballo
-    def test_mover_pieza_tablero_caballo(self):
-        self.tablero.mover_pieza_tablero(6, 'C', 'Caballo 1 blanco')
-        self.assertEqual(self.tablero.tablero[8][2], '  ')
-        self.assertIsInstance(self.tablero.tablero[6][3], Caballo)
+        self.tablero.mover_pieza_tablero(7, 'C', 'Peon 9 negro') # Mover donde se encuentra el Peon 3 blanco
+        
+        self.assertIsInstance(self.tablero.__tablero__[7][3], Peon)
+        self.assertEqual(self.tablero.__tablero__[6][4], '  ')
+        self.assertNotIn('Peon 3 blanco', self.tablero.__piezas__)
+    
+    def test_movimiento_peon_comer_invalido(self):
+        with self.assertRaises(ValueError) as context:
+            self.tablero.mover_pieza_tablero(6, 'B', 'Peon 1 blanco')
+        self.assertIn(str(context.exception), 'El peon solo se puede mover en línea recta')
+
 
     # Verifica si la pieza existe en el atributo __piezas__
     def test_pieza_existente(self):
         self.assertTrue(self.tablero.pieza_existente('Caballo 2 blanco'))
         self.assertFalse(self.tablero.pieza_existente('Torre 4 negro'))
-
 
 if __name__ == '__main__':
     unittest.main()

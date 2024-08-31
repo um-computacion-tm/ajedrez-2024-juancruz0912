@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## [1.0.6] - 23-08-2024
+
+### Modificados:
+- Peon.py: se agrego el movimiento especial del peon para comer una pieza
+
+### Juego basico terminado
+
+
+## [1.0.6] - 23-08-2024
+
+### Modificados:
+- Tablero.py y Juego.py: se termino de emplementar los metodos para verificar los movimientos
+
+
+## [1.0.6] - 23-08-2024
+
+### Modificados:
+- Pieza.py: se crearon los metodos para verificar el movmimiento de cada pieza
+
+
 ## [1.1.4] - 27-08-2024
 
 ### Modificados

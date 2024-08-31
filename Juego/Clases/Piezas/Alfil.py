@@ -14,7 +14,10 @@ class Alfil(Pieza):
             return f'♝{self.__id__}'
         
     def verificar_movimiento(self, fila, columna):
-        if abs(self.__fila__ - fila) == abs(self.__columna__ - columna):
+        if abs(self.fila - fila) == abs(self.columna - columna):
             return 'Diagonal'
-        else:  
-            raise ValueError('El movimiento no es en diagonal')
+        else:
+            raise ValueError('El movimiento no es diagonal')
+
+
+ 

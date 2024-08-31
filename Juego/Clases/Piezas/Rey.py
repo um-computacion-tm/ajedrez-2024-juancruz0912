@@ -12,11 +12,10 @@ class Rey(Pieza):
             return '♚ '
         
     def verificar_movimiento(self, fila, columna):
-        if self.__fila__ == fila and self.__columna__ == columna:
-            raise ValueError('EL rey no se puede mover a la misma posición')
-        elif abs(self.fila - fila) <= 1 and abs(self.columna - columna) <= 1:
-            return 'Recto'
-        elif abs(self.__fila__ - fila) == abs(self.__columna__ - columna):
-            return 'Diagonal'
+        if abs(self.__fila__ - fila) <= 1 and abs(self.__columna__ - columna) <= 1:
+            if abs(self.__fila__ - fila) == abs(self.__columna__ - columna):
+                return 'Diagonal'
+            else:  
+                return 'Recto'
         else:  
             raise ValueError('El movimiento no es valido')
