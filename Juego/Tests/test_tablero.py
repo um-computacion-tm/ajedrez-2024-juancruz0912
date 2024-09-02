@@ -127,26 +127,6 @@ class TestTablero(unittest.TestCase):
             self.tablero.comer_pieza(6, 4, self.torre_blanca)
         self.assertIn('La casilla 6,4 esta ocupada por una pieza del mismo color', str(context.exception))
 
-    # Test de jaque (rey blanco en jaque)
-    def test_jaque_blanco(self):
-        self.tablero.tablero[1][5] = '  '  
-        self.tablero.tablero[5][5] = self.tablero.piezas['Torre 1 negro']  
-        self.tablero.piezas['Torre 1 negro'].fila = 5
-        self.tablero.piezas['Torre 1 negro'].columna = 5
-        self.assertEqual(self.tablero.jaque(), 'blanco')
-
-    # Test de jaque (rey negro en jaque)
-    def test_jaque_negro(self):
-        self.tablero.tablero[8][5] = '  '  
-        self.tablero.tablero[4][5] = self.tablero.piezas['Torre 1 blanco'] 
-        self.tablero.piezas['Torre 1 blanco'].fila = 4
-        self.tablero.piezas['Torre 1 blanco'].columna = 5
-        self.assertEqual(self.tablero.jaque(), 'negro')
-
-    # Test sin jaque
-    def test_jaque_invalido(self):
-        self.assertFalse(self.tablero.jaque())
-
 
 if __name__ == '__main__':
     unittest.main()

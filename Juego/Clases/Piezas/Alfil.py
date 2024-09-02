@@ -1,17 +1,13 @@
-from .Pieza import Pieza
+from .Pieza import PiezaId
 
-class Alfil(Pieza):
+class Alfil(PiezaId):
 
-    def __init__(self, color, id, fila, columna):
-        super().__init__('Torre', color, fila, columna)
-        self.__id__ = id
+    pieza_blanca = '♗'
+    pieza_negra = '♝'
 
+    def __init__(self, color, id, fila, columna, movimiento = None):
+        super().__init__('Alfil', color, id, fila, columna, movimiento)
 
-    def __str__(self):  
-        if self.__color__ == 'blanco':
-            return f'♗{self.__id__}'
-        else:
-            return f'♝{self.__id__}'
         
     def verificar_movimiento(self, fila, columna):
         if abs(self.fila - fila) == abs(self.columna - columna):
