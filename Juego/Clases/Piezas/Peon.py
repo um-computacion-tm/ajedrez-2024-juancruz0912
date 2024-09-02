@@ -11,7 +11,7 @@ class Peon(PiezaId):
     def verificar_movimiento(self, fila, columna):
         if self.columna == columna:
             paso = -1 if self.__color__ == 'blanco' else 1
-            if self.primer_movimiento(self, fila):
+            if self.primer_movimiento(fila):
                 return True
             elif fila == self.fila + paso:
                 self.__movimiento__ = 'Recto' 
