@@ -2,29 +2,29 @@ from abc import ABC, abstractmethod
 
 class Pieza(ABC):
     
-    def __init__(self, nombre, color, fila, columna):
+    def __init__(self, nombre, color, fila, columna, movimiento = None):
         self.__nombre__ = nombre
         self.__color__ = color
         self.__fila__ = fila
         self.__columna__ = columna
+        self.__movimiento__ = movimiento
 
+    @property
+    def movimiento(self):
+        return self.__movimiento__
 
-    # Método para ver la fila de la pieza
     @property
     def fila(self):
         return self.__fila__
 
-    # Método para cambiar la fila de la pieza
     @fila.setter
     def fila(self, value):
         self.__fila__ = value
 
-    # Método para ver la columna de la pieza 
     @property
     def columna(self):
         return self.__columna__
 
-    # Método para cambiar la columna de la pieza
     @columna.setter
     def columna(self, value):
         self.__columna__ = value

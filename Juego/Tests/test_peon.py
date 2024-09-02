@@ -18,11 +18,22 @@ class TestPeon(unittest.TestCase):
 
     # Primer movimiento
     def test_primer_movimiento_valido(self):
-        self.assertEqual(self.peon_blanco.verificar_movimiento(6, 1), 'Recto')
-        self.assertEqual(self.peon_blanco.verificar_movimiento(5, 1), 'Recto')
-        self.assertEqual(self.peon_negro.verificar_movimiento(3, 1), 'Recto')
-        self.assertEqual(self.peon_negro.verificar_movimiento(4, 1), 'Recto')
+        movimiento_b = self.peon_blanco.verificar_movimiento(6, 1)
+        self.assertEqual(movimiento_b, True)
+        self.assertEqual(self.peon_blanco.movimiento, 'Recto')
+        
+        movimiento_b2 = self.peon_blanco.verificar_movimiento(5, 1)
+        self.assertEqual(movimiento_b2, True)
+        self.assertEqual(self.peon_blanco.movimiento, 'Recto')
+        
+        movimiento_n = self.peon_negro.verificar_movimiento(3, 1)
+        self.assertEqual(movimiento_n, True)
+        self.assertEqual(self.peon_negro.movimiento, 'Recto')
 
+        movimiento_n2 = self.peon_negro.verificar_movimiento(4, 1)
+        self.assertEqual(movimiento_n2, True)
+        self.assertEqual(self.peon_negro.movimiento, 'Recto')
+        
     # Caso donde en la primer jugada se quieran mover mas de dos lugares
     def test_moverse_mas_lugares_blanco(self):
         with self.assertRaises(ValueError) as context:
@@ -37,7 +48,9 @@ class TestPeon(unittest.TestCase):
     # Se inicia el peon mas adelante para verificar el movimiento luego del primer paso
     # Test piezas negras
     def test_movimiento_valido_negro(self):
-        self.assertEqual(self.peon_negro2.verificar_movimiento(5, 2), 'Recto')
+        movimiento = self.peon_negro2.verificar_movimiento(5, 2)
+        self.assertTrue(movimiento)
+        self.assertEqual(self.peon_negro2.movimiento, 'Recto')
 
     def test_movimiento_invalido1_negro(self):
         with self.assertRaises(ValueError) as context:
@@ -51,7 +64,9 @@ class TestPeon(unittest.TestCase):
 
     # Test piezas blancas
     def test_movimiento_valido_blanco(self):
-        self.assertEqual(self.peon_blanco2.verificar_movimiento(4, 2), 'Recto')
+        movimiento = self.peon_blanco2.verificar_movimiento(4, 2)
+        self.assertTrue(movimiento)
+        self.assertEqual(self.peon_blanco2.movimiento, 'Recto')
 
     def test_movimiento_invalido1_blanco(self):
         with self.assertRaises(ValueError) as context:
@@ -64,7 +79,9 @@ class TestPeon(unittest.TestCase):
         self.assertEqual(str(context.exception), 'El peon solo se puede mover en línea recta')
 
     def test_comer_peon(self):
-        self.assertEqual(self.peon_blanco2.verificar_movimiento(4, 3), 'Comer')
+        movimiento = self.peon_blanco2.verificar_movimiento(4, 3)
+        self.assertTrue(movimiento)
+        self.assertEqual(self.peon_blanco2.movimiento, 'Comer')
 
 
 if __name__ == '__main__':

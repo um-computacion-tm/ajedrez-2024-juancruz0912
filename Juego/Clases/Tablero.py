@@ -107,7 +107,8 @@ class Tablero:
     def mover_pieza_tablero(self, x, y, pieza):
         y = self.__fila1__[y]
         pieza = self.__piezas__[pieza]
-        movimiento = pieza.verificar_movimiento(x, y)
+        pieza.verificar_movimiento(x, y)
+        movimiento = pieza.movimiento
         if self.mismo_lugar(x, y, pieza):
             if movimiento == 'Recto':
                 self.movimiento_recto_valido(x, y, pieza)
@@ -188,6 +189,29 @@ class Tablero:
         pieza.columna = y
         self.__tablero__[x][y] = pieza
         return True
+
+    # Metodo para el Jaque
+    def jaque(self):
+        rey_blanco = self.__piezas__.get('Rey blanco')
+        rey_negro = self.__piezas__.get('Rey negro')
+        for pieza in self.__piezas__.values():
+            if pieza.color == 'negro':
+                try:
+                    if pieza.verificar_movimiento(rey_blanco.fila, rey_blanco.columna):
+                        return 'blanco'
+                except ValueError:
+                    continue 
+        for pieza in self.__piezas__.values():
+            if pieza.color == 'blanco':
+                try:
+                    if pieza.verificar_movimiento(rey_negro.fila, rey_negro.columna):
+                        return 'negro'
+                except ValueError:
+                    continue 
+        return False
+    
+
+
 
     @property
     def tablero(self):

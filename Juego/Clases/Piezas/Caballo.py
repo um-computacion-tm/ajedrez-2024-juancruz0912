@@ -15,6 +15,7 @@ class Caballo(Pieza):
 
     def verificar_movimiento(self, fila, columna):
         if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
-            return 'Caballo'
+            self.__movimiento__ = 'Caballo' 
+            return True
         else:
             raise ValueError('Movimiento no valido')
