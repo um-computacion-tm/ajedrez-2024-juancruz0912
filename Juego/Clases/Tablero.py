@@ -72,6 +72,7 @@ class Tablero:
         filas.append(linea)
 
         return "\n".join(filas)
+    
     #Metodo para colocar cada pieza con su posicion correspondiente en el tablero
     def colocar_piezas(self):
         for pieza in self.__piezas__.values():
@@ -105,6 +106,8 @@ class Tablero:
 
     #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover, Ej: 'TN1')
     def mover_pieza_tablero(self, x, y, pieza):
+        if not (1 <= x <= 8):
+            raise ValueError (f'La fila {x} no existe')
         y = self.__fila1__[y]
         pieza = self.__piezas__[pieza]
         pieza.verificar_movimiento(x, y)
@@ -189,28 +192,6 @@ class Tablero:
         pieza.columna = y
         self.__tablero__[x][y] = pieza
         return True
-
-    # Metodo para el Jaque
-    def jaque(self):
-        rey_blanco = self.__piezas__.get('Rey blanco')
-        rey_negro = self.__piezas__.get('Rey negro')
-        for pieza in self.__piezas__.values():
-            if pieza.color == 'negro':
-                try:
-                    if pieza.verificar_movimiento(rey_blanco.fila, rey_blanco.columna):
-                        return 'blanco'
-                except ValueError:
-                    continue 
-        for pieza in self.__piezas__.values():
-            if pieza.color == 'blanco':
-                try:
-                    if pieza.verificar_movimiento(rey_negro.fila, rey_negro.columna):
-                        return 'negro'
-                except ValueError:
-                    continue 
-        return False
-    
-
 
 
     @property

@@ -1,17 +1,13 @@
-from .Pieza import Pieza 
+from .Pieza import PiezaId 
 
-class Peon(Pieza):
+class Peon(PiezaId):
+
+    pieza_blanca = '♙'
+    pieza_negra = '♟'
 
     def __init__(self, color, id, fila, columna, movimiento = None):
-        super().__init__('Peon', color, fila, columna, movimiento)
-        self.__id__ = id
+        super().__init__('Peon', color, id, fila, columna, movimiento)
 
-    def __str__(self):
-        if self.__color__ == 'blanco':
-            return f'♙{self.__id__}'
-        else:
-            return f'♟{self.__id__}'
-        
     def verificar_movimiento(self, fila, columna):
         if self.columna == columna:
             if self.__color__ == 'blanco':

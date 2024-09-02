@@ -8,6 +8,12 @@ class Pieza(ABC):
         self.__fila__ = fila
         self.__columna__ = columna
         self.__movimiento__ = movimiento
+    
+    def __str__(self):
+        if self.__color__ == 'blanco':
+            return self.pieza_blanca 
+        else:
+            return self.pieza_negra 
 
     @property
     def movimiento(self):
@@ -37,3 +43,17 @@ class Pieza(ABC):
     @abstractmethod
     def verificar_movimiento(self, fila, columna):
         pass
+
+        
+class PiezaId(Pieza):
+        
+    def __init__(self, nombre, color, id, fila, columna, movimiento = None):
+        super().__init__(nombre, color, fila, columna, movimiento)
+        self.__id__ = id
+
+    def __str__(self):
+        if self.__color__ == 'blanco':
+            return self.pieza_blanca + str(self.__id__)
+        else:
+            return self.pieza_negra + str(self.__id__)
+            
