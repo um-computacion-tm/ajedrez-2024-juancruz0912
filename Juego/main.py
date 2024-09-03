@@ -1,4 +1,4 @@
-from Clases.Juego import Juego
+from .Clases.Juego import Juego
 
 def jugar(juego):
         try:
