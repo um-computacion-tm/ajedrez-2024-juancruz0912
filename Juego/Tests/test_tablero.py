@@ -41,10 +41,19 @@ class TestTablero(unittest.TestCase):
     def test_movimiento_recto_valido_horizontal(self):
         self.assertTrue(self.tablero.movimiento_recto_valido(4, 6, self.torre_blanca))  
 
+    # Ingresar una fila que no es del tablero
+    def test_movimiento_fila_invalida(self):
+        self.tablero.tablero[7][5] = '  '
+        self.tablero.tablero[8][5] = '  '
+        with self.assertRaises(ValueError) as context:
+            self.tablero.mover_pieza_tablero(9, 5, self.torre_negra)
+        self.assertIn('La fila 9 no existe', str(context.exception))
+    
     # Movimiento que no es recto
     def test_movimiento_recto_invalido(self):
-        with self.assertRaises(ValueError):
-            self.tablero.movimiento_recto_valido(7, 7, self.torre_blanca)  # Movimiento no válido
+        with self.assertRaises(ValueError) as context:
+            self.tablero.movimiento_recto_valido(7, 6, self.torre_blanca)  # Movimiento no válido
+        self.assertIn('El movimiento debe ser en vertical o horizontal', str(context.exception))
     
     # Test donde en un movimiento recto la casilla está ocupada
     def test_movimiento_recto_ocupado(self):  
