@@ -108,6 +108,8 @@ class Tablero:
     def mover_pieza_tablero(self, x, y, pieza):
         if not (1 <= x <= 8):
             raise ValueError (f'La fila {x} no existe')
+        if y not in self.__fila1__:
+            raise ValueError(f'La columna {y} no existe')
         y = self.__fila1__[y]
         pieza = self.__piezas__[pieza]
         pieza.verificar_movimiento(x, y)
@@ -155,7 +157,6 @@ class Tablero:
             if self.__tablero__[pieza.fila][columna] != '  ':  # Ocupada
                 self.comer_pieza(x, columna, pieza)
         self.mover_pieza_valida(x, y, pieza)
-        return True
     
     # Metodo para verificar si hay alguna pieza en el medio de la trayectoria (Movimientos verticales)
     def movimiento_vertical(self, x, y, pieza):
@@ -164,7 +165,6 @@ class Tablero:
             if self.__tablero__[fila][pieza.columna] != '  ':  # Ocupada
                 self.comer_pieza(fila, y, pieza)
         self.mover_pieza_valida(x, y, pieza)
-        return True
 
     # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos diagonales)
     def movimiento_diagonal_valido(self, x, y, pieza):    
