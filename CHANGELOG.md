@@ -10,7 +10,6 @@
 
 ### Modificado:
 - Se modificaron las piezas, agregando el atributo movimiento, el cual indica el movimiento a realizar de la pieza
-- Se empezo a trabajar en el metodo del jaque
 
 
 ## [1.0.6] - 23-08-2024

@@ -1,4 +1,4 @@
-from .Clases.Juego import Juego
+from Clases.Juego import Juego
 
 def jugar(juego):
         try:
@@ -33,6 +33,7 @@ def mover_pieza_valida(juego, pieza):
 def main():
     
     print('Bienvenidos al juego del ajedrez')
+    print('En todo momento que quieras terminar el juego, escribe 0 en vez de ingresar el nombre de la pieza')
     print('Ingresar los nombres de los jugadores')
     
     jugador1 = input('Jugador 1 (Blancas): ')
