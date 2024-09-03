@@ -191,8 +191,7 @@ class Tablero:
         pieza.fila = x 
         pieza.columna = y
         self.__tablero__[x][y] = pieza
-        return True
-
+        return True    
 
     @property
     def tablero(self):
