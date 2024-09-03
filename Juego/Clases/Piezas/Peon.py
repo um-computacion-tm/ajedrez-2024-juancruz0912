@@ -18,7 +18,7 @@ class Peon(PiezaId):
                 return True
             else:
                 raise ValueError('El peon se puede mover una casilla hacia adelante')
-        elif abs(self.__fila__ - fila) == 1 and abs(self.__columna__ - columna) == 1:
+        elif self.diagonal(fila, columna):
             self.__movimiento__ = 'Comer' 
             return True
         else:
@@ -40,3 +40,8 @@ class Peon(PiezaId):
                 else:
                     raise ValueError('El peon se puede mover una o dos casillas hacia adelante')
         
+    def diagonal(self, fila, columna):
+        if abs(self.fila - fila) == 1 and abs(self.columna - columna) == 1:
+            return True
+        else:
+            return False
