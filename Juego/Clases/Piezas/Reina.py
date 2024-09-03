@@ -10,11 +10,23 @@ class Reina(Pieza):
 
 
     def verificar_movimiento(self, fila, columna):
-        if self.fila == fila or self.columna == columna:
+        if self.recto(fila, columna):
             self.__movimiento__ = 'Recto' 
             return True
-        elif abs(self.__fila__ - fila) == abs(self.__columna__ - columna):
+        elif self.diagonal(fila, columna):
             self.__movimiento__ = 'Diagonal' 
             return True
         else:  
             raise ValueError('El movimiento no es valido')
+        
+    def diagonal(self, fila, columna):
+        if abs(self.fila - fila) == abs(self.columna - columna):
+            return True
+        else:
+            return False
+    
+    def recto(self, fila, columna):
+        if self.fila == fila or self.columna == columna:
+            return True
+        else:
+            return False
