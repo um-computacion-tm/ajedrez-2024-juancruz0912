@@ -15,8 +15,3 @@ class Caballo(PiezaId):
         else:
             raise ValueError('Movimiento no valido')
         
-    def caballo(self, fila, columna):
-        if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
-            return True
-        else:
-            return False

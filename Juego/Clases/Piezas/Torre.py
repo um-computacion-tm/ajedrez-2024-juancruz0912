@@ -16,8 +16,3 @@ class Torre(PiezaId):
         else:
             raise ValueError('Movimiento no valido')
         
-    def recto(self, fila, columna):
-        if self.__fila__ == fila or self.__columna__ == columna:
-            return True
-        else:
-            return False

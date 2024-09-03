@@ -8,18 +8,9 @@ class Alfil(PiezaId):
     def __init__(self, color, id, fila, columna, movimiento = None):
         super().__init__('Alfil', color, id, fila, columna, movimiento)
 
-        
     def verificar_movimiento(self, fila, columna):
         if self.diagonal(fila, columna):
             self.__movimiento__ = 'Diagonal' 
             return True
         else:
             raise ValueError('El movimiento no es diagonal')
-
-
-    def diagonal(self, fila, columna):
-        if abs(self.fila - fila) == abs(self.columna - columna):
-            return True
-        else:
-            return False
- 
