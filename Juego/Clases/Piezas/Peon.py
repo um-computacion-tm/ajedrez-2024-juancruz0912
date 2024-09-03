@@ -5,8 +5,10 @@ class Peon(PiezaId):
     pieza_blanca = '♙'
     pieza_negra = '♟'
 
-    def __init__(self, color, id, fila, columna, movimiento = None):
-        super().__init__('Peon', color, id, fila, columna, movimiento)
+    def __init__(self, color, id, fila, columna, **kwargs):
+        nombre = 'Peon'  
+        movimiento = kwargs.get('movimiento', None)  
+        super().__init__(nombre, color, id, fila, columna, movimiento)
 
     def verificar_movimiento(self, fila, columna):
         if self.columna == columna:
@@ -18,7 +20,7 @@ class Peon(PiezaId):
                 return True
             else:
                 raise ValueError('El peon se puede mover una casilla hacia adelante')
-        elif self.diagonal_un_lugar(fila, columna):
+        elif abs(self.__fila__ - fila) == 1 and abs(self.__columna__ - columna) == 1:
             self.__movimiento__ = 'Comer' 
             return True
         else:

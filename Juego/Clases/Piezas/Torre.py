@@ -7,7 +7,11 @@ class Torre(PiezaId):
 
     def __init__(self, color, id, fila, columna, movimiento = None):
         super().__init__('Peon', color, id, fila, columna, movimiento)
+
     
     def verificar_movimiento(self, fila, columna):
-        self.torre(fila, columna)
-        
+        if self.__fila__ == fila or self.__columna__ == columna:
+            self.__movimiento__ = 'Recto'
+            return True
+        else:
+            raise ValueError('Movimiento no valido')
