@@ -44,6 +44,47 @@ class Pieza(ABC):
     def verificar_movimiento(self, fila, columna):
         pass
 
+    def rey(self, fila, columna):
+        if self.diagonal_un_lugar(fila, columna):
+            self.__movimiento__ = 'Diagonal' 
+            return True
+        elif self.recto_un_lugar(fila, columna):  
+            self.__movimiento__ = 'Recto' 
+            return True
+        else:  
+            raise ValueError('El movimiento no es valido')
+        
+    def reina(self, fila, columna):
+        if self.recto(fila, columna):
+            self.__movimiento__ = 'Recto' 
+            return True
+        elif self.diagonal(fila, columna):
+            self.__movimiento__ = 'Diagonal' 
+            return True
+        else:  
+            raise ValueError('El movimiento no es valido')
+        
+    def alfil(self, fila, columna):
+        if self.diagonal(fila, columna):
+            self.__movimiento__ = 'Diagonal' 
+            return True
+        else:
+            raise ValueError('El movimiento no es diagonal')
+        
+    def torre(self, fila, columna):
+        if self.recto(fila, columna):
+            self.__movimiento__ = 'Recto'
+            return True
+        else:
+            raise ValueError('Movimiento no valido')
+    
+    def caballo(self, fila, columna):
+        if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
+            self.__movimiento__ = 'Caballo' 
+            return True
+        else:
+            raise ValueError('Movimiento no valido')
+    
     def diagonal(self, fila, columna):
         if abs(self.fila - fila) == abs(self.columna - columna):
             return True
@@ -58,12 +99,6 @@ class Pieza(ABC):
         
     def recto_un_lugar(self, fila, columna):
         if (self.fila == fila and abs(self.columna - columna) == 1) or (self.columna == columna and abs(self.fila - fila) == 1):
-            return True
-        else:
-            return False
-        
-    def caballo(self, fila, columna):
-        if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
             return True
         else:
             return False

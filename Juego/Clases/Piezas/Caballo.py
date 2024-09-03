@@ -9,9 +9,5 @@ class Caballo(PiezaId):
         super().__init__('Caballo', color, id, fila, columna, movimiento)
 
     def verificar_movimiento(self, fila, columna):
-        if self.caballo(fila, columna):
-            self.__movimiento__ = 'Caballo' 
-            return True
-        else:
-            raise ValueError('Movimiento no valido')
-        
+        self.caballo(fila, columna)
+
