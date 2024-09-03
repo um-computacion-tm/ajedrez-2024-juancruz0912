@@ -10,12 +10,12 @@ class Rey(Pieza):
 
         
     def verificar_movimiento(self, fila, columna):
-        if self.diagonal_un_lugar(fila, columna):
-            self.__movimiento__ = 'Diagonal' 
-            return True
-        elif self.recto_un_lugar(fila, columna):  
-            self.__movimiento__ = 'Recto' 
-            return True
+        if abs(self.__fila__ - fila) <= 1 and abs(self.__columna__ - columna) <= 1:
+            if abs(self.__fila__ - fila) == abs(self.__columna__ - columna):
+                self.__movimiento__ = 'Diagonal' 
+                return True
+            else:  
+                self.__movimiento__ = 'Recto' 
+                return True
         else:  
-            raise ValueError('El movimiento no es valido')
-        
+            return False

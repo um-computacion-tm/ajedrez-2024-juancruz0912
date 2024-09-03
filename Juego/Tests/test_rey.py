@@ -31,8 +31,7 @@ class TestRey(unittest.TestCase):
     
     # Movimiento fuera del rango del rey
     def test_movimiento_invalido(self):
-        with self.assertRaises(ValueError):
-            self.rey_blanco.verificar_movimiento(8, 7)  # Movimiento fuera del rango del rey
+        self.assertFalse(self.rey_blanco.verificar_movimiento(8, 7))  # Movimiento fuera del rango del rey
 
 if __name__ == '__main__':
     unittest.main()
