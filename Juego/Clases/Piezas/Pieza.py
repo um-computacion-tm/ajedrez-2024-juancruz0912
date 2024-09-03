@@ -44,19 +44,6 @@ class Pieza(ABC):
     def verificar_movimiento(self, fila, columna):
         pass
 
-    def diagonal(self, fila, columna):
-        if abs(self.fila - fila) == abs(self.columna - columna):
-            self.__movimiento__ = 'Diagonal' 
-            return True
-        else:
-            raise ValueError('El movimiento no es diagonal')
-        
-    def caballo(self, fila, columna):
-        if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
-            self.__movimiento__ = 'Caballo' 
-            return True
-        else:
-            raise ValueError('Movimiento no valido')
         
 class PiezaId(Pieza):
         
