@@ -19,14 +19,3 @@ class Reina(Pieza):
         else:  
             raise ValueError('El movimiento no es valido')
         
-    def diagonal(self, fila, columna):
-        if abs(self.fila - fila) == abs(self.columna - columna):
-            return True
-        else:
-            return False
-    
-    def recto(self, fila, columna):
-        if self.fila == fila or self.columna == columna:
-            return True
-        else:
-            return False

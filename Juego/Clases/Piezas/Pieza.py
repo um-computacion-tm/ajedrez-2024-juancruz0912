@@ -44,6 +44,37 @@ class Pieza(ABC):
     def verificar_movimiento(self, fila, columna):
         pass
 
+    def diagonal(self, fila, columna):
+        if abs(self.fila - fila) == abs(self.columna - columna):
+            return True
+        else:
+            return False
+        
+    def diagonal_un_lugar(self, fila, columna):
+        if abs(self.fila - fila) == 1 and abs(self.columna - columna) == 1:
+            return True
+        else:
+            return False
+        
+    def recto_un_lugar(self, fila, columna):
+        if (self.fila == fila and abs(self.columna - columna) == 1) or (self.columna == columna and abs(self.fila - fila) == 1):
+            return True
+        else:
+            return False
+        
+    def caballo(self, fila, columna):
+        if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
+            return True
+        else:
+            return False
+        
+    def recto(self, fila, columna):
+        if self.fila == fila or self.columna == columna:
+            return True
+        else:
+            return False
+    
+
         
 class PiezaId(Pieza):
         
