@@ -142,21 +142,30 @@ class Tablero:
     # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos rectos)
     def movimiento_recto_valido(self, x, y, pieza):
         if pieza.fila == x:  # Movimiento horizontal
-            paso = 1 if pieza.columna < y else -1
-            for columna in range(pieza.columna + paso, y, paso):
-                if self.__tablero__[pieza.fila][columna] != '  ':  # Ocupada
-                    self.comer_pieza(x, columna, pieza)
-            self.mover_pieza_valida(x, y, pieza)
-            return True
+           self.movimiento_horizontal(x, y, pieza)
         elif pieza.columna == y:  # Movimiento vertical
-            paso = 1 if pieza.fila < x else -1
-            for fila in range(pieza.fila + paso, x, paso):
-                if self.__tablero__[fila][pieza.columna] != '  ':  # Ocupada
-                    self.comer_pieza(fila, y, pieza)
-            self.mover_pieza_valida(x, y, pieza)
-            return True
-        raise ValueError('El movimiento debe ser en vertical o horizontal')
+            self.movimiento_vertical(x, y, pieza)
+        else:
+            raise ValueError('El movimiento debe ser en vertical o horizontal')
     
+    # Metodo para verificar si hay alguna pieza en el medio de la trayectoria (Movimientos horizontales)
+    def movimiento_horizontal(self, x, y, pieza):
+        paso = 1 if pieza.columna < y else -1
+        for columna in range(pieza.columna + paso, y, paso):
+            if self.__tablero__[pieza.fila][columna] != '  ':  # Ocupada
+                self.comer_pieza(x, columna, pieza)
+        self.mover_pieza_valida(x, y, pieza)
+        return True
+    
+    # Metodo para verificar si hay alguna pieza en el medio de la trayectoria (Movimientos verticales)
+    def movimiento_vertical(self, x, y, pieza):
+        paso = 1 if pieza.fila < x else -1
+        for fila in range(pieza.fila + paso, x, paso):
+            if self.__tablero__[fila][pieza.columna] != '  ':  # Ocupada
+                self.comer_pieza(fila, y, pieza)
+        self.mover_pieza_valida(x, y, pieza)
+        return True
+
     # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos diagonales)
     def movimiento_diagonal_valido(self, x, y, pieza):    
         fila_paso = 1 if x > pieza.fila else -1

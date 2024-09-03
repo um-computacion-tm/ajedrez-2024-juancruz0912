@@ -39,7 +39,9 @@ class TestTablero(unittest.TestCase):
 
     # Verificacion del metodo para mover fichas rectas
     def test_movimiento_recto_valido_horizontal(self):
-        self.assertTrue(self.tablero.movimiento_recto_valido(4, 6, self.torre_blanca))  
+        self.tablero.tablero[1][2] = '  '
+        self.tablero.movimiento_recto_valido(1, 2, self.tablero.piezas['Torre 1 negro'])
+        self.assertIsInstance(self.tablero.tablero[1][2], Torre)  
 
     # Ingresar una fila que no es del tablero
     def test_movimiento_fila_invalida(self):
