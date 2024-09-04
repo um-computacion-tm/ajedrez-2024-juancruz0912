@@ -20,10 +20,8 @@ class TestAlfil(unittest.TestCase):
         self.assertEqual(self.alfil_negro.movimiento, 'Diagonal')
 
     def test_movimiento_invalido(self):
-        with self.assertRaises(ValueError):
-            self.alfil_blanco.verificar_movimiento(8, 4)
-        with self.assertRaises(ValueError):
-            self.alfil_negro.verificar_movimiento(6, 3)
+        self.assertFalse(self.alfil_blanco.verificar_movimiento(8, 4)) 
+        self.assertFalse(self.alfil_negro.verificar_movimiento(6, 3))
 
 if __name__ == '__main__':
     unittest.main()

@@ -20,9 +20,7 @@ class TestCaballo(unittest.TestCase):
         self.assertEqual(self.caballo_negro.movimiento, 'Caballo')
         
     def test_movimiento_invalido(self):
-        with self.assertRaises(ValueError) as context:
-            self.caballo_blanco.verificar_movimiento(6, 4)
-        self.assertEqual(str(context.exception), 'Movimiento no valido')
+        self.assertFalse(self.caballo_blanco.verificar_movimiento(6, 4))
 
 if __name__ == '__main__':
     unittest.main()

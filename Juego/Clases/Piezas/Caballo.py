@@ -7,8 +7,9 @@ class Caballo(PiezaId):
 
 
     def __init__(self, color, **kwargs):
-        self.__columna__ = 2 if kwargs['id'] == 1 else 7 
-        super().__init__('Caballo', color, id=kwargs['id'], columna = self.__columna__)
+        c1 = 2  
+        c2 = 7
+        super().__init__('Caballo', color, id=kwargs['id'], c1 = c1, c2 = c2)
 
 
     def verificar_movimiento(self, fila, columna):
