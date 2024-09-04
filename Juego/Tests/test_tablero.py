@@ -11,7 +11,7 @@ class TestTablero(unittest.TestCase):
         self.tablero = Tablero()
         self.tablero.tablero[4][4] = '  '  # Limpiar casilla central para pruebas
         self.torre_blanca = Torre('blanco', 1, 4, 4)
-        self.peon_blanco = Peon('blanco', 1, 4, 6)
+        self.peon_blanco = Peon('blanco', id  = 1, fila = 4, columna = 6)
         self.alfil_blanco = self.tablero.piezas['Alfil 2 blanco']
         self.caballo_blanco = self.tablero.piezas['Caballo 1 blanco']
         self.torre_negra = Torre('negro', 5, 6, 5)

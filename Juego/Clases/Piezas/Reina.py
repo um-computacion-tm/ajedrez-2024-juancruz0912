@@ -10,4 +10,4 @@ class Reina(Pieza):
 
 
     def verificar_movimiento(self, fila, columna):
-        self.reyes(fila, columna)
+        return self.reyes(fila, columna)

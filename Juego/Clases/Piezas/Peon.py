@@ -5,9 +5,9 @@ class Peon(PiezaId):
     pieza_blanca = '♙'
     pieza_negra = '♟'
 
-    def __init__(self, color, id, fila, columna, movimiento = None):
+    def __init__(self, color, **kwargs):
         self.__primer_movimiento__ = False
-        super().__init__('Peon', color, id, fila, columna, movimiento)
+        super().__init__('Peon', color, **kwargs)
 
     def verificar_movimiento(self, fila, columna):
         if self.columna == columna:

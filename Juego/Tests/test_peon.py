@@ -4,10 +4,10 @@ from Juego.Clases.Piezas.Peon import Peon
 class TestPeon(unittest.TestCase):
 
     def setUp(self):
-        self.peon_negro = Peon('negro', 1, 2, 1)
-        self.peon_negro2 = Peon('negro', 2, 4, 2)
-        self.peon_blanco = Peon('blanco', 1, 7, 1)
-        self.peon_blanco2 = Peon('blanco', 2, 5, 2)
+        self.peon_negro = Peon('negro', id =1, fila = 2, columna = 1)
+        self.peon_negro2 = Peon('negro', id = 2, fila =  4, columna =  2)
+        self.peon_blanco = Peon('blanco', id = 1, fila = 7, columna = 1)
+        self.peon_blanco2 = Peon('blanco', id = 2, fila = 5, columna = 2)
         self.peon_negro2.__primer_movimiento__ = True
         self.peon_blanco2.__primer_movimiento__ = True
 
