@@ -32,22 +32,22 @@ class Tablero:
     #Metodo para crear las piezas y asignarles la posicion inicial
     def crear_piezas(self):
         self.__piezas__ = {
-                'Torre 1 negro': Torre('negro', 1, 1, 1), 
-                'Caballo 1 negro': Caballo('negro', 1, 1, 2),
-                'Alfil 1 negro': Alfil('negro', 1, 1, 3), 
-                'Rey negro': Rey('negro', 1, 5), 
-                'Reina negro': Reina('negro', 1, 4), 
-                'Alfil 2 negro': Alfil('negro', 2, 1, 6), 
-                'Caballo 2 negro': Caballo('negro', 2, 1, 7),
-                'Torre 2 negro': Torre('negro', 2, 1, 8),
-                'Torre 1 blanco': Torre('blanco', 1, 8, 1), 
-                'Caballo 1 blanco': Caballo('blanco', 1, 8, 2),
-                'Alfil 1 blanco': Alfil('blanco', 1, 8, 3), 
-                'Rey blanco': Rey('blanco', 8, 5), 
-                'Reina blanco': Reina('blanco', 8, 4), 
-                'Alfil 2 blanco': Alfil('blanco', 2, 8, 6), 
-                'Caballo 2 blanco': Caballo('blanco', 2, 8, 7),
-                'Torre 2 blanco': Torre('blanco', 2, 8, 8)
+                'Torre 1 negro': Torre('negro', id = 1), 
+                'Caballo 1 negro': Caballo('negro', id = 1),
+                'Alfil 1 negro': Alfil('negro', id = 1), 
+                'Rey negro': Rey('negro'), 
+                'Reina negro': Reina('negro'), 
+                'Alfil 2 negro': Alfil('negro', id = 2), 
+                'Caballo 2 negro': Caballo('negro', id = 2),
+                'Torre 2 negro': Torre('negro', id = 2),
+                'Torre 1 blanco': Torre('blanco', id = 1), 
+                'Caballo 1 blanco': Caballo('blanco', id = 1),
+                'Alfil 1 blanco': Alfil('blanco', id = 1), 
+                'Rey blanco': Rey('blanco'), 
+                'Reina blanco': Reina('blanco'), 
+                'Alfil 2 blanco': Alfil('blanco', id = 2), 
+                'Caballo 2 blanco': Caballo('blanco', id = 2),
+                'Torre 2 blanco': Torre('blanco', id = 2)
         }
         for i in range(1, 9):
             self.__piezas__[f'Peon {i} negro'] = Peon('negro', id = i) 
@@ -196,6 +196,7 @@ class Tablero:
     
     # Metodo en el cual se mueve la pieza una vez que ya esta verificado que puede hacer el movimiento
     def mover_pieza_valida(self, x, y, pieza):
+        print('hola')
         self.__tablero__[pieza.fila][pieza.columna] = '  '
         pieza.fila = x 
         pieza.columna = y

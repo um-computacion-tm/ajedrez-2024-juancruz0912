@@ -4,8 +4,8 @@ from Juego.Clases.Piezas.Torre import Torre
 class TestTorre(unittest.TestCase):
 
     def setUp(self):
-        self.torre_negro = Torre('negro', 1, 1, 1)
-        self.torre_blanco = Torre('blanco', 1, 8, 1)
+        self.torre_negro = Torre('negro', id = 1)
+        self.torre_blanco = Torre('blanco', id = 1)
 
     def test_inicializacion(self):
         self.assertEqual(self.torre_blanco.__str__(), '♖1')

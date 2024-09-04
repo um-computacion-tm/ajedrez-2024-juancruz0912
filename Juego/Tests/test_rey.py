@@ -4,8 +4,8 @@ from Juego.Clases.Piezas.Rey import Rey
 class TestRey(unittest.TestCase):
 
     def setUp(self):
-        self.rey_negro = Rey('negro', 1, 5)
-        self.rey_blanco = Rey('blanco', 8, 5)
+        self.rey_negro = Rey('negro')
+        self.rey_blanco = Rey('blanco')
         
     def test_inicializacion(self):
         self.assertEqual(self.rey_blanco.__str__(), '♔ ')

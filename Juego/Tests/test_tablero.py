@@ -10,11 +10,11 @@ class TestTablero(unittest.TestCase):
     def setUp(self):
         self.tablero = Tablero()
         self.tablero.tablero[4][4] = '  '  # Limpiar casilla central para pruebas
-        self.torre_blanca = Torre('blanco', 1, 4, 4)
-        self.peon_blanco = Peon('blanco', id  = 1, fila = 4, columna = 6)
+        self.torre_blanca = Torre('blanco', id = 1)
+        self.peon_blanco = Peon('blanco', id  = 1)
         self.alfil_blanco = self.tablero.piezas['Alfil 2 blanco']
         self.caballo_blanco = self.tablero.piezas['Caballo 1 blanco']
-        self.torre_negra = Torre('negro', 5, 6, 5)
+        self.torre_negra = Torre('negro', id = 5)
         self.peon_negro = self.tablero.piezas['Peon 5 negro']
         self.rey_blanco = self.tablero.piezas['Rey blanco']
         self.rey_negro = self.tablero.piezas['Rey negro']
@@ -48,8 +48,13 @@ class TestTablero(unittest.TestCase):
         self.tablero.tablero[7][5] = '  '
         self.tablero.tablero[8][5] = '  '
         with self.assertRaises(ValueError) as context:
-            self.tablero.mover_pieza_tablero(9, 5, self.torre_negra)
+            self.tablero.mover_pieza_tablero(9, 'A', self.torre_negra)
         self.assertIn('La fila 9 no existe', str(context.exception))
+
+    def test_columna_invalida(self):
+        with self.assertRaises(ValueError) as context:
+            self.tablero.mover_pieza_tablero(7, 'Z', self.torre_blanca)  # Movimiento no válido
+        self.assertIn('La columna Z no existe', str(context.exception))
     
     # Movimiento que no es recto
     def test_movimiento_recto_invalido(self):
@@ -59,10 +64,9 @@ class TestTablero(unittest.TestCase):
     
     # Test donde en un movimiento recto la casilla está ocupada
     def test_movimiento_recto_ocupado(self):  
-        self.tablero.tablero[4][6] = self.peon_blanco
         with self.assertRaises(ValueError) as context:
-            self.tablero.movimiento_recto_valido(4, 7, self.torre_blanca)
-        self.assertIn('La casilla 4,6 esta ocupada por una pieza del mismo color', str(context.exception))
+            self.tablero.movimiento_recto_valido(4, 1, self.torre_blanca)
+        self.assertIn('La casilla 7,1 esta ocupada por una pieza del mismo color', str(context.exception))
 
     # Verificando el movimiento diagonal válido
     def test_mover_pieza_tablero_diagonal(self):
@@ -108,7 +112,9 @@ class TestTablero(unittest.TestCase):
     def test_comer_pieza(self):
         self.tablero.__tablero__[4][4] = self.torre_blanca
         self.tablero.__tablero__[5][4] = self.peon_negro
-        self.tablero.comer_pieza(5, 4, self.torre_blanca)
+        self.torre_blanca.fila = 4
+        self.torre_blanca.columna = 4
+        self.tablero.comer_pieza(5, 4, self.torre_blanca)        
         self.assertIsInstance(self.tablero.__tablero__[5][4], Torre)
         self.assertEqual(self.tablero.__tablero__[4][4], '  ')
         self.assertNotIn('Peon 5 negro', self.tablero.__piezas__)

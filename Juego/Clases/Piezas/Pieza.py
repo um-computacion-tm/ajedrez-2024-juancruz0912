@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class Pieza(ABC):
     
-    def __init__(self, nombre, color, fila, columna, movimiento = None):
+    def __init__(self, nombre, color, columna, fila, movimiento = None):
         self.__nombre__ = nombre
         self.__color__ = color
         self.__fila__ = fila
@@ -72,13 +72,18 @@ class Pieza(ABC):
         
 class PiezaId(Pieza):
         
-    def __init__(self, nombre, color, id, fila, columna, movimiento = None):
-        super().__init__(nombre, color, fila, columna, movimiento)
+    def __init__(self, nombre, color, id, columna):
+        self.__fila__ = 1 if color == 'negro' else 8  # Fila inicial para piezas no peones
+        super().__init__(nombre, color, columna, fila = self.__fila__)
         self.__id__ = id
 
     def __str__(self):
-        if self.__color__ == 'blanco':
-            return self.pieza_blanca + str(self.__id__)
-        else:
-            return self.pieza_negra + str(self.__id__)
+        return f"{self.pieza_blanca}{self.__id__}" if self.__color__ == 'blanco' else f"{self.pieza_negra}{self.__id__}"
+
+class PiezaPeon(PiezaId):
+    
+    def __init__(self, nombre, color, id, columna):
+        fila = 2 if color == 'negro' else 7  # Fila inicial para peones
+        super().__init__(nombre, color, id, columna)
+        self.__fila__ = fila
             

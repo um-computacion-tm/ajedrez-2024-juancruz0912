@@ -4,8 +4,8 @@ from Juego.Clases.Piezas.Reina import Reina
 class TestReina(unittest.TestCase):
 
     def setUp(self):
-        self.reina_negra = Reina('negro', 0, 4)
-        self.reina_blanca = Reina('blanco', 8, 4)
+        self.reina_negra = Reina('negro')
+        self.reina_blanca = Reina('blanco')
         
     def test_inicializacion(self):
         self.assertEqual(self.reina_blanca.__str__(), '♕ ')
