@@ -7,8 +7,8 @@ class Peon(PiezaPeon):
 
     def __init__(self, color, **kwargs):
         self.__primer_movimiento__ = False
-        self.__columna__ = kwargs['id']  
-        super().__init__('Peon', color, id=kwargs['id'],  columna = self.__columna__)
+        c1 = c2 = kwargs['id']  
+        super().__init__('Peon', color, id=kwargs['id'], c1 = c1, c2 = c2)
 
 
     def verificar_movimiento(self, fila, columna):

@@ -112,6 +112,9 @@ class Tablero:
             raise ValueError(f'La columna {y} no existe')
         y = self.__fila1__[y]
         pieza = self.__piezas__[pieza]
+        self.veriricar_movimiento(x, y, pieza)  
+        
+    def veriricar_movimiento(self, x, y, pieza):
         if pieza.verificar_movimiento(x, y):
             movimiento = pieza.movimiento
             if self.mismo_lugar(x, y, pieza):
@@ -128,6 +131,7 @@ class Tablero:
                     self.movimiento_peon_comer(x, y, pieza)
         else:
             raise ValueError('Movimiento no valido')       
+        
     
 
     # Metodo para verificar si la pieza se movio al mismo lugar

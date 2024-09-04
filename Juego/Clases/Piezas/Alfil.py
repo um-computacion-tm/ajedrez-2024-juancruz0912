@@ -4,11 +4,12 @@ class Alfil(PiezaId):
 
     pieza_blanca = '♗'
     pieza_negra = '♝'
-
+    
 
     def __init__(self, color, **kwargs):
-        self.__columna__ = 3 if kwargs['id'] == 1 else 6 
-        super().__init__('Alfil', color, id=kwargs['id'], columna = self.__columna__)
+        c1 = 3
+        c2 = 6
+        super().__init__('Alfil', color, id=kwargs['id'], c1 = c1 , c2 = c2)
 
         
     def verificar_movimiento(self, fila, columna):

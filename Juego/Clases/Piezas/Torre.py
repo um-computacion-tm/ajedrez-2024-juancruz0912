@@ -6,8 +6,9 @@ class Torre(PiezaId):
     pieza_negra = '♜'
 
     def __init__(self, color, **kwargs):
-        self.__columna__ = 1 if kwargs['id'] == 1 else 8 
-        super().__init__('Torre', color, id=kwargs['id'], columna = self.__columna__)
+        c1 = 1
+        c2 = 8
+        super().__init__('Torre', color, id=kwargs['id'], c1=c1, c2=c2)
 
     
     def verificar_movimiento(self, fila, columna):
