@@ -45,27 +45,35 @@ class Pieza(ABC):
         pass
 
     def es_movimiento_recto(self, fila, columna):
-        return self.__fila__ == fila or self.__columna__ == columna
+        if self.__fila__ == fila or self.__columna__ == columna:
+            self.__movimiento__ = 'Recto'
+            return True
+        else:
+            return False
+        
 
-    def es_movimiento_diagonal(self, fila, columna):
-        return abs(self.__fila__ - fila) == abs(self.__columna__ - columna)
-    
+    def es_movimiento_diagonal(self, fila, columna, mensaje):
+        if abs(self.__fila__ - fila) == abs(self.__columna__ - columna):
+            self.__movimiento__ = mensaje 
+            return True
+        else:
+            return False
+        
+
     def reyes(self, fila, columna):
         if self.es_movimiento_recto(fila, columna):
-            self.__movimiento__ = 'Recto' 
             return True
-        elif self.es_movimiento_diagonal(fila, columna):
-            self.__movimiento__ = 'Diagonal' 
+        elif self.es_movimiento_diagonal(fila, columna, 'Diagonal'):
             return True
         else:  
-            raise ValueError('El movimiento no es valido')
+            return False
     
     def movimiento_caballo(self, fila, columna):
         if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
             self.__movimiento__ = 'Caballo' 
             return True
         else:
-            raise ValueError('Movimiento no valido')
+            return False
         
     def un_paso(self, fila, columna):
         return abs(self.__fila__ - fila) <= 1 and abs(self.__columna__ - columna) <= 1

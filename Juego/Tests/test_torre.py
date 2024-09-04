@@ -25,9 +25,7 @@ class TestTorre(unittest.TestCase):
     
     # Movimiento inválido que no sea recto
     def test_movimiento_invalido(self):
-        with self.assertRaises(ValueError) as context:
-            self.torre_blanco.verificar_movimiento(7, 2)
-        self.assertEqual(str(context.exception), 'Movimiento no valido' )  # Movimiento diagonal
+        self.assertFalse(self.torre_blanco.verificar_movimiento(7, 2))  # Movimiento diagonal
 
 if __name__ == '__main__':
     unittest.main()

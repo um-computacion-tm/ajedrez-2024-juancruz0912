@@ -12,11 +12,8 @@ class Alfil(PiezaId):
 
         
     def verificar_movimiento(self, fila, columna):
-        if self.es_movimiento_diagonal(fila, columna):
-            self.__movimiento__ = 'Diagonal' 
-            return True
-        else:
-            raise ValueError('El movimiento no es diagonal')
+        return self.es_movimiento_diagonal(fila, columna, 'Diagonal')
+            
 
 
  

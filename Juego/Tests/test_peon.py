@@ -39,9 +39,7 @@ class TestPeon(unittest.TestCase):
         self.assertEqual(str(context.exception), 'El peon se puede mover una casilla hacia adelante')
 
     def test_movimiento_invalido2_negro(self):
-        with self.assertRaises(ValueError) as context:
-            self.peon_negro2.verificar_movimiento(6, 3)
-        self.assertEqual(str(context.exception), 'El peon solo se puede mover en línea recta')
+        self.assertFalse(self.peon_negro2.verificar_movimiento(7, 3))
 
     def test_comer_peon(self):
         movimiento = self.peon_negro2.verificar_movimiento(3, 3)

@@ -16,17 +16,17 @@ class Peon(PiezaPeon):
             paso = -1 if self.color == 'blanco' else 1
             if self.__primer_movimiento__ == False:
                 self.primer_movimiento(fila, paso)
+                return True
             elif fila == self.fila + paso:
                 self.__movimiento__ = 'Recto' 
                 return True
             else:
                 raise ValueError('El peon se puede mover una casilla hacia adelante')
         elif self.un_paso(fila, columna):
-            if self.es_movimiento_diagonal(fila, columna):
-                self.__movimiento__ = 'Comer' 
-                return True
+            self.es_movimiento_diagonal(fila, columna, 'Comer')
+            return True
         else:
-            raise ValueError('El peon solo se puede mover en línea recta')
+            return False
         
     def primer_movimiento(self, fila, paso):
         if fila == self.fila + paso or fila == self.fila + 2 * paso:

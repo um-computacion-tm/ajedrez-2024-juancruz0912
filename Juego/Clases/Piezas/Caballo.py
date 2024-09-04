@@ -12,4 +12,5 @@ class Caballo(PiezaId):
 
 
     def verificar_movimiento(self, fila, columna):
+        print(self.movimiento_caballo(fila, columna))
         return self.movimiento_caballo(fila, columna)

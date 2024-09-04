@@ -112,20 +112,22 @@ class Tablero:
             raise ValueError(f'La columna {y} no existe')
         y = self.__fila1__[y]
         pieza = self.__piezas__[pieza]
-        pieza.verificar_movimiento(x, y)
-        movimiento = pieza.movimiento
-        if self.mismo_lugar(x, y, pieza):
-            if movimiento == 'Recto':
-                self.movimiento_recto_valido(x, y, pieza)
-            elif movimiento == 'Diagonal':
-                self.movimiento_diagonal_valido(x, y, pieza)
-            elif movimiento == 'Caballo':
-                if self.tablero[x][y] == '  ':
-                    self.mover_pieza_valida(x, y, pieza)
-                else:
-                    self.comer_pieza(x, y, pieza)
-            elif movimiento == 'Comer':
-                self.movimiento_peon_comer(x, y, pieza)       
+        if pieza.verificar_movimiento(x, y):
+            movimiento = pieza.movimiento
+            if self.mismo_lugar(x, y, pieza):
+                if movimiento == 'Recto':
+                    self.movimiento_recto_valido(x, y, pieza)
+                elif movimiento == 'Diagonal':
+                    self.movimiento_diagonal_valido(x, y, pieza)
+                elif movimiento == 'Caballo':
+                    if self.tablero[x][y] == '  ':
+                        self.mover_pieza_valida(x, y, pieza)
+                    else:
+                        self.comer_pieza(x, y, pieza)
+                elif movimiento == 'Comer':
+                    self.movimiento_peon_comer(x, y, pieza)
+        else:
+            raise ValueError('Movimiento no valido')       
     
 
     # Metodo para verificar si la pieza se movio al mismo lugar
@@ -196,7 +198,6 @@ class Tablero:
     
     # Metodo en el cual se mueve la pieza una vez que ya esta verificado que puede hacer el movimiento
     def mover_pieza_valida(self, x, y, pieza):
-        print('hola')
         self.__tablero__[pieza.fila][pieza.columna] = '  '
         pieza.fila = x 
         pieza.columna = y

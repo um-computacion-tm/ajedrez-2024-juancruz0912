@@ -24,8 +24,7 @@ class TestReina(unittest.TestCase):
         self.assertEqual(self.reina_blanca.movimiento, 'Diagonal')
 
     def test_movimiento_invalido(self):
-        with self.assertRaises(ValueError):
-            self.reina_blanca.verificar_movimiento(5, 6)  # Movimiento no válido
+            self.assertFalse(self.reina_blanca.verificar_movimiento(5, 6))  # Movimiento no válido
 
 if __name__ == '__main__':
     unittest.main()
