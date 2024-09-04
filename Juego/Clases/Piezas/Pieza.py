@@ -79,6 +79,12 @@ class PiezaId(Pieza):
 
     def __str__(self):
         return f"{self.pieza_blanca}{self.__id__}" if self.__color__ == 'blanco' else f"{self.pieza_negra}{self.__id__}"
+    
+class PiezaReyes(Pieza):
+    def __init__(self, nombre, color, columna):
+        self.__columna__ = self.columna
+        self.__fila__ = 1 if color == 'negro' else 8 
+        super().__init__(nombre=nombre, color=color, columna=columna, fila= self.__fila__)
 
 class PiezaPeon(PiezaId):
     
