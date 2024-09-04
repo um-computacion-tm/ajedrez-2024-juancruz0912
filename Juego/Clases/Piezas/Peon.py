@@ -1,15 +1,14 @@
-from .Pieza import PiezaId 
+from .Pieza import PiezaPeon
 
-class Peon(PiezaId):
+class Peon(PiezaPeon):
 
     pieza_blanca = '♙'
     pieza_negra = '♟'
 
     def __init__(self, color, **kwargs):
         self.__primer_movimiento__ = False
-        self.__fila__ = 2 if color == 'negro' else 7
         self.__columna__ = kwargs['id']  
-        super().__init__('Peon', color, id=kwargs['id'], fila = self.__fila__, columna = self.__columna__)
+        super().__init__('Peon', color, id=kwargs['id'],  columna = self.__columna__)
 
 
     def verificar_movimiento(self, fila, columna):

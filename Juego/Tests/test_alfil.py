@@ -4,8 +4,8 @@ from Juego.Clases.Piezas.Alfil import Alfil
 class TestAlfil(unittest.TestCase):
 
     def setUp(self):
-        self.alfil_negro = Alfil('negro', 1, 1, 3)
-        self.alfil_blanco = Alfil('blanco', 1, 8, 3)
+        self.alfil_negro = Alfil('negro', id =1)
+        self.alfil_blanco = Alfil('blanco', id =1)
 
     def test_inicializacion(self):
         self.assertEqual(self.alfil_blanco.__str__(), '♗1')

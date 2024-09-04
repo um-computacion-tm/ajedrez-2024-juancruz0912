@@ -4,8 +4,8 @@ from Juego.Clases.Piezas.Caballo import Caballo
 class TestCaballo(unittest.TestCase):
 
     def setUp(self):
-        self.caballo_negro = Caballo('negro', 1, 1, 2)
-        self.caballo_blanco = Caballo('blanco', 1, 8, 2)
+        self.caballo_negro = Caballo('negro', id = 1)
+        self.caballo_blanco = Caballo('blanco', id = 1)
 
     def test_inicializacion(self):
         self.assertEqual(self.caballo_blanco.__str__(), '♘1')
