@@ -10,4 +10,4 @@ class Caballo(PiezaId):
 
 
     def verificar_movimiento(self, fila, columna):
-        return self.caballo(fila, columna)
+        return self.movimiento_caballo(fila, columna)

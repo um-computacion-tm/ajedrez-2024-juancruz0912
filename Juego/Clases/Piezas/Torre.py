@@ -6,7 +6,7 @@ class Torre(PiezaId):
     pieza_negra = '♜'
 
     def __init__(self, color, id, fila, columna, movimiento = None):
-        super().__init__('Peon', color, id, fila, columna, movimiento)
+        super().__init__('Torre', color, id, fila, columna, movimiento)
 
     
     def verificar_movimiento(self, fila, columna):
