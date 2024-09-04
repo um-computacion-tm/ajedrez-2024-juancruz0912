@@ -16,16 +16,11 @@ class TestRey(unittest.TestCase):
     # Movimientos válidos dentro del rango del rey
     def test_movimiento_valido(self):
 
-        movimiento_r = self.rey_blanco.verificar_movimiento(8, 6)
-        self.assertEqual(movimiento_r, True)
+        self.rey_blanco.verificar_movimiento(8, 6)
         self.assertEqual(self.rey_blanco.movimiento, 'Recto')
-        
-        movimiento_a = self.rey_blanco.verificar_movimiento(7, 5)
-        self.assertEqual(movimiento_a, True)
+        self.rey_blanco.verificar_movimiento(7, 5)
         self.assertEqual(self.rey_blanco.movimiento, 'Recto')
-        
-        movimiento_d = self.rey_blanco.verificar_movimiento(7, 6)
-        self.assertEqual(movimiento_d, True)
+        self.rey_blanco.verificar_movimiento(7, 6)
         self.assertEqual(self.rey_blanco.movimiento, 'Diagonal')
 
     

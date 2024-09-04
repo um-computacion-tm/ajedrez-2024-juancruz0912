@@ -44,6 +44,21 @@ class Pieza(ABC):
     def verificar_movimiento(self, fila, columna):
         pass
 
+    def es_movimiento_recto(self, fila, columna):
+        return self.__fila__ == fila or self.__columna__ == columna
+
+    def es_movimiento_diagonal(self, fila, columna):
+        return abs(self.__fila__ - fila) == abs(self.__columna__ - columna)
+    
+    def reyes(self, fila, columna):
+        if self.es_movimiento_recto(fila, columna):
+            self.__movimiento__ = 'Recto' 
+            return True
+        elif self.es_movimiento_diagonal(fila, columna):
+            self.__movimiento__ = 'Diagonal' 
+            return True
+        else:  
+            raise ValueError('El movimiento no es valido')
         
 class PiezaId(Pieza):
         

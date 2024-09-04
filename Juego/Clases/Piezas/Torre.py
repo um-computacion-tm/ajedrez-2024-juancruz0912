@@ -10,7 +10,7 @@ class Torre(PiezaId):
 
     
     def verificar_movimiento(self, fila, columna):
-        if self.__fila__ == fila or self.__columna__ == columna:
+        if self.es_movimiento_recto(fila, columna):
             self.__movimiento__ = 'Recto'
             return True
         else:

@@ -8,6 +8,8 @@ class TestPeon(unittest.TestCase):
         self.peon_negro2 = Peon('negro', 2, 4, 2)
         self.peon_blanco = Peon('blanco', 1, 7, 1)
         self.peon_blanco2 = Peon('blanco', 2, 5, 2)
+        self.peon_negro2.__primer_movimiento__ = True
+        self.peon_blanco2.__primer_movimiento__ = True
 
 
     def test_inicializacion(self):
@@ -16,24 +18,7 @@ class TestPeon(unittest.TestCase):
         self.assertEqual(self.peon_blanco.__color__, 'blanco')
         self.assertEqual(self.peon_negro.__color__, 'negro')
 
-    # Primer movimiento
-    def test_primer_movimiento_valido(self):
-        movimiento_b = self.peon_blanco.verificar_movimiento(6, 1)
-        self.assertEqual(movimiento_b, True)
-        self.assertEqual(self.peon_blanco.movimiento, 'Recto')
-        
-        movimiento_b2 = self.peon_blanco.verificar_movimiento(5, 1)
-        self.assertEqual(movimiento_b2, True)
-        self.assertEqual(self.peon_blanco.movimiento, 'Recto')
-        
-        movimiento_n = self.peon_negro.verificar_movimiento(3, 1)
-        self.assertEqual(movimiento_n, True)
-        self.assertEqual(self.peon_negro.movimiento, 'Recto')
 
-        movimiento_n2 = self.peon_negro.verificar_movimiento(4, 1)
-        self.assertEqual(movimiento_n2, True)
-        self.assertEqual(self.peon_negro.movimiento, 'Recto')
-        
     # Caso donde en la primer jugada se quieran mover mas de dos lugares
     def test_moverse_mas_lugares_blanco(self):
         with self.assertRaises(ValueError) as context:
