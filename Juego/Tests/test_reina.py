@@ -14,11 +14,13 @@ class TestReina(unittest.TestCase):
         self.assertEqual(self.reina_negra.__color__, 'negro')
 
     def test_movimiento_recto_valido(self):
-        self.reina_blanca.verificar_movimiento(8, 7)
+        movimiento_b = self.reina_blanca.verificar_movimiento(8, 7)
+        self.assertEqual(movimiento_b, True)
         self.assertEqual(self.reina_blanca.movimiento, 'Recto')
 
     def test_movimiento_diagonal_valido(self):
-        self.reina_blanca.verificar_movimiento(7, 3)
+        movimiento_b = self.reina_blanca.verificar_movimiento(7, 3)
+        self.assertEqual(movimiento_b, True)
         self.assertEqual(self.reina_blanca.movimiento, 'Diagonal')
 
     def test_movimiento_invalido(self):

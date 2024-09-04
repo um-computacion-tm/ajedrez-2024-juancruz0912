@@ -50,8 +50,8 @@ class Tablero:
                 'Torre 2 blanco': Torre('blanco', 2, 8, 8)
         }
         for i in range(1, 9):
-            self.__piezas__[f'Peon {i} negro'] = Peon('negro', i, 2, i) 
-            self.__piezas__[f'Peon {i} blanco'] = Peon('blanco', i, 7, i)
+            self.__piezas__[f'Peon {i} negro'] = Peon('negro', id = i, fila = 2, columna = i) 
+            self.__piezas__[f'Peon {i} blanco'] = Peon('blanco', id = i, fila =  7, columna = i)
         
     def __str__(self):
         filas = []

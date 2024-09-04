@@ -10,7 +10,7 @@ class Alfil(PiezaId):
 
         
     def verificar_movimiento(self, fila, columna):
-        if abs(self.fila - fila) == abs(self.columna - columna):
+        if self.es_movimiento_diagonal(fila, columna):
             self.__movimiento__ = 'Diagonal' 
             return True
         else:
