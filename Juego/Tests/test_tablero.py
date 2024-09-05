@@ -10,11 +10,11 @@ class TestTablero(unittest.TestCase):
     def setUp(self):
         self.tablero = Tablero()
         self.tablero.tablero[4][4] = '  '  # Limpiar casilla central para pruebas
-        self.torre_blanca = Torre('blanco', id = 1)
-        self.peon_blanco = Peon('blanco', id  = 1)
+        self.torre_blanca = self.tablero.piezas['Torre 1 blanco'] 
+        self.peon_blanco = self.tablero.piezas['Peon 1 blanco']
         self.alfil_blanco = self.tablero.piezas['Alfil 2 blanco']
         self.caballo_blanco = self.tablero.piezas['Caballo 1 blanco']
-        self.torre_negra = Torre('negro', id = 5)
+        self.torre_negra = self.tablero.piezas['Torre 2 negro']
         self.peon_negro = self.tablero.piezas['Peon 5 negro']
         self.rey_blanco = self.tablero.piezas['Rey blanco']
         self.rey_negro = self.tablero.piezas['Rey negro']
@@ -55,6 +55,11 @@ class TestTablero(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             self.tablero.mover_pieza_tablero(7, 'Z', self.torre_blanca)  # Movimiento no válido
         self.assertIn('La columna Z no existe', str(context.exception))
+    
+    def test_movimiento_invalido(self):
+        with self.assertRaises(ValueError) as context:
+            self.tablero.mover_pieza_tablero(7, 'A', 'Caballo 1 blanco')
+        self.assertIn('Movimiento no valido', str(context.exception))
     
     # Movimiento que no es recto
     def test_movimiento_recto_invalido(self):
@@ -102,7 +107,7 @@ class TestTablero(unittest.TestCase):
         self.assertIn('La pieza no se ha movido', str(context.exception))
 
     # Mover pieza a una posición ocupada por una pieza de su mismo color
-    def test_mover_pieza_tablero_movimiento(self):
+    def test_mover_pieza_tablero_cassilla_ocupada(self):
         self.tablero.__tablero__[7][1] = self.torre_blanca  
         with self.assertRaises(ValueError) as context: 
             self.tablero.mover_pieza_tablero(3, 'A', 'Torre 1 blanco')
@@ -118,6 +123,15 @@ class TestTablero(unittest.TestCase):
         self.assertIsInstance(self.tablero.__tablero__[5][4], Torre)
         self.assertEqual(self.tablero.__tablero__[4][4], '  ')
         self.assertNotIn('Peon 5 negro', self.tablero.__piezas__)
+
+    def test_comer_pieza_horizontal(self):
+        self.tablero.__tablero__[4][6] = self.torre_blanca
+        self.tablero.__tablero__[4][4] = self.peon_negro
+        self.torre_blanca.fila = 4
+        self.torre_blanca.columna = 6
+        self.tablero.movimiento_horizontal(4, 4, self.torre_blanca)      
+        self.assertIsInstance(self.tablero.__tablero__[4][4], Torre)
+        self.assertEqual(self.tablero.__tablero__[4][6], '  ')
 
     # Test el caballo come una pieza
     def test_comer_pieza_caballo(self):
