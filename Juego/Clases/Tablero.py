@@ -207,6 +207,17 @@ class Tablero:
         pieza.columna = y
         self.__tablero__[x][y] = pieza
         return True    
+   
+    #Metodo para el jaque, donde se pasa el color del rey que se quiere verificar, 
+    # luego de que el jugador blanco mueva, se verifica si el rey negro esta en jaque
+    def jaque(self, color):
+        rey = self.__piezas__[f'Rey {color}']
+        for pieza in self.__piezas__.values():
+            if pieza.color != color: #Piezas del otro color del rey
+                if self.verificar_movimiento(rey.fila, rey.columna, pieza) == 'Comer': #Si alguna pieza puede llegar al rey
+                    return True
+        return False
+
 
     @property
     def tablero(self):
