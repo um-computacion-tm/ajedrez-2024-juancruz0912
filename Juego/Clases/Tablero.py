@@ -214,9 +214,45 @@ class Tablero:
         rey = self.__piezas__[f'Rey {color}']
         for pieza in self.__piezas__.values():
             if pieza.color != color: #Piezas del otro color del rey
-                if self.verificar_movimiento(rey.fila, rey.columna, pieza) == 'Comer': #Si alguna pieza puede llegar al rey
+                if self.veriricar_movimiento(rey.fila, rey.columna, pieza) == 'Comer': #Si alguna pieza puede llegar al rey
                     return True
         return False
+    
+    # Metodo del jaque mate, donde se verifica primero si alguna pieza le hace jaque, y luego verifica los posibles movimientos del rey
+    def jaque_mate(self, color):
+        rey = self.__piezas__.get(f'Rey {color}')
+        if self.jaque(color):
+            self.metodo_jaque_mate(rey, color)
+        else:
+            raise ValueError(f'El rey {color} esta en Jaque')
+        
+    def metodo_jaque_mate(self, rey, color):
+        jaque_mate = 0
+        movimientos_rey = [
+            (1, 0), (-1, 0), (0, 1), (0, -1), 
+            (1, 1), (1, -1), (-1, 1), (-1, -1)
+        ]
+        fila_original = rey.fila # Guardar las variables del rey
+        columna_original = rey.columna
+        for dx, dy in movimientos_rey:
+            nueva_fila = fila_original + dx
+            nueva_columna = columna_original + dy
+            if 1 <= nueva_fila <= 8 and 1 <= nueva_columna <= 8:  # Verificar si la nueva posición está dentro de los límites del tablero
+                nueva_columna = self.convertir_numero_a_letra(nueva_columna)
+                if self.verificar_movimiento(nueva_fila, nueva_columna, rey):  # Intentar mover el rey a la nueva posición
+                    if self.jaque() == color:  # Si el rey sigue en jaque
+                        jaque_mate += 1
+                    else:
+                        return False
+            else:
+                 jaque_mate += 1
+        if jaque_mate == 8:
+            return True
+
+    # Metodo utilizado en el jaque para convertir el numero de la columna a la letra correspondiente
+    def convertir_numero_a_letra(self, numero):
+        columnas = {1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'E', 6: 'F', 7: 'G', 8: 'H'}
+        return columnas[numero]
 
 
     @property
