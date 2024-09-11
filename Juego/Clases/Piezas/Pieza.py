@@ -80,12 +80,10 @@ class Pieza(ABC):
         
 class PiezaId(Pieza):
         
-    def __init__(self, nombre, color, id, **kwargs):
-        c1 = kwargs['c1']
-        c2 = kwargs['c2']
+    def __init__(self, nombre, color, id):
         self.__id__ = id
         self.__fila__ = 1 if color == 'negro' else 8  
-        self.__columna__ = c1 if id == 1 else c2 
+        self.__columna__ = self.c1 if id == 1 else self.c2 
         super().__init__(nombre, color, columna = self.__columna__, fila = self.__fila__)
 
     def __str__(self):
@@ -94,10 +92,10 @@ class PiezaId(Pieza):
 
 
 class PiezaReyes(Pieza):
-    def __init__(self, nombre, color, columna):
-        self.__columna__ = self.columna
+    def __init__(self, nombre, color):
+        self.__columna__ = self.c1
         self.__fila__ = 1 if color == 'negro' else 8 
-        super().__init__(nombre=nombre, color=color, columna=columna, fila= self.__fila__)
+        super().__init__(nombre=nombre, color=color, columna= self.__columna__, fila= self.__fila__)
 
 
 
@@ -106,4 +104,5 @@ class PiezaPeon(PiezaId):
     def __init__(self, nombre, color, id, **kargs):
         super().__init__(nombre, color, id, **kargs)
         self.__fila__ = 2 if color == 'negro' else 7  
+        self.__columna__ = id
             

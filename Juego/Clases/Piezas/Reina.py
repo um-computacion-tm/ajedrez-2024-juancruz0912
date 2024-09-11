@@ -4,10 +4,10 @@ class Reina(PiezaReyes):
 
     pieza_blanca = '♕ '
     pieza_negra = '♛ '
-    columna = 4
+    c1 = 4
 
     def __init__(self, color):
-        super().__init__('Reina', color, columna = self.columna)
+        super().__init__('Reina', color)
 
 
     def verificar_movimiento(self, fila, columna):
