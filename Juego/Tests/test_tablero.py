@@ -4,6 +4,9 @@ from Juego.Clases.Piezas.Torre import Torre
 from Juego.Clases.Piezas.Peon import Peon
 from Juego.Clases.Piezas.Alfil import Alfil
 from Juego.Clases.Piezas.Caballo import Caballo
+from Juego.Clases.Piezas.Rey import Rey
+from unittest.mock import Mock, patch
+
 
 class TestTablero(unittest.TestCase):
 
@@ -40,8 +43,7 @@ class TestTablero(unittest.TestCase):
     # Verificacion del metodo para mover fichas rectas
     def test_movimiento_recto_valido_horizontal(self):
         self.tablero.tablero[1][2] = '  '
-        self.tablero.movimiento_recto_valido(1, 2, self.tablero.piezas['Torre 1 negro'])
-        self.assertIsInstance(self.tablero.tablero[1][2], Torre)  
+        self.assertTrue(self.tablero.movimiento_recto_valido(1, 2, self.tablero.piezas['Torre 1 negro'])) 
 
     # Ingresar una fila que no es del tablero
     def test_movimiento_fila_invalida(self):
@@ -60,18 +62,37 @@ class TestTablero(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             self.tablero.mover_pieza_tablero(7, 'A', 'Caballo 1 blanco')
         self.assertIn('Movimiento no valido', str(context.exception))
-    
+
     # Movimiento que no es recto
     def test_movimiento_recto_invalido(self):
-        with self.assertRaises(ValueError) as context:
-            self.tablero.movimiento_recto_valido(7, 6, self.torre_blanca)  # Movimiento no válido
-        self.assertIn('El movimiento debe ser en vertical o horizontal', str(context.exception))
+        self.assertFalse(self.tablero.movimiento_recto_valido(7, 6, self.torre_blanca)) 
     
+    # Test donde en un movimiento recto la casilla está ocupada 
+    def test_movimiento_recto_ocupado_vertical(self):  
+        self.assertFalse(self.tablero.movimiento_recto_valido(4, 1, self.torre_blanca))
+
     # Test donde en un movimiento recto la casilla está ocupada
-    def test_movimiento_recto_ocupado(self):  
-        with self.assertRaises(ValueError) as context:
-            self.tablero.movimiento_recto_valido(4, 1, self.torre_blanca)
-        self.assertIn('La casilla 7,1 esta ocupada por una pieza del mismo color', str(context.exception))
+    def test_movimiento_recto_ocupado_horizontal(self):  
+        self.assertFalse(self.tablero.movimiento_recto_valido(8, 3, self.torre_blanca))
+
+    def test_movimiento_recto_comer_horizontal(self):
+        self.tablero.tablero[8][2] = self.tablero.piezas['Peon 1 negro']
+        self.assertEqual(self.tablero.movimiento_recto_valido(8, 2, self.torre_blanca), 'Comer')
+
+    def test_movimiento_recto_comer_vertical(self):
+        self.tablero.tablero[5][1] = self.torre_blanca
+        self.torre_blanca.fila = 5
+        self.assertEqual(self.tablero.movimiento_recto_valido(2, 1, self.torre_blanca), 'Comer')
+
+    def test_movimiento_recto_final_no_valido_horizontal(self):
+        self.assertFalse(self.tablero.movimiento_recto_valido(8, 2, self.torre_blanca))
+
+    def test_movimiento_recto_final_no_valido_vertical(self):
+        self.assertFalse(self.tablero.movimiento_recto_valido(7, 1, self.torre_blanca))
+
+    def test_movimiento_peon_invalido2(self):
+        peon = self.tablero.piezas['Peon 7 blanco']
+        self.assertFalse(self.tablero.movimiento_peon_comer(3, 8, peon))
 
     # Verificando el movimiento diagonal válido
     def test_mover_pieza_tablero_diagonal(self):
@@ -79,21 +100,27 @@ class TestTablero(unittest.TestCase):
         self.tablero.mover_pieza_tablero(6, 'A', 'Alfil 1 blanco')
         self.assertIsInstance(self.tablero.tablero[6][1], Alfil)
 
-    # Test donde en un movimiento diagonal la casilla está ocupada
-    def test_movimiento_diagonal_ocupado(self):
-        with self.assertRaises(ValueError) as context:
-            self.tablero.movimiento_diagonal_valido(6, 8, self.alfil_blanco)
-        self.assertIn('La casilla 7,7 esta ocupada por una pieza del mismo color', str(context.exception))
+    def test_movimiento_diagonal_no_valido(self):
+        self.assertFalse(self.tablero.movimiento_diagonal_valido(7, 2, self.alfil_blanco))
 
+    def test_movimiento_diagonal_comer(self):
+        self.tablero.tablero[7][7] = self.tablero.piezas['Peon 1 negro']
+        self.assertEqual(self.tablero.movimiento_diagonal_valido(7, 7, self.alfil_blanco), 'Comer')
+ 
     # Verificando el movimiento del caballo
     def test_mover_pieza_tablero_caballo(self):
         self.tablero.mover_pieza_tablero(6, 'C', 'Caballo 1 blanco')
         self.assertIsInstance(self.tablero.tablero[6][3], Caballo)
 
+    def test_move_caballo_invalido(self):
+        self.caballo = self.tablero.piezas['Caballo 1 blanco']    
+        self.assertFalse(self.tablero.que_movimiento(7, 4, self.caballo))
+
     def test_movimiento_peon_invalido(self):
-        with self.assertRaises(ValueError) as context: 
-            self.tablero.mover_pieza_tablero(3, 'B', 'Peon 1 negro')
-        self.assertIn('El peon solo se puede mover en línea recta', str(context.exception))
+        with self.assertRaises(ValueError) as context:
+            self.tablero.mover_pieza_tablero(4, 'A', 'Peon 1 blanco')
+        self.assertIn('Movimiento no valido', str(context.exception))
+
 
     # Verificar que se puede mover una pieza correctamente
     def test_mover_pieza_tablero(self):        
@@ -102,16 +129,17 @@ class TestTablero(unittest.TestCase):
 
     # Mover pieza al mismo lugar
     def test_mismo_lugar(self):
-        with self.assertRaises(ValueError) as context: 
+        with self.assertRaises(ValueError) as context:
             self.tablero.mover_pieza_tablero(1, 'A', 'Torre 1 negro')
-        self.assertIn('La pieza no se ha movido', str(context.exception))
+        self.assertIn('Movimiento no valido', str(context.exception))
+
 
     # Mover pieza a una posición ocupada por una pieza de su mismo color
     def test_mover_pieza_tablero_cassilla_ocupada(self):
         self.tablero.__tablero__[7][1] = self.torre_blanca  
-        with self.assertRaises(ValueError) as context: 
+        with self.assertRaises(ValueError) as context:
             self.tablero.mover_pieza_tablero(3, 'A', 'Torre 1 blanco')
-        self.assertEqual(str(context.exception), 'La casilla 7,1 esta ocupada por una pieza del mismo color')
+        self.assertIn('Movimiento no valido', str(context.exception))
 
     # Test donde la torre blanca come al peon negro, se verifica que la torre se movió y que el peon no está más en la lista
     def test_comer_pieza(self):
@@ -124,14 +152,6 @@ class TestTablero(unittest.TestCase):
         self.assertEqual(self.tablero.__tablero__[4][4], '  ')
         self.assertNotIn('Peon 5 negro', self.tablero.__piezas__)
 
-    def test_comer_pieza_horizontal(self):
-        self.tablero.__tablero__[4][6] = self.torre_blanca
-        self.tablero.__tablero__[4][4] = self.peon_negro
-        self.torre_blanca.fila = 4
-        self.torre_blanca.columna = 6
-        self.tablero.movimiento_horizontal(4, 4, self.torre_blanca)      
-        self.assertIsInstance(self.tablero.__tablero__[4][4], Torre)
-        self.assertEqual(self.tablero.__tablero__[4][6], '  ')
 
     # Test el caballo come una pieza
     def test_comer_pieza_caballo(self):
@@ -144,19 +164,82 @@ class TestTablero(unittest.TestCase):
 
     # Test el peon come una pieza
     def test_comer_pieza_peon(self):
-        self.peon = self.tablero.piezas['Peon 2 negro']
-        self.tablero.tablero[6][3] = self.peon
+        peon = self.tablero.piezas['Peon 2 negro']
+        self.tablero.tablero[6][3] = peon
+        peon.fila = 6
+        peon.columna = 3
         self.tablero.mover_pieza_tablero(6, 'C', 'Peon 2 blanco')
         self.assertIsInstance(self.tablero.__tablero__[6][3], Peon)
         self.assertEqual(self.tablero.__tablero__[7][2], '  ')
         self.assertNotIn('Peon 2 negro', self.tablero.__piezas__)
 
-    # Intentamos que una pieza blanca coma a otra pieza blanca (debe lanzar una excepción)
-    def test_comer_pieza_invalido(self):
-        self.tablero.__tablero__[6][4] = self.alfil_blanco
+    def test_jaque_devuelve_true(self):
+        rey_blanco = self.tablero.piezas['Rey blanco']
+        torre_negra = self.tablero.piezas['Torre 1 negro']
+        rey_blanco.fila = 4
+        rey_blanco.columna = 4
+        self.tablero.tablero[4][4] = rey_blanco
+        torre_negra.fila = 4
+        torre_negra.columna = 1
+        self.tablero.tablero[4][1] = torre_negra
+        self.assertTrue(self.tablero.jaque('blanco', rey_blanco.fila, rey_blanco.columna))
+
+
+    def test_jaque_mate_tablero_devuelve_false(self):
+        rey_blanco = self.tablero.piezas['Rey blanco']
+        reina_negra = self.tablero.piezas['Reina negro']
+        rey_blanco.fila = 1
+        rey_blanco.columna = 1
+        self.tablero.tablero[1][1] = rey_blanco
+        self.tablero.piezas.pop('Torre 1 negro')
+        self.tablero.tablero[2][1] = '  '
+        self.tablero.tablero[1][2] = '  '
+        reina_negra.fila = 1
+        reina_negra.columna = 3
+        self.tablero.tablero[1][3] = reina_negra
         with self.assertRaises(ValueError) as context:
-            self.tablero.comer_pieza(6, 4, self.torre_blanca)
-        self.assertIn('La casilla 6,4 esta ocupada por una pieza del mismo color', str(context.exception))
+           self.tablero.jaque_mate_tablero('blanco')
+        self.assertIn(str(context.exception), 'El rey blanco esta en jaque, hay que hacer algo para salvarlo!')
+
+    def test_jaque_mate_tablero_devuelve_true1(self):
+        rey_blanco = self.tablero.piezas['Rey blanco']
+        reina_negra = self.tablero.piezas['Reina negro']
+        torre_negra = self.tablero.piezas['Torre 1 negro']
+        rey_blanco.fila = 3
+        rey_blanco.columna = 1
+        self.tablero.tablero[3][1] = rey_blanco
+        reina_negra.fila = 3
+        reina_negra.columna = 2
+        self.tablero.tablero[3][2] = reina_negra
+        torre_negra.fila = 4
+        torre_negra.columna = 1
+        self.tablero.tablero[4][1] = torre_negra
+        self.assertTrue(self.tablero.jaque_mate_tablero('blanco'))    
+
+    def test_verificar_comer_pieza_jaque_devuelve_true(self):
+        rey_blanco = self.tablero.piezas['Rey blanco']
+        reina_negra = self.tablero.piezas['Reina negro']
+        torre_blanca = self.tablero.piezas['Torre 1 blanco']
+        rey_blanco.fila = 4
+        rey_blanco.columna = 2
+        self.tablero.tablero[4][2] = rey_blanco
+        reina_negra.fila = 4
+        reina_negra.columna = 1
+        self.tablero.tablero[4][1] = reina_negra
+        torre_blanca.fila = 5
+        torre_blanca.columna = 1
+        self.tablero.tablero[5][1] = torre_blanca
+        self.assertTrue(self.tablero.verificar_comer_pieza_jaque(4, 2, 'blanco'))
+
+    def test_jaque_mate_tablero_devuelve_true1(self):
+        reina_negra = self.tablero.piezas['Reina negro']
+        reina_negra.fila = 5
+        reina_negra.columna = 8
+        self.tablero.tablero[5][8] = reina_negra
+        self.tablero.tablero[7][6] = '  '
+        print(self.tablero)
+        self.assertTrue(self.tablero.jaque_mate_tablero('blanco'))   
+
 
 
 if __name__ == '__main__':

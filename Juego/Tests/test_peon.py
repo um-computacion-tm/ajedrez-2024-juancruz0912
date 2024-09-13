@@ -19,14 +19,10 @@ class TestPeon(unittest.TestCase):
 
     # Caso donde en la primer jugada se quieran mover mas de dos lugares
     def test_moverse_mas_lugares_blanco(self):
-        with self.assertRaises(ValueError) as context:
-            self.peon_blanco.verificar_movimiento(4, 1)
-        self.assertEqual(str(context.exception), 'El peon se puede mover una o dos casillas hacia adelante')
+        self.assertFalse(self.peon_blanco.verificar_movimiento(4, 1))
 
     def test_moverse_mas_lugares_negro(self):
-        with self.assertRaises(ValueError) as context:
-            self.peon_negro.verificar_movimiento(5, 1)
-        self.assertEqual(str(context.exception), 'El peon se puede mover una o dos casillas hacia adelante')
+        self.assertFalse(self.peon_negro.verificar_movimiento(5, 1))
 
     def test_movimiento_valido_negro(self):
         self.peon_negro.verificar_movimiento(3, 1)
@@ -34,9 +30,7 @@ class TestPeon(unittest.TestCase):
         self.assertTrue(self.peon_negro.verificar_movimiento(3, 1))
 
     def test_movimiento_invalido1_negro(self):
-        with self.assertRaises(ValueError) as context:
-            self.peon_negro2.verificar_movimiento(6, 2)
-        self.assertEqual(str(context.exception), 'El peon se puede mover una casilla hacia adelante')
+        self.assertFalse(self.peon_negro2.verificar_movimiento(6, 2))
 
     def test_movimiento_invalido2_negro(self):
         self.assertFalse(self.peon_negro2.verificar_movimiento(7, 3))
