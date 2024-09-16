@@ -11,6 +11,7 @@ def jugar(juego):
 
 def mover(juego):
     pieza = input('Que pieza quieres mover?: ')
+    pieza = pieza.capitalize()
     if pieza == '0':
         juego.terminar_juego()
     elif juego.buscar_pieza(pieza) == True:
@@ -20,11 +21,16 @@ def mover(juego):
         mover(juego)
 
 def mover_pieza_valida(juego, pieza):
-    fila = int(input('Fila donde quieres mover la pieza: '))
-    columna = input('Columna donde quieres mover la pieza: ')
     try:
-        juego.mover_pieza(fila, columna, pieza)
-        juego.cambiar_turno()
+        fila = int(input('Fila donde quieres mover la pieza: '))
+        columna = input('Columna donde quieres mover la pieza: ')
+        mensaje = juego.mover_pieza(fila, columna, pieza)
+        if mensaje:
+            print(juego.tablero)
+            print(mensaje)
+            juego.terminar_juego() 
+        else:
+            juego.cambiar_turno()
     except ValueError as e:
         print(e)
         mover_pieza_valida(juego, pieza)
@@ -49,6 +55,7 @@ def main():
     
     while juego.estado == True:
         jugar(juego)
+    
     print('Se termino el juego')
 
 if __name__ == '__main__':
