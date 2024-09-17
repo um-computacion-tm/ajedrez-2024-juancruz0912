@@ -3,6 +3,16 @@
 ## [1.2.0] -06-09-2024
 
 ### Modificados:
+- se eliminan repeticiones del codigo y se modifica el archivo main.py para mejorar la interfaz
+
+## [1.2.1] -12-09-2024
+
+### Modificados:
+- se finaliza el metodo del jaque y jaque mate
+
+## [1.2.0] -06-09-2024
+
+### Modificados:
 - se empieza a trabajar en el metodo Jaque()
 
 
