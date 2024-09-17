@@ -101,7 +101,7 @@ class TestTablero(unittest.TestCase):
         self.assertIsInstance(self.tablero.tablero[6][1], Alfil)
 
     def test_movimiento_diagonal_no_valido(self):
-        self.assertFalse(self.tablero.movimiento_diagonal_valido(7, 2, self.alfil_blanco))
+        self.assertFalse(self.tablero.movimiento_diagonal_valido(6, 8, self.alfil_blanco))
 
     def test_movimiento_diagonal_comer(self):
         self.tablero.tablero[7][7] = self.tablero.piezas['Peon 1 negro']
@@ -197,9 +197,7 @@ class TestTablero(unittest.TestCase):
         reina_negra.fila = 1
         reina_negra.columna = 3
         self.tablero.tablero[1][3] = reina_negra
-        with self.assertRaises(ValueError) as context:
-           self.tablero.jaque_mate_tablero('blanco')
-        self.assertIn(str(context.exception), 'El rey blanco esta en jaque, hay que hacer algo para salvarlo!')
+        self.assertEqual(self.tablero.jaque_mate_tablero('blanco'), False)
 
     def test_jaque_mate_tablero_devuelve_true1(self):
         rey_blanco = self.tablero.piezas['Rey blanco']
@@ -216,29 +214,20 @@ class TestTablero(unittest.TestCase):
         self.tablero.tablero[4][1] = torre_negra
         self.assertTrue(self.tablero.jaque_mate_tablero('blanco'))    
 
-    def test_verificar_comer_pieza_jaque_devuelve_true(self):
-        rey_blanco = self.tablero.piezas['Rey blanco']
-        reina_negra = self.tablero.piezas['Reina negro']
-        torre_blanca = self.tablero.piezas['Torre 1 blanco']
-        rey_blanco.fila = 4
-        rey_blanco.columna = 2
-        self.tablero.tablero[4][2] = rey_blanco
-        reina_negra.fila = 4
-        reina_negra.columna = 1
-        self.tablero.tablero[4][1] = reina_negra
-        torre_blanca.fila = 5
-        torre_blanca.columna = 1
-        self.tablero.tablero[5][1] = torre_blanca
-        self.assertTrue(self.tablero.verificar_comer_pieza_jaque(4, 2, 'blanco'))
-
     def test_jaque_mate_tablero_devuelve_true1(self):
         reina_negra = self.tablero.piezas['Reina negro']
         reina_negra.fila = 5
         reina_negra.columna = 8
         self.tablero.tablero[5][8] = reina_negra
         self.tablero.tablero[7][6] = '  '
-        print(self.tablero)
         self.assertTrue(self.tablero.jaque_mate_tablero('blanco'))   
+
+    def test_jaque_caballo(self):
+        caballo_blanco = self.tablero.piezas['Caballo 1 blanco']
+        self.tablero.tablero[2][3] = caballo_blanco
+        caballo_blanco.fila = 2
+        caballo_blanco.columna = 3
+        self.assertEqual(self.tablero.jaque_mate_tablero('negro'), False)
 
 
 

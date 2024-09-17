@@ -112,34 +112,37 @@ class Tablero:
             raise ValueError(f'La columna {y} no existe')
         y = self.__fila1__[y]
         pieza = self.__piezas__[pieza]
-        self.verificar_movimiento(x, y, pieza)  
+        return self.verificar_movimiento(x, y, pieza)  # Una vez obtenidos los valores, se verifica si es correcto el movimiento
         
-    def que_movimiento(self, x, y, pieza):
-        if pieza.verificar_movimiento(x, y):
+    # Metodo que valida los movimientos
+    def validar_movimiento(self, x, y, pieza):
+        if pieza.verificar_movimiento(x, y): # Se verifica el movimiento de la propia pieza
             movimiento = pieza.movimiento
-            if self.mismo_lugar(x, y, pieza):
-                if movimiento == 'Recto':
-                     return self.movimiento_recto_valido(x, y, pieza)
-                elif movimiento == 'Diagonal':
-                    return self.movimiento_diagonal_valido(x, y, pieza)
-                elif movimiento == 'Caballo':
-                    if self.tablero[x][y] == '  ':
-                       return True
-                    elif self.tablero[x][y].color != pieza.color:
-                        return 'Comer'
-                    else:
-                        return False
-                elif movimiento == 'Comer':
-                    return self.movimiento_peon_comer(x, y, pieza)
-        else:
-            return False       
-
+            if self.mismo_lugar(x, y, pieza): # Se verifica que no se muevan al mismo lugar
+                return movimiento
+        return False
+    
+    # Metodo en el cual ya sabemos el movimiento de la ficha y vemos si dentro del tablero es valido o no
+    def que_movimiento(self, x, y, pieza):
+        movimiento = self.validar_movimiento(x, y, pieza)
+        if movimiento:
+            if movimiento == 'Recto':
+                return self.movimiento_recto_valido(x, y, pieza)
+            elif movimiento == 'Diagonal':
+                return self.movimiento_diagonal_valido(x, y, pieza)
+            elif movimiento == 'Caballo':
+                return self.movimiento_caballo(x, y, pieza)
+            elif movimiento == 'Comer':
+                return self.movimiento_peon_comer(x, y, pieza)
+        return False
+    
+    # Metodo que define si mueve la ficha, si hay que comer a otra ficha o si hay que mover
     def verificar_movimiento(self, x, y, pieza):
         mover = self.que_movimiento(x, y, pieza)
         if mover == 'Comer':
-            self.comer_pieza(x, y, pieza)
+            return self.comer_pieza(x, y, pieza)
         elif mover == True:
-            self.mover_pieza_valida(x, y, pieza)
+            return self.mover_pieza_valida(x, y, pieza)
         else:
             raise ValueError('Movimiento no valido')
         
@@ -151,6 +154,7 @@ class Tablero:
         else:
             return True
 
+    # Metodo que verifica el movimiento del peon al comer
     def movimiento_peon_comer(self, x, y, pieza):
         if self.__tablero__[x][y] != '  ':
             if self.__tablero__[x][y].color != pieza.color:
@@ -187,7 +191,7 @@ class Tablero:
             if self.__tablero__[fila][pieza.columna] != '  ':  # Ocupada
                 return False
         if self.__tablero__[x][pieza.columna] != '  ':
-            if self.__tablero__[x][pieza.columna].color != pieza.color:
+            if self.__tablero__[x][pieza.columna].color != pieza.color and not isinstance(pieza, Peon):
                 return 'Comer'
             else:
                 return False
@@ -198,15 +202,28 @@ class Tablero:
         fila_paso = 1 if x > pieza.fila else -1
         columna_paso = 1 if y > pieza.columna else -1
         fila_actual, columna_actual = pieza.fila + fila_paso, pieza.columna + columna_paso
-        while fila_actual != x + fila_paso and columna_actual != y + fila_paso:
+        while fila_actual != x and columna_actual != y: # verifica todo el camino
             if self.__tablero__[fila_actual][columna_actual] != '  ':  # Ocupada
-                if self.__tablero__[fila_actual][columna_actual].color != pieza.color:
-                    return 'Comer'
-                else:
-                    return False
+                return False
             fila_actual += fila_paso
             columna_actual += columna_paso
-        return True
+        if self.__tablero__[x][y] != '  ': # Si hay una pieza en la posicion final
+            if self.__tablero__[x][y].color != pieza.color:
+                return 'Comer'
+            else:
+                return False
+        else:
+            return True
+        
+    # Metodo para verificar el movimiento del caballo
+    def movimiento_caballo(self, x, y, pieza):
+        if self.tablero[x][y] == '  ':
+            return True
+        elif self.tablero[x][y].color != pieza.color:
+            return 'Comer'
+        else:
+            return False
+
 
     # Metodo para comer una pieza
     def comer_pieza(self, x, y, pieza):
@@ -218,10 +235,9 @@ class Tablero:
                 break
         if clave_a_eliminar:
             self.__piezas__.pop(clave_a_eliminar)  # Elimina la pieza comida del diccionario
-        self.mover_pieza_valida(x, y, pieza)
+        return self.mover_pieza_valida(x, y, pieza)
 
 
-    
     # Metodo en el cual se mueve la pieza una vez que ya esta verificado que puede hacer el movimiento
     def mover_pieza_valida(self, x, y, pieza):
         self.__tablero__[pieza.fila][pieza.columna] = '  '
@@ -231,65 +247,89 @@ class Tablero:
         return True    
 
     
-    # Metodo del jaque mate, donde se verifica primero si alguna pieza le hace jaque, y luego se verifica si alguna pieza puede comer a la pieza que hace el jaque
-    # y por ultimo si el rey puede moverse a alguna posicion donde no este en jaque
-    def jaque_mate_tablero(self, color, x, y ):
-        rey = self.__piezas__.get(f'Rey {color}')
-        if self.jaque(color):
-            if self.verificar_comer_pieza_jaque(x, y, color):
-                self.metodo_jaque_mate(rey, color)
+    # Metodo del jaque mate, el cual se llama al finalizar el truno y se comprueba si el rey del otro equipo esta en jaque 
+    # Primero se verifica primero si alguna pieza le hace jaque
+    # Luego se verifica la cantidad de piezas que amenazan al rey, si una se verifica si se puede comer la pieza o tapar el camino 
+    # Si hay mas de una pieza que amenaza al rey, si es asi lo unico que puede hacer el rey es moverse a algun lugar seguro
+    # Si el rey no puede moverse a ningun lugar seguro, entonces es jaque mate
+    def jaque_mate_tablero(self, color):
+        rey = self.__piezas__[f'Rey {color}']
+        if self.jaque(color, rey.fila, rey.columna): # Si el rey se encuentra en jaque, se verifica si hay jaque mate
+            if self.metodo_jaque_mate(rey, color):
+                return True
+            else:
+                return False #En este caso da jaque
         else:
             return False
         
     
-    #Metodo para el jaque, donde se pasa el color del rey que se quiere verificar, 
-    # luego de que el jugador blanco mueva, se verifica si el rey negro esta en jaque
-    def jaque(self, color):
-        rey = self.__piezas__[f'Rey {color}']
+    #Metodo para el jaque, donde se verifica si alguna pieza puede comer al rey
+    def jaque(self, color, xr, cr):
         for pieza in self.__piezas__.values():
-            if pieza.color != color: #Piezas del otro color del rey
-                if self.que_movimiento(rey.fila, rey.columna, pieza) == 'Comer': #Si alguna pieza puede llegar al rey
+            if pieza.color != color: 
+                if self.que_movimiento(xr, cr, pieza) == 'Comer': #Si alguna pieza puede llegar al rey
                     return True
         return False
-        
+
+    # Metodo en el cual se verifica la cantidad de piezas que amenazan al rey, si pueden ser comidas y si pueden ser bloquedas
     def metodo_jaque_mate(self, rey, color):
+        piezas_que_comen_al_rey = []
+        for pieza in self.piezas.values(): # se hace una lista con todas las piezas que pueden comer al rey
+            if pieza.color != color and self.que_movimiento(rey.fila, rey.columna, pieza) == 'Comer': 
+                piezas_que_comen_al_rey.append(pieza)
+        if len(piezas_que_comen_al_rey) > 1: # si hay mas de una pieza haciendo jaque al rey ninguna pieza va a poder salvar al rey
+            return self.verificar_movimiento_rey_jaque(rey, color) # se verifica si se puede mover el rey
+        else:
+            return self.verificar_comer_pieza_jaque(piezas_que_comen_al_rey, rey, color) # Caso que hay solo una pieza que amenaza al rey
+    
+    # Metodo que verifica si las piezas que amenazan al rey pueden ser comidas de alguna forma
+    def verificar_comer_pieza_jaque(self, piezas_que_comen_al_rey, rey, color):
+        pieza = piezas_que_comen_al_rey[0]
+        for pieza2 in self.piezas.values(): # se verifica si de alguna forma se pueden comer a todas las piezas que amenazan al rey
+            if pieza2.color == color and self.que_movimiento(pieza.fila, pieza.columna, pieza2) == 'Comer': 
+                return False #Si la pieza que ponia en jaque al rey puede ser comida 
+        return self.verificar_bloquear_camino_jaque(rey, color, pieza) # Si ninguna pieza puede comer a la pieza que pone en jaque al rey, se verifica si pueden bloquear el camino  
+
+    # Metodo que verifica si puedo bloquear el camino de alguna pieza
+    def verificar_bloquear_camino_jaque(self, rey, color, pieza_amenaza):
+        if pieza_amenaza in [Torre, Alfil, Reina]:
+           direccion_x = 1 if pieza_amenaza.fila > rey.fila else -1 if pieza_amenaza.fila < rey.fila else 0
+           direccion_y = 1 if pieza_amenaza.columna > rey.columna else -1 if pieza_amenaza.columna < rey.columna else 0
+           fila_bloqueo = rey.fila + direccion_x
+           columna_bloqueo = rey.columna + direccion_y
+           while fila_bloqueo != pieza_amenaza.fila or columna_bloqueo != pieza_amenaza.columna:
+               for pieza_aliada in self.__piezas__.values():
+                   if pieza_aliada.color == color and self.que_movimiento(fila_bloqueo, columna_bloqueo, pieza_aliada) == True:
+                       return False  # Si alguna pieza aliada puede bloquear la amenaza, no es jaque mate
+               fila_bloqueo += direccion_x
+               columna_bloqueo += direccion_y
+        return self.verificar_movimiento_rey_jaque(rey, color) # Ninguna pieza puede bloquear la amenaza
+
+    # Metodo que verifica si el rey puede moverse a algun lugar donde no este en jaque
+    def verificar_movimiento_rey_jaque(self, rey, color):
         movimientos_rey = [
             (1, 0), (-1, 0), (0, 1), (0, -1), 
             (1, 1), (1, -1), (-1, 1), (-1, -1)
         ]
-        return self.verificar_jaque(movimientos_rey, rey, color )
-        
-    def verificar_jaque(self, movimientos_rey, rey, color):
-        jaque_mate = 0
         for dx, dy in movimientos_rey:
-            nueva_fila =rey.fila + dx
+            nueva_fila = rey.fila + dx
             nueva_columna = rey.columna + dy
-            if 1 <= nueva_fila <= 8 and 1 <= nueva_columna <= 8:  # Verificar si la nueva posición está dentro de los límites del tablero
-                nueva_columna = self.convertir_numero_a_letra(nueva_columna)
-                if self.verificar_movimiento(nueva_fila, nueva_columna, rey):  # Intentar mover el rey a la nueva posición
-                    if self.jaque() == color:  # Si el rey sigue en jaque
-                        jaque_mate += 1
-                    else:
-                        return False
-            else:
-                 jaque_mate += 1
-        if jaque_mate == 8:
-            return True
-    
-    
-    def verificar_comer_pieza_jaque(self, x, y, color):
-        for pieza in self.piezas.values():
-            if pieza.color == color: # verificar si alguna pieza del color del rey puede comer a la pieza que hace jaque
-                if self.que_movimiento(x, y, pieza) == 'Comer':
-                    return False
+            if self.verificar_movimiento_rey(nueva_fila, nueva_columna, rey):  # Verifica si el rey se puede mover a otro lado
+                self.__tablero__[nueva_fila][nueva_columna] = rey
+                if not self.jaque(color, nueva_fila, nueva_columna):  # Verifica si el rey sigue en jaque
+                    self.__tablero__[nueva_fila][nueva_columna] = '  '
+                    return False  # Si el rey puede moverse a un lugar seguro, no hay jaque mate
+                self.__tablero__[nueva_fila][nueva_columna] = '  '  # Restaurar el tablero si sigue en jaque
+        return True  # Si no hay ningún lugar seguro, es jaque mate
+
+    # Metodo que verifica si el rey se puede mover a otro lado
+    def verificar_movimiento_rey(self, x, y, rey):
+        if 1 <= x <= 8 and 1 <= y <= 8:
+            if self.que_movimiento(x, y, rey) in [True, 'Comer']:
+                return True
         else:
-            return True
-
-    # Metodo utilizado en el jaque para convertir el numero de la columna a la letra correspondiente
-    def convertir_numero_a_letra(self, numero):
-        columnas = {1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'E', 6: 'F', 7: 'G', 8: 'H'}
-        return columnas[numero]
-
+            return False
+    
 
     @property
     def tablero(self):

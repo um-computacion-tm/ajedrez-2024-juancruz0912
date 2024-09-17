@@ -27,7 +27,7 @@ class Juego:
         self.__estado__ = False
         return self.__tablero__
     
-
+    #Metodo para ver si algun jugador gano la partida, o porque comio todas las piezas del rival o porque hay jaque mate
     def ganar_juego(self, color):
         if self.tablero.quedan_piezas() == 'Blanco': # si no quedan piezas blancas gana negro
             return f'{self.__negro__} es el ganador'

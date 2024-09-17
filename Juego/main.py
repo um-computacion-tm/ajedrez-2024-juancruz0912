@@ -1,4 +1,4 @@
-from .Clases.Juego import Juego
+from Clases.Juego import Juego
 import os
 
 def jugar(juego):
@@ -22,18 +22,27 @@ def mover(juego):
 
 def mover_pieza_valida(juego, pieza):
     try:
-        fila = int(input('Fila donde quieres mover la pieza: '))
-        columna = input('Columna donde quieres mover la pieza: ')
-        mensaje = juego.mover_pieza(fila, columna, pieza)
-        if mensaje:
-            print(juego.tablero)
-            print(mensaje)
-            juego.terminar_juego() 
-        else:
-            juego.cambiar_turno()
-    except ValueError as e:
-        print(e)
-        mover_pieza_valida(juego, pieza)
+        fila = int(input('Fila donde quieres mover la pieza (o 0 para cancelar): '))
+        if fila == 0:
+            mover(juego)  
+            return 
+    except ValueError:
+        print('La fila no es un número válido.')
+        mover_pieza_valida(juego, pieza)  
+        return
+    columna = input('Columna donde quieres mover la pieza (o 0 para cancelar): ')
+    if columna == '0':
+        mover(juego) 
+        return  
+    mensaje = juego.mover_pieza(fila, columna, pieza)
+    if mensaje:
+        print(juego.tablero)
+        print(mensaje)
+        juego.terminar_juego() 
+    else:
+        juego.cambiar_turno()
+
+
 
 def limpiar_pantalla():
     if os.name == 'posix':  
