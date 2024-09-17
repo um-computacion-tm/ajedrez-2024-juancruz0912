@@ -50,16 +50,12 @@ class Juego:
         if self.__tablero__.mover_pieza_tablero(x, y, pieza):
             color = 'blanco' if turno == 'negro' else 'negro' # Si el movimiento de la pieza es correcto, cambia el turno
             return self.ganar_juego(color)
-        return self.__tablero__
 
     def buscar_pieza(self, pieza):
         turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
         pieza = str(pieza + ' ' + turno)
         return self.__tablero__.pieza_existente(pieza)   
     
-    def jaque_mate(self, color, x, y):
-        if self.tablero.jaque_mate_tablero(color, x, y):
-            self.terminar_juego()
     
     #Metodo para poder ver el estado del juego (encapsulamiento)
     @property

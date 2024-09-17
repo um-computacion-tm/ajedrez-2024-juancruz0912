@@ -126,16 +126,19 @@ class Tablero:
     def que_movimiento(self, x, y, pieza):
         movimiento = self.validar_movimiento(x, y, pieza)
         if movimiento:
-            if movimiento == 'Recto':
-                return self.movimiento_recto_valido(x, y, pieza)
-            elif movimiento == 'Diagonal':
-                return self.movimiento_diagonal_valido(x, y, pieza)
-            elif movimiento == 'Caballo':
-                return self.movimiento_caballo(x, y, pieza)
-            elif movimiento == 'Comer':
-                return self.movimiento_peon_comer(x, y, pieza)
+            return self.ver_movimiento(x, y, pieza, movimiento)
         else:
             return False
+        
+    def ver_movimiento(self, x, y, pieza, movimiento):
+        if movimiento == 'Recto':
+            return self.movimiento_recto_valido(x, y, pieza)
+        elif movimiento == 'Diagonal':
+            return self.movimiento_diagonal_valido(x, y, pieza)
+        elif movimiento == 'Caballo':
+            return self.movimiento_caballo(x, y, pieza)
+        elif movimiento == 'Comer':
+            return self.movimiento_peon_comer(x, y, pieza)
     
     # Metodo que define si mueve la ficha, si hay que comer a otra ficha o si hay que mover
     def verificar_movimiento(self, x, y, pieza):

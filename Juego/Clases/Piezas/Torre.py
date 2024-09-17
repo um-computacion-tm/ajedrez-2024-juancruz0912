@@ -6,6 +6,7 @@ class Torre(PiezaId):
     pieza_negra = '♜'
     c1 = 1
     c2 = 8
+    
     def __init__(self, color, **kwargs):
         super().__init__('Torre', color, id=kwargs['id'])
 
