@@ -4,13 +4,13 @@ class Torre(PiezaId):
 
     pieza_blanca = '♖'
     pieza_negra = '♜'
-
+    c1 = 1
+    c2 = 8
+    
     def __init__(self, color, **kwargs):
-        c1 = 1
-        c2 = 8
-        super().__init__('Torre', color, id=kwargs['id'], c1=c1, c2=c2)
+        super().__init__('Torre', color, id=kwargs['id'])
 
     
-    def verificar_movimiento(self, fila, columna):
+    def movimiento_especifico(self, fila, columna):
         return self.es_movimiento_recto(fila, columna)
             

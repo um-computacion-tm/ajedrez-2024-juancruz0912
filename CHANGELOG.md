@@ -1,12 +1,18 @@
 # CHANGELOG
 
-## [1.1.0] -01-09-2024
+## [1.2.0] -06-09-2024
+
+### Modificados:
+- se empieza a trabajar en el metodo Jaque()
+
+
+## [1.1.8] -01-09-2024
 
 ### Agregado
 - Se agrego una clase abstracta de pieza con id
 
 
-## [1.1.0] -01-09-2024
+## [1.1.7] -01-09-2024
 
 ### Modificado:
 - Se modificaron las piezas, agregando el atributo movimiento, el cual indica el movimiento a realizar de la pieza

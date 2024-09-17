@@ -1,5 +1,6 @@
 import unittest
 from Juego.Clases.Juego import Juego 
+from unittest.mock import MagicMock
 from Juego.Clases.Tablero import Tablero
 from Juego.Clases.Piezas.Peon import Peon
 
@@ -7,6 +8,9 @@ class TestJuego(unittest.TestCase):
 
     def setUp(self):
         self.juego = Juego('Juan', 'Pedro')
+        self.juego2 = Juego('Jugador Blanco', 'Jugador Negro')
+        self.juego2.tablero = MagicMock()
+        self.juego2.tablero.jaque_mate_tablero = MagicMock()
 
     # Test para verificar que se inicie de forma correcta la instancia
     def test_iniciar(self):
@@ -32,7 +36,7 @@ class TestJuego(unittest.TestCase):
         piezas_a_remover = [nombre for nombre, pieza in self.juego.tablero.piezas.items() if pieza.color == 'negro']  # Remover todas las piezas negras
         for pieza in piezas_a_remover:
             del self.juego.tablero.piezas[pieza]
-        resultado = self.juego.ganar_juego()
+        resultado = self.juego.ganar_juego('negro')
         self.assertEqual(resultado, 'Juan es el ganador')
 
     # Simula que el tablero indica que solo quedan piezas negras
@@ -41,14 +45,19 @@ class TestJuego(unittest.TestCase):
         piezas_a_remover = [nombre for nombre, pieza in self.juego.tablero.piezas.items() if pieza.color == 'blanco']  # Remover todas las piezas blancas
         for pieza in piezas_a_remover:
             del self.juego.tablero.piezas[pieza]
-        resultado = self.juego.ganar_juego()
+        resultado = self.juego.ganar_juego('negro')
         self.assertEqual(resultado, 'Pedro es el ganador')
+
+    def test_ganar_juego_jaque_mate(self):
+        self.juego2.tablero.jaque_mate_tablero.return_value = True #se simula que el rey blanco está en jaque mate
+        resultado = self.juego2.ganar_juego('blanco')
+        self.assertEqual(resultado, '---  El rey blanco esta en jaque mate, por lo tanto Jugador Negro es el ganador!! ---')
 
 
     # Simula que el tablero indica que aún hay piezas de ambos colores
     def test_ganar_juego_sin_ganador(self):
         self.juego.tablero.colocar_piezas()  # Coloca las piezas en el tablero
-        resultado = self.juego.ganar_juego()
+        resultado = self.juego.ganar_juego('negro')
         self.assertIsNone(resultado)
 
     # Test para el método cambiar_turno
