@@ -15,8 +15,6 @@ class TestJuegoAjedrez(unittest.TestCase):
         self.juego.terminar_juego.assert_called_once()
 
 
-
-
     @patch('builtins.input', side_effect=['Jugador1', 'Jugador2', '0'])
     def test_main_terminar_juego(self, mock_input):
         self.juego.empezar_juego = MagicMock()
