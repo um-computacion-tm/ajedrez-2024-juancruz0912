@@ -11,7 +11,7 @@ class Peon(PiezaPeon):
         super().__init__('Peon', color, id=kwargs['id'])
 
 
-    def verificar_movimiento(self, fila, columna):
+    def movimiento_especifico(self, fila, columna):
         if self.columna == columna:
             paso = -1 if self.color == 'blanco' else 1
             if self.__primer_movimiento__ == False:

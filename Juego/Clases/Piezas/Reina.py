@@ -10,5 +10,5 @@ class Reina(PiezaReyes):
         super().__init__('Reina', color)
 
 
-    def verificar_movimiento(self, fila, columna):
+    def movimiento_especifico(self, fila, columna):
         return self.reyes(fila, columna)

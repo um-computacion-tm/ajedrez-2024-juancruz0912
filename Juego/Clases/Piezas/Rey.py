@@ -10,7 +10,7 @@ class Rey(PiezaReyes):
         super().__init__('Rey', color)
 
         
-    def verificar_movimiento(self, fila, columna):
+    def movimiento_especifico(self, fila, columna):
         if self.un_paso(fila, columna):
             return self.reyes(fila, columna)
         else:  

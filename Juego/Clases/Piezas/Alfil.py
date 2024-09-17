@@ -11,7 +11,7 @@ class Alfil(PiezaId):
         super().__init__('Alfil', color, id=kwargs['id'])
 
 
-    def verificar_movimiento(self, fila, columna):
+    def movimiento_especifico(self, fila, columna):
         return self.es_movimiento_diagonal(fila, columna, 'Diagonal')
             
 

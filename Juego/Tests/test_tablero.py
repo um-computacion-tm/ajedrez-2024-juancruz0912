@@ -216,8 +216,11 @@ class TestTablero(unittest.TestCase):
 
     def test_jaque_mate_tablero_devuelve_true1(self):
         reina_negra = self.tablero.piezas['Reina negro']
+        peon_blanco = self.tablero.piezas['Peon 7 blanco']
         reina_negra.fila = 5
         reina_negra.columna = 8
+        peon_blanco.fila = 5
+        peon_blanco.columna = 7
         self.tablero.tablero[5][8] = reina_negra
         self.tablero.tablero[7][6] = '  '
         self.assertTrue(self.tablero.jaque_mate_tablero('blanco'))   
@@ -228,6 +231,21 @@ class TestTablero(unittest.TestCase):
         caballo_blanco.fila = 2
         caballo_blanco.columna = 3
         self.assertEqual(self.tablero.jaque_mate_tablero('negro'), False)
+
+    def test_salvar_jaque_bloqueando_camino(self):
+        torre_blanca = self.tablero.piezas['Torre 1 blanco']
+        torre_negra = self.tablero.piezas['Torre 1 negro']
+        self.tablero.tablero[2][5] = '  '
+        self.tablero.tablero[2][4] = torre_negra
+        self.tablero.tablero[4][5] = torre_blanca
+        torre_blanca.fila = 4
+        torre_blanca.columna = 5
+        torre_negra.fila = 2
+        torre_negra.columna = 4
+        self.assertFalse(self.tablero.jaque_mate_tablero('negro'))
+
+
+
 
 
 

@@ -134,7 +134,8 @@ class Tablero:
                 return self.movimiento_caballo(x, y, pieza)
             elif movimiento == 'Comer':
                 return self.movimiento_peon_comer(x, y, pieza)
-        return False
+        else:
+            return False
     
     # Metodo que define si mueve la ficha, si hay que comer a otra ficha o si hay que mover
     def verificar_movimiento(self, x, y, pieza):
@@ -292,18 +293,36 @@ class Tablero:
 
     # Metodo que verifica si puedo bloquear el camino de alguna pieza
     def verificar_bloquear_camino_jaque(self, rey, color, pieza_amenaza):
-        if pieza_amenaza in [Torre, Alfil, Reina]:
-           direccion_x = 1 if pieza_amenaza.fila > rey.fila else -1 if pieza_amenaza.fila < rey.fila else 0
-           direccion_y = 1 if pieza_amenaza.columna > rey.columna else -1 if pieza_amenaza.columna < rey.columna else 0
-           fila_bloqueo = rey.fila + direccion_x
-           columna_bloqueo = rey.columna + direccion_y
-           while fila_bloqueo != pieza_amenaza.fila or columna_bloqueo != pieza_amenaza.columna:
-               for pieza_aliada in self.__piezas__.values():
-                   if pieza_aliada.color == color and self.que_movimiento(fila_bloqueo, columna_bloqueo, pieza_aliada) == True:
-                       return False  # Si alguna pieza aliada puede bloquear la amenaza, no es jaque mate
-               fila_bloqueo += direccion_x
-               columna_bloqueo += direccion_y
-        return self.verificar_movimiento_rey_jaque(rey, color) # Ninguna pieza puede bloquear la amenaza
+        if isinstance(pieza_amenaza, (Torre, Alfil, Reina)):
+            direccion_x, direccion_y = self.calcular_direcciones(rey, pieza_amenaza)
+            if not self.explorar_camino_bloqueo(rey, color, pieza_amenaza, direccion_x, direccion_y):
+                return False  # Si alguna pieza aliada puede bloquear la amenaza, no es jaque mate
+        return self.verificar_movimiento_rey_jaque(rey, color)  # Ninguna pieza puede bloquear la amenaza
+
+    # Metodo que calcula las direcciones de la pieza que amenaza al rey
+    def calcular_direcciones(self, rey, pieza_amenaza):
+        direccion_x = 1 if pieza_amenaza.fila > rey.fila else -1 if pieza_amenaza.fila < rey.fila else 0
+        direccion_y = 1 if pieza_amenaza.columna > rey.columna else -1 if pieza_amenaza.columna < rey.columna else 0
+        return direccion_x, direccion_y
+
+    # Metodo que explora el camino para ver si alguna pieza puede bloquear la amenaza
+    def explorar_camino_bloqueo(self, rey, color, pieza_amenaza, direccion_x, direccion_y):
+        fila_bloqueo = rey.fila + direccion_x
+        columna_bloqueo = rey.columna + direccion_y
+        while fila_bloqueo != pieza_amenaza.fila or columna_bloqueo != pieza_amenaza.columna:
+            if self.pieza_puede_bloquear(fila_bloqueo, columna_bloqueo, color, rey):
+                return False  # Si una pieza aliada puede bloquear la amenaza, no es jaque mate
+            fila_bloqueo += direccion_x
+            columna_bloqueo += direccion_y
+        return True
+
+    # Ver si alguna pieza puede bloquear el camino
+    def pieza_puede_bloquear(self, fila, columna, color, rey):
+        for pieza_aliada in self.__piezas__.values():
+            if pieza_aliada.color == color and pieza_aliada != rey and self.que_movimiento(fila, columna, pieza_aliada) == True:
+                return True
+        return False
+
 
     # Metodo que verifica si el rey puede moverse a algun lugar donde no este en jaque
     def verificar_movimiento_rey_jaque(self, rey, color):

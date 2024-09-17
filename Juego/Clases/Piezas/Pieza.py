@@ -41,8 +41,11 @@ class Pieza(ABC):
     
     # Metodo para verificar si el movimiento de la pieza es valido
     @abstractmethod
-    def verificar_movimiento(self, fila, columna):
+    def movimiento_especifico(self, fila, columna):
         pass
+
+    def verificar_movimiento(self, fila, columna):
+        return self.movimiento_especifico(fila, columna)
 
     def es_movimiento_recto(self, fila, columna):
         if self.__fila__ == fila or self.__columna__ == columna:

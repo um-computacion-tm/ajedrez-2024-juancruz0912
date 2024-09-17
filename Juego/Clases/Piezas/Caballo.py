@@ -11,5 +11,5 @@ class Caballo(PiezaId):
         super().__init__('Caballo', color, id=kwargs['id'])
 
 
-    def verificar_movimiento(self, fila, columna):
+    def movimiento_especifico(self, fila, columna):
         return self.movimiento_caballo(fila, columna)

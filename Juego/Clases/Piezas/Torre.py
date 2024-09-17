@@ -10,6 +10,6 @@ class Torre(PiezaId):
         super().__init__('Torre', color, id=kwargs['id'])
 
     
-    def verificar_movimiento(self, fila, columna):
+    def movimiento_especifico(self, fila, columna):
         return self.es_movimiento_recto(fila, columna)
             
