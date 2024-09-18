@@ -1,9 +1,9 @@
-from .Piezas.torre import Torre
-from .Piezas.alfil import Alfil  
-from .Piezas.caballo import Caballo
-from .Piezas.reina import Reina
-from .Piezas.rey import Rey
-from .Piezas.peon import Peon
+from Juego.Piezas.torre import Torre
+from Juego.Piezas.alfil import Alfil  
+from Juego.Piezas.caballo import Caballo
+from Juego.Piezas.reina import Reina
+from Juego.Piezas.rey import Rey
+from Juego.Piezas.peon import Peon
 
 class Tablero:
     
