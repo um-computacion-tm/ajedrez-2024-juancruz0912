@@ -1,4 +1,4 @@
-from .Clases.Juego import Juego
+from .juego import Juego
 import os
 
 def jugar(juego):
@@ -14,11 +14,12 @@ def mover(juego):
     pieza = pieza.capitalize()
     if pieza == '0':
         juego.terminar_juego()
-    elif juego.buscar_pieza(pieza) == True:
-        mover_pieza_valida(juego, pieza)
-    else:  
-        print(f'{pieza} no existe') 
-        mover(juego)
+    else:
+        try:
+            mover_pieza_valida(juego, pieza)
+        except Exception as e:
+            print(e)
+            mover(juego)
 
 def mover_pieza_valida(juego, pieza):
     try:
@@ -60,7 +61,6 @@ def main():
     jugador1 = input('Jugador 1 (Blancas): ')
     jugador2 = input('Jugador 2 (Negras): ')
     juego = Juego(jugador1, jugador2)
-    juego.empezar_juego()
     
     while juego.estado == True:
         jugar(juego)

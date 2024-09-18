@@ -1,9 +1,9 @@
-from .Piezas.Torre import Torre
-from .Piezas.Alfil import Alfil  
-from .Piezas.Caballo import Caballo
-from .Piezas.Reina import Reina
-from .Piezas.Rey import Rey
-from .Piezas.Peon import Peon
+from .Piezas.torre import Torre
+from .Piezas.alfil import Alfil  
+from .Piezas.caballo import Caballo
+from .Piezas.reina import Reina
+from .Piezas.rey import Rey
+from .Piezas.peon import Peon
 
 class Tablero:
     
@@ -165,6 +165,7 @@ class Tablero:
                 return 'Comer'
         else:
             return False
+        
 
     # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos rectos)
     def movimiento_recto_valido(self, x, y, pieza):
@@ -219,15 +220,6 @@ class Tablero:
         else:
             return True
         
-    # Metodo para verificar el movimiento del caballo
-    def movimiento_caballo(self, x, y, pieza):
-        if self.tablero[x][y] == '  ':
-            return True
-        elif self.tablero[x][y].color != pieza.color:
-            return 'Comer'
-        else:
-            return False
-
 
     # Metodo para comer una pieza
     def comer_pieza(self, x, y, pieza):
@@ -259,7 +251,7 @@ class Tablero:
     def jaque_mate_tablero(self, color):
         rey = self.__piezas__[f'Rey {color}']
         if self.jaque(color, rey.fila, rey.columna): # Si el rey se encuentra en jaque, se verifica si hay jaque mate
-            if self.metodo_jaque_mate(rey, color):
+            if self.salvar_jaque_mate(rey, color):
                 return True
             else:
                 return False #En este caso da jaque
@@ -276,7 +268,7 @@ class Tablero:
         return False
 
     # Metodo en el cual se verifica la cantidad de piezas que amenazan al rey, si pueden ser comidas y si pueden ser bloquedas
-    def metodo_jaque_mate(self, rey, color):
+    def salvar_jaque_mate(self, rey, color):
         piezas_que_comen_al_rey = []
         for pieza in self.piezas.values(): # se hace una lista con todas las piezas que pueden comer al rey
             if pieza.color != color and self.que_movimiento(rey.fila, rey.columna, pieza) == 'Comer': 

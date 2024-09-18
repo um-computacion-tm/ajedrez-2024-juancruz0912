@@ -12,4 +12,8 @@ class Caballo(PiezaId):
 
 
     def movimiento_especifico(self, fila, columna):
-        return self.movimiento_caballo(fila, columna)
+        if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
+            self.__movimiento__ = 'Caballo' 
+            return True
+        else:
+            return False
