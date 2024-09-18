@@ -1,5 +1,4 @@
-from .tablero import Tablero
-
+from Juego.tablero import Tablero
 
 class Juego:
     
@@ -45,7 +44,6 @@ class Juego:
         if not self.__tablero__.pieza_existente(pieza_original):
             raise ValueError(f'{pieza} no existe')
         else:
-            
             y = y.upper()
             if self.__tablero__.mover_pieza_tablero(x, y, pieza_original):
                 color = 'blanco' if turno == 'negro' else 'negro' # Si el movimiento de la pieza es correcto, cambia el turno

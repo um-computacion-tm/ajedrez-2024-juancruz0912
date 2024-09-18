@@ -9,6 +9,7 @@ class Torre(PiezaId):
     
     def __init__(self, color, **kwargs):
         super().__init__('Torre', color, id=kwargs['id'])
+        self.__movimiento__ = 'Recto'
 
     
     def movimiento_especifico(self, fila, columna):
