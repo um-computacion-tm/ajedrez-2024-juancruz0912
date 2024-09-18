@@ -1,10 +1,10 @@
 import unittest
-from Juego.Clases.Tablero import Tablero
-from Juego.Clases.Piezas.Torre import Torre
-from Juego.Clases.Piezas.Peon import Peon
-from Juego.Clases.Piezas.Alfil import Alfil
-from Juego.Clases.Piezas.Caballo import Caballo
-from Juego.Clases.Piezas.Rey import Rey
+from Juego.tablero import Tablero
+from Juego.Piezas.torre import Torre
+from Juego.Piezas.peon import Peon
+from Juego.Piezas.alfil import Alfil
+from Juego.Piezas.caballo import Caballo
+from Juego.Piezas.rey import Rey
 from unittest.mock import Mock, patch
 
 

@@ -1,10 +1,10 @@
-from .Tablero import Tablero
+from .tablero import Tablero
 
 
 class Juego:
     
     def __init__(self, jugador1, jugador2):
-        self.__estado__ = False
+        self.__estado__ = True
         self.__tablero__ = Tablero()
         self.__blanco__ = jugador1
         self.__negro__ = jugador2
@@ -17,10 +17,6 @@ class Juego:
         else:
             self.__turno__ = self.__blanco__
 
-    # Metodo que permite iniciar el juego, estableciendo el atributo estado en 1 (Jugando)
-    def empezar_juego(self):
-        self.__estado__ = True
-        return self.__tablero__
 
     # Metodo que permite finalizar el juego, estableciendo el atributo estado en 0 (No Jugando) 
     def terminar_juego(self):
@@ -45,16 +41,16 @@ class Juego:
     #se mueva en el tablero
     def mover_pieza(self, x, y, pieza): 
         turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
-        pieza = pieza + ' ' + turno
-        y = y.upper()
-        if self.__tablero__.mover_pieza_tablero(x, y, pieza):
-            color = 'blanco' if turno == 'negro' else 'negro' # Si el movimiento de la pieza es correcto, cambia el turno
-            return self.ganar_juego(color)
-
-    def buscar_pieza(self, pieza):
-        turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
-        pieza = str(pieza + ' ' + turno)
-        return self.__tablero__.pieza_existente(pieza)   
+        pieza_original = pieza + ' ' + turno
+        if not self.__tablero__.pieza_existente(pieza_original):
+            raise ValueError(f'{pieza} no existe')
+        else:
+            
+            y = y.upper()
+            if self.__tablero__.mover_pieza_tablero(x, y, pieza_original):
+                color = 'blanco' if turno == 'negro' else 'negro' # Si el movimiento de la pieza es correcto, cambia el turno
+                return self.ganar_juego(color)
+  
     
     
     #Metodo para poder ver el estado del juego (encapsulamiento)

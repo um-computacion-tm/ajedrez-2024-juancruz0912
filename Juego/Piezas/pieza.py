@@ -70,14 +70,7 @@ class Pieza(ABC):
             return True
         else:  
             return False
-    
-    def movimiento_caballo(self, fila, columna):
-        if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
-            self.__movimiento__ = 'Caballo' 
-            return True
-        else:
-            return False
-        
+
     def un_paso(self, fila, columna):
         return abs(self.__fila__ - fila) <= 1 and abs(self.__columna__ - columna) <= 1
         

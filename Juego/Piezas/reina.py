@@ -1,4 +1,4 @@
-from .Pieza import PiezaReyes
+from .pieza import PiezaReyes
    
 class Reina(PiezaReyes):
 

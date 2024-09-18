@@ -19,3 +19,4 @@ exclude_lines =
     __str__
     main()
     @.*\.setter
+    @.*\.abstractmethod

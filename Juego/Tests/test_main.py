@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from Juego.Clases.Juego import Juego 
-from Juego.main import main, jugar, mover, mover_pieza_valida
+from Juego.juego import Juego 
+from Juego.main import main, jugar
 
 class TestJuegoAjedrez(unittest.TestCase):
 
