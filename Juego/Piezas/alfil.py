@@ -1,4 +1,4 @@
-from .Pieza import PiezaId
+from .pieza import PiezaId
 
 class Alfil(PiezaId):
 

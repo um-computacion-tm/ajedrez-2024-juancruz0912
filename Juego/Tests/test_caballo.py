@@ -1,5 +1,5 @@
 import unittest
-from Juego.Clases.Piezas.Caballo import Caballo
+from Juego.Piezas.caballo import Caballo
 
 class TestCaballo(unittest.TestCase):
 

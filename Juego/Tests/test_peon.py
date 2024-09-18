@@ -1,5 +1,5 @@
 import unittest
-from Juego.Clases.Piezas.Peon import Peon
+from Juego.Piezas.peon import Peon
 
 class TestPeon(unittest.TestCase):
 

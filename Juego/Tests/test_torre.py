@@ -1,5 +1,5 @@
 import unittest
-from Juego.Clases.Piezas.Torre import Torre
+from Juego.Piezas.torre import Torre
 
 class TestTorre(unittest.TestCase):
 

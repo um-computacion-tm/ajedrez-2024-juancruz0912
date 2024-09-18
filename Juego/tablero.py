@@ -220,6 +220,14 @@ class Tablero:
         else:
             return True
         
+    # Metodo para verificar el movimiento del caballo
+    def movimiento_caballo(self, x, y, pieza):
+        if self.tablero[x][y] == '  ':
+            return True
+        elif self.tablero[x][y].color != pieza.color:
+            return 'Comer'
+        else:
+            return False
 
     # Metodo para comer una pieza
     def comer_pieza(self, x, y, pieza):

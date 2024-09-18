@@ -41,16 +41,16 @@ class Juego:
     #se mueva en el tablero
     def mover_pieza(self, x, y, pieza): 
         turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
-        pieza = pieza + ' ' + turno
-        y = y.upper()
-        if self.__tablero__.mover_pieza_tablero(x, y, pieza):
-            color = 'blanco' if turno == 'negro' else 'negro' # Si el movimiento de la pieza es correcto, cambia el turno
-            return self.ganar_juego(color)
-
-    def buscar_pieza(self, pieza):
-        turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
-        pieza = str(pieza + ' ' + turno)
-        return self.__tablero__.pieza_existente(pieza)   
+        pieza_original = pieza + ' ' + turno
+        if not self.__tablero__.pieza_existente(pieza_original):
+            raise ValueError(f'{pieza} no existe')
+        else:
+            
+            y = y.upper()
+            if self.__tablero__.mover_pieza_tablero(x, y, pieza_original):
+                color = 'blanco' if turno == 'negro' else 'negro' # Si el movimiento de la pieza es correcto, cambia el turno
+                return self.ganar_juego(color)
+  
     
     
     #Metodo para poder ver el estado del juego (encapsulamiento)

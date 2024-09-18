@@ -1,8 +1,8 @@
 import unittest
-from Juego.Clases.Juego import Juego 
+from Juego.juego import Juego 
 from unittest.mock import MagicMock
-from Juego.Clases.Tablero import Tablero
-from Juego.Clases.Piezas.Peon import Peon
+from Juego.tablero import Tablero
+from Juego.Piezas.peon import Peon
 
 class TestJuego(unittest.TestCase):
 
@@ -14,16 +14,12 @@ class TestJuego(unittest.TestCase):
 
     # Test para verificar que se inicie de forma correcta la instancia
     def test_iniciar(self):
-        self.assertFalse(self.juego.estado)
+        self.assertTrue(self.juego.estado)
         self.assertIsInstance(self.juego.tablero, Tablero)
         self.assertEqual(self.juego.__blanco__, "Juan")
         self.assertEqual(self.juego.__negro__, "Pedro")
         self.assertEqual(self.juego.__turno__, "Juan")
 
-    # Test para el método empezar_juego
-    def test_empezar_juego(self):
-        self.juego.empezar_juego()
-        self.assertEqual(self.juego.__estado__, True)
 
     # Test para el método terminar_juego
     def test_terminar_juego(self):
@@ -66,22 +62,22 @@ class TestJuego(unittest.TestCase):
         self.assertEqual(self.juego.__turno__, self.juego.__negro__)
         self.juego.cambiar_turno()
         self.assertEqual(self.juego.__turno__, self.juego.__blanco__)
+
+    def test_pieza_no_existe(self):
+        with self.assertRaises(ValueError) as context:
+            self.juego.mover_pieza(3, 'A', 'Peon 90') 
+        
     
     def test_mover_pieza(self):
         self.juego.tablero.colocar_piezas()
-        self.juego.empezar_juego()
         self.juego.mover_pieza(6, 'A', 'Peon 1')  
         self.assertIsInstance(self.juego.tablero.tablero[6][1], Peon)
 
-    def test_buscar_pieza_existente(self):
-        self.juego.empezar_juego()
-        existe = self.juego.buscar_pieza('Torre 1')
-        self.assertTrue(existe)
 
     def test_buscar_pieza_no_existente(self):
-        self.juego.empezar_juego()
-        existe = self.juego.buscar_pieza('Torre X')
-        self.assertFalse(existe)
+        with self.assertRaises(ValueError) as context:
+            self.juego.mover_pieza(3, 'a', 'Torre X')
+        self.assertIn(str(context.exception), 'Torre X no existe')
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,5 @@
 import unittest
-from Juego.Clases.Piezas.Rey import Rey
+from Juego.Piezas.rey import Rey
 
 class TestRey(unittest.TestCase):
 

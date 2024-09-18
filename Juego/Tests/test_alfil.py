@@ -1,5 +1,5 @@
 import unittest
-from Juego.Clases.Piezas.Alfil import Alfil
+from Juego.Piezas.alfil import Alfil
 
 class TestAlfil(unittest.TestCase):
 
