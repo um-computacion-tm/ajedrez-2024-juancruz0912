@@ -35,10 +35,10 @@ El juego continúa hasta que se detecta un jaque mate o uno de los dos jugadores
 2. Luego, ejecutar los siguientes comandos:
  ```
  2. Crear imagen de Docker
-$ docker buildx build -t ajedrez-2024-juancruz0912 .
+$ docker buildx build -t ajedrez /ruta/al/directorio
 
 3. Ejecutar tests y jugar.
-$ docker run -i ajedrez-2024-juancruz0912
+$ docker run -i ajedrez
  ```
 
 # Pruebas

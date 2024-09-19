@@ -75,12 +75,12 @@ class Pieza(ABC):
         return abs(self.__fila__ - fila) <= 1 and abs(self.__columna__ - columna) <= 1
         
 class PiezaId(Pieza):
-        
-    def __init__(self, nombre, color, id):
+    def __init__(self, nombre, color, id, movimiento):
         self.__id__ = id
-        self.__fila__ = 1 if color == 'negro' else 8  
-        self.__columna__ = self.c1 if id == 1 else self.c2 
-        super().__init__(nombre, color, columna = self.__columna__, fila = self.__fila__)
+        self.__fila__ = 1 if color == 'negro' else 8
+        self.__columna__ = self.c1 if id == 1 else self.c2
+        super().__init__(nombre, color, columna=self.__columna__, fila=self.__fila__)
+        self.__movimiento__ = movimiento
 
     def __str__(self):
         return f"{self.pieza_blanca}{self.__id__}" if self.__color__ == 'blanco' else f"{self.pieza_negra}{self.__id__}"
