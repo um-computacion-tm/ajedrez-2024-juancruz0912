@@ -62,7 +62,8 @@ class Pieza(ABC):
         else:
             return False
 
-    
+    def es_movimiento_caballo(self, fila, columna):
+        return (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2)
 
     def reyes(self, fila, columna):
         if self.es_movimiento_recto(fila, columna):
@@ -87,7 +88,7 @@ class PiezaId(Pieza):
         return f"{self.pieza_blanca}{self.__id__}" if self.__color__ == 'blanco' else f"{self.pieza_negra}{self.__id__}"
     
 
-
+# clase especial para la reina y el rey
 class PiezaReyes(Pieza):
     def __init__(self, nombre, color):
         self.__columna__ = self.c1
@@ -95,7 +96,7 @@ class PiezaReyes(Pieza):
         super().__init__(nombre=nombre, color=color, columna= self.__columna__, fila= self.__fila__)
 
 
-
+# clase especial para los peones, donde todos tiene misma fila
 class PiezaPeon(PiezaId):
     
     def __init__(self, nombre, color, id, **kargs):
