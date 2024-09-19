@@ -8,7 +8,7 @@ class Peon(PiezaPeon):
     def __init__(self, color, **kwargs):
         self.__primer_movimiento__ = False
         self.c1 = self.c2 = kwargs['id']
-        super().__init__('Peon', color, id=kwargs['id'])
+        self.configurar_pieza('Peon', color, id=kwargs['id'], movimiento='Recto')
 
 
     def movimiento_especifico(self, fila, columna):

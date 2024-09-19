@@ -7,13 +7,10 @@ class Caballo(PiezaId):
     c1 = 2  
     c2 = 7
 
-    def __init__(self, color, **kwargs):         
-        super().__init__('Caballo', color, id=kwargs['id'])
-        self.__movimiento__ = 'Caballo'
-
+    def __init__(self, color, **kwargs):
+        self.configurar_pieza('Caballo', color, id=kwargs['id'], movimiento='Caballo')
 
     def movimiento_especifico(self, fila, columna):
         if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
             return True
-        else:
-            return False
+        return False

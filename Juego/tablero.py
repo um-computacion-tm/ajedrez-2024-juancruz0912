@@ -113,7 +113,17 @@ class Tablero:
         y = self.__fila1__[y]
         pieza = self.__piezas__[pieza]
         return self.verificar_movimiento(x, y, pieza)  # Una vez obtenidos los valores, se verifica si es correcto el movimiento
-        
+    
+    # Metodo que define si mueve la ficha, si hay que comer a otra ficha o si hay que mover
+    def verificar_movimiento(self, x, y, pieza):
+        mover = self.que_movimiento(x, y, pieza)
+        if mover == 'Comer': # si la casilla destino esta ocupada
+            return self.comer_pieza(x, y, pieza)
+        elif mover == True:
+            return self.mover_pieza_valida(x, y, pieza)
+        else:
+            raise ValueError('Movimiento no valido')
+
     # Metodo que valida los movimientos
     def validar_movimiento(self, x, y, pieza):
         if pieza.verificar_movimiento(x, y): # Se verifica el movimiento de la propia pieza
@@ -140,16 +150,6 @@ class Tablero:
         elif movimiento == 'Comer':
             return self.movimiento_peon_comer(x, y, pieza)
     
-    # Metodo que define si mueve la ficha, si hay que comer a otra ficha o si hay que mover
-    def verificar_movimiento(self, x, y, pieza):
-        mover = self.que_movimiento(x, y, pieza)
-        if mover == 'Comer':
-            return self.comer_pieza(x, y, pieza)
-        elif mover == True:
-            return self.mover_pieza_valida(x, y, pieza)
-        else:
-            raise ValueError('Movimiento no valido')
-        
 
     # Metodo para verificar si la pieza se movio al mismo lugar
     def mismo_lugar(self, x, y, pieza):
