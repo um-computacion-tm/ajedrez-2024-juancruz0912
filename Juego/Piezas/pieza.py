@@ -62,6 +62,9 @@ class Pieza(ABC):
         else:
             return False
         
+    def es_movimiento_caballo(self, fila, columna):
+        return (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2)
+        
 
     def reyes(self, fila, columna):
         if self.es_movimiento_recto(fila, columna):

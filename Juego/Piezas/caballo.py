@@ -11,6 +11,4 @@ class Caballo(PiezaId):
         self.configurar_pieza('Caballo', color, id=kwargs['id'], movimiento='Caballo')
 
     def movimiento_especifico(self, fila, columna):
-        if (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2):
-            return True
-        return False
+       return self.es_movimiento_caballo(fila, columna)
