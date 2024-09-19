@@ -8,11 +8,12 @@ class Alfil(PiezaId):
     c2 = 6 
 
     def __init__(self, color, **kwargs):
-        self.configurar_pieza('Alfil', color, id=kwargs['id'], movimiento='Diagonal')
+        super().__init__('Alfil', color, id=kwargs['id'])
+        self.__movimiento__ = 'Diagonal'
+
 
     def movimiento_especifico(self, fila, columna):
         return self.es_movimiento_diagonal(fila, columna, 'Diagonal')
-            
 
 
  

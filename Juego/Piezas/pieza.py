@@ -62,9 +62,6 @@ class Pieza(ABC):
         else:
             return False
         
-    def es_movimiento_caballo(self, fila, columna):
-        return (abs(self.fila - fila) == 2 and abs(self.columna - columna) == 1) or (abs(self.fila - fila) == 1 and abs(self.columna - columna) == 2)
-        
 
     def reyes(self, fila, columna):
         if self.es_movimiento_recto(fila, columna):
@@ -78,19 +75,12 @@ class Pieza(ABC):
         return abs(self.__fila__ - fila) <= 1 and abs(self.__columna__ - columna) <= 1
         
 class PiezaId(Pieza):
-    def __init__(self, nombre, color, id, movimiento):
+        
+    def __init__(self, nombre, color, id):
         self.__id__ = id
-        self.__fila__ = 1 if color == 'negro' else 8
-        self.__columna__ = self.c1 if id == 1 else self.c2
-        super().__init__(nombre, color, columna=self.__columna__, fila=self.__fila__)
-        self.__movimiento__ = movimiento
-
-    def configurar_pieza(self, nombre, color, id, movimiento):
-        self.__id__ = id
-        self.__fila__ = 1 if color == 'negro' else 8
-        self.__columna__ = self.c1 if id == 1 else self.c2
-        super().__init__(nombre, color, columna=self.__columna__, fila=self.__fila__)
-        self.__movimiento__ = movimiento
+        self.__fila__ = 1 if color == 'negro' else 8  
+        self.__columna__ = self.c1 if id == 1 else self.c2 
+        super().__init__(nombre, color, columna = self.__columna__, fila = self.__fila__)
 
     def __str__(self):
         return f"{self.pieza_blanca}{self.__id__}" if self.__color__ == 'blanco' else f"{self.pieza_negra}{self.__id__}"
@@ -111,4 +101,3 @@ class PiezaPeon(PiezaId):
         super().__init__(nombre, color, id, **kargs)
         self.__fila__ = 2 if color == 'negro' else 7  
         self.__columna__ = id
-            
