@@ -9,7 +9,6 @@ class Caballo(PiezaId):
 
     def __init__(self, color, **kwargs):         
         super().__init__('Caballo', color, id=kwargs['id'])
-        self.__movimiento__ = 'Caballo'
 
 
     def movimiento_especifico(self, fila, columna):
