@@ -8,8 +8,10 @@ class Torre(PiezaId):
     c2 = 8
     
     def __init__(self, color, **kwargs):
-        self.configurar_pieza('Torre', color, id=kwargs['id'], movimiento='Recto')
+        super().__init__('Torre', color, id=kwargs['id'])
+        self.__movimiento__ = 'Recto'
 
+    
     def movimiento_especifico(self, fila, columna):
         return self.es_movimiento_recto(fila, columna)
             
