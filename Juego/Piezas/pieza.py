@@ -61,7 +61,8 @@ class Pieza(ABC):
             return True
         else:
             return False
-        
+
+    
 
     def reyes(self, fila, columna):
         if self.es_movimiento_recto(fila, columna):
