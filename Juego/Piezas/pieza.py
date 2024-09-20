@@ -41,7 +41,7 @@ class Pieza(ABC):
     
     # Metodo para verificar si el movimiento de la pieza es valido
     @abstractmethod
-    def movimiento_especifico(self, fila, columna):
+    def movimiento_especifico(self, fila, columna): # pragma: no cover
         pass
 
     def verificar_movimiento(self, fila, columna):

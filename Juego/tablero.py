@@ -141,10 +141,8 @@ class Tablero:
             return False
         
     def ver_movimiento(self, x, y, pieza, movimiento):
-        if movimiento == 'Recto':
-            return self.movimiento_recto_valido(x, y, pieza)
-        elif movimiento == 'Diagonal':
-            return self.movimiento_diagonal_valido(x, y, pieza)
+        if movimiento == 'Recto' or movimiento == 'Diagonal':
+            return self.movimiento_tablero_valido(x, y, pieza)
         elif movimiento == 'Caballo':
             return self.movimiento_caballo(x, y, pieza)
         elif movimiento == 'Comer':
@@ -167,58 +165,34 @@ class Tablero:
             return False
         
 
-    # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos rectos)
-    def movimiento_recto_valido(self, x, y, pieza):
-        if pieza.fila == x:  # Movimiento horizontal
-           return self.movimiento_horizontal(y, pieza)
-        elif pieza.columna == y:  # Movimiento vertical
-            return self.movimiento_vertical(x, pieza)
-        else:
-            return False
-    
-    # Metodo para verificar si hay alguna pieza en el medio de la trayectoria (Movimientos horizontales)
-    def movimiento_horizontal(self, y, pieza):
-        paso = 1 if pieza.columna < y else -1
-        for columna in range(pieza.columna + paso, y, paso):
-            if self.__tablero__[pieza.fila][columna] != '  ':  # Ocupada
-                return False
-        if self.__tablero__[pieza.fila][y] != '  ':
-            if self.__tablero__[pieza.fila][y].color != pieza.color:
-                return 'Comer'
-            else:
-                return False
-        return True
-    
-    # Metodo para verificar si hay alguna pieza en el medio de la trayectoria (Movimientos verticales)
-    def movimiento_vertical(self, x, pieza):
-        paso = 1 if pieza.fila < x else -1
-        for fila in range(pieza.fila + paso, x, paso):
-            if self.__tablero__[fila][pieza.columna] != '  ':  # Ocupada
-                return False
-        if self.__tablero__[x][pieza.columna] != '  ':
-            if self.__tablero__[x][pieza.columna].color != pieza.color and not isinstance(pieza, Peon):
-                return 'Comer'
-            else:
-                return False
-        return True
-
-    # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos diagonales)
-    def movimiento_diagonal_valido(self, x, y, pieza):    
-        fila_paso = 1 if x > pieza.fila else -1
-        columna_paso = 1 if y > pieza.columna else -1
+    # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos rectos y diagonales)
+    def movimiento_tablero_valido(self, x, y, pieza):    
+        fila_paso = self.definir_paso(pieza.fila, x)
+        columna_paso = self.definir_paso(pieza.columna, y)
         fila_actual, columna_actual = pieza.fila + fila_paso, pieza.columna + columna_paso
-        while fila_actual != x and columna_actual != y: # verifica todo el camino
+        while fila_actual != x or columna_actual != y: # verifica todo el camino
             if self.__tablero__[fila_actual][columna_actual] != '  ':  # Ocupada
                 return False
             fila_actual += fila_paso
             columna_actual += columna_paso
         if self.__tablero__[x][y] != '  ': # Si hay una pieza en la posicion final
-            if self.__tablero__[x][y].color != pieza.color:
+            if self.__tablero__[x][y].color != pieza.color and not isinstance(pieza, Peon): #Porque el peon no puede comer de frente
                 return 'Comer'
             else:
                 return False
         else:
             return True
+        
+    def definir_paso(self, origen, destino):
+        paso = 0
+        if origen == destino:
+            paso = 0
+        elif origen < destino:
+            paso = 1
+        else:
+            paso = -1
+        return paso
+        
         
     # Metodo para verificar el movimiento del caballo
     def movimiento_caballo(self, x, y, pieza):
@@ -262,7 +236,7 @@ class Tablero:
             if self.salvar_jaque_mate(rey, color):
                 return True
             else:
-                return False #En este caso da jaque
+                return False #En este caso hay jaque
         else:
             return False
         
@@ -298,7 +272,7 @@ class Tablero:
     def verificar_bloquear_camino_jaque(self, rey, color, pieza_amenaza):
         if isinstance(pieza_amenaza, (Torre, Alfil, Reina)):
             direccion_x, direccion_y = self.calcular_direcciones(rey, pieza_amenaza)
-            if not self.explorar_camino_bloqueo(rey, color, pieza_amenaza, direccion_x, direccion_y):
+            if self.explorar_camino_bloqueo(rey, color, pieza_amenaza, direccion_x, direccion_y):
                 return False  # Si alguna pieza aliada puede bloquear la amenaza, no es jaque mate
         return self.verificar_movimiento_rey_jaque(rey, color)  # Ninguna pieza puede bloquear la amenaza
 
@@ -314,10 +288,10 @@ class Tablero:
         columna_bloqueo = rey.columna + direccion_y
         while fila_bloqueo != pieza_amenaza.fila or columna_bloqueo != pieza_amenaza.columna:
             if self.pieza_puede_bloquear(fila_bloqueo, columna_bloqueo, color, rey):
-                return False  # Si una pieza aliada puede bloquear la amenaza, no es jaque mate
+                return True  # Si una pieza aliada puede bloquear la amenaza, no es jaque mate
             fila_bloqueo += direccion_x
             columna_bloqueo += direccion_y
-        return True
+        return False # Una pieza no puede bloquear la amenaza
 
     # Ver si alguna pieza puede bloquear el camino
     def pieza_puede_bloquear(self, fila, columna, color, rey):

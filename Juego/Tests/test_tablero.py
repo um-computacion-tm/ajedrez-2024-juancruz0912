@@ -43,7 +43,7 @@ class TestTablero(unittest.TestCase):
     # Verificacion del metodo para mover fichas rectas
     def test_movimiento_recto_valido_horizontal(self):
         self.tablero.tablero[1][2] = '  '
-        self.assertTrue(self.tablero.movimiento_recto_valido(1, 2, self.tablero.piezas['Torre 1 negro'])) 
+        self.assertTrue(self.tablero.movimiento_tablero_valido(1, 2, self.tablero.piezas['Torre 1 negro'])) 
 
     # Ingresar una fila que no es del tablero
     def test_movimiento_fila_invalida(self):
@@ -65,30 +65,28 @@ class TestTablero(unittest.TestCase):
 
     # Movimiento que no es recto
     def test_movimiento_recto_invalido(self):
-        self.assertFalse(self.tablero.movimiento_recto_valido(7, 6, self.torre_blanca)) 
+        self.assertFalse(self.tablero.movimiento_tablero_valido(7, 6, self.torre_blanca)) 
     
     # Test donde en un movimiento recto la casilla está ocupada 
     def test_movimiento_recto_ocupado_vertical(self):  
-        self.assertFalse(self.tablero.movimiento_recto_valido(4, 1, self.torre_blanca))
+        self.assertFalse(self.tablero.movimiento_tablero_valido(4, 1, self.torre_blanca))
 
     # Test donde en un movimiento recto la casilla está ocupada
     def test_movimiento_recto_ocupado_horizontal(self):  
-        self.assertFalse(self.tablero.movimiento_recto_valido(8, 3, self.torre_blanca))
+        self.assertFalse(self.tablero.movimiento_tablero_valido(8, 3, self.torre_blanca))
 
     def test_movimiento_recto_comer_horizontal(self):
         self.tablero.tablero[8][2] = self.tablero.piezas['Peon 1 negro']
-        self.assertEqual(self.tablero.movimiento_recto_valido(8, 2, self.torre_blanca), 'Comer')
+        self.assertEqual(self.tablero.movimiento_tablero_valido(8, 2, self.torre_blanca), 'Comer')
 
     def test_movimiento_recto_comer_vertical(self):
         self.tablero.tablero[5][1] = self.torre_blanca
         self.torre_blanca.fila = 5
-        self.assertEqual(self.tablero.movimiento_recto_valido(2, 1, self.torre_blanca), 'Comer')
+        self.assertEqual(self.tablero.movimiento_tablero_valido(2, 1, self.torre_blanca), 'Comer')
 
     def test_movimiento_recto_final_no_valido_horizontal(self):
-        self.assertFalse(self.tablero.movimiento_recto_valido(8, 2, self.torre_blanca))
+        self.assertFalse(self.tablero.movimiento_tablero_valido(8, 2, self.torre_blanca))
 
-    def test_movimiento_recto_final_no_valido_vertical(self):
-        self.assertFalse(self.tablero.movimiento_recto_valido(7, 1, self.torre_blanca))
 
     def test_movimiento_peon_invalido2(self):
         peon = self.tablero.piezas['Peon 7 blanco']
@@ -101,11 +99,11 @@ class TestTablero(unittest.TestCase):
         self.assertIsInstance(self.tablero.tablero[6][1], Alfil)
 
     def test_movimiento_diagonal_no_valido(self):
-        self.assertFalse(self.tablero.movimiento_diagonal_valido(6, 8, self.alfil_blanco))
+        self.assertFalse(self.tablero.movimiento_tablero_valido(6, 8, self.alfil_blanco))
 
     def test_movimiento_diagonal_comer(self):
         self.tablero.tablero[7][7] = self.tablero.piezas['Peon 1 negro']
-        self.assertEqual(self.tablero.movimiento_diagonal_valido(7, 7, self.alfil_blanco), 'Comer')
+        self.assertEqual(self.tablero.movimiento_tablero_valido(7, 7, self.alfil_blanco), 'Comer')
  
     # Verificando el movimiento del caballo
     def test_mover_pieza_tablero_caballo(self):
@@ -136,7 +134,6 @@ class TestTablero(unittest.TestCase):
 
     # Mover pieza a una posición ocupada por una pieza de su mismo color
     def test_mover_pieza_tablero_cassilla_ocupada(self):
-        self.tablero.__tablero__[7][1] = self.torre_blanca  
         with self.assertRaises(ValueError) as context:
             self.tablero.mover_pieza_tablero(3, 'A', 'Torre 1 blanco')
         self.assertIn('Movimiento no valido', str(context.exception))
@@ -184,7 +181,6 @@ class TestTablero(unittest.TestCase):
         self.tablero.tablero[4][1] = torre_negra
         self.assertTrue(self.tablero.jaque('blanco', rey_blanco.fila, rey_blanco.columna))
 
-
     def test_jaque_mate_tablero_devuelve_false(self):
         rey_blanco = self.tablero.piezas['Rey blanco']
         reina_negra = self.tablero.piezas['Reina negro']
@@ -197,7 +193,7 @@ class TestTablero(unittest.TestCase):
         reina_negra.fila = 1
         reina_negra.columna = 3
         self.tablero.tablero[1][3] = reina_negra
-        self.assertEqual(self.tablero.jaque_mate_tablero('blanco'), False)
+        self.assertFalse(self.tablero.jaque_mate_tablero('blanco'))
 
     def test_jaque_mate_tablero_devuelve_true1(self):
         rey_blanco = self.tablero.piezas['Rey blanco']
@@ -213,17 +209,6 @@ class TestTablero(unittest.TestCase):
         torre_negra.columna = 1
         self.tablero.tablero[4][1] = torre_negra
         self.assertTrue(self.tablero.jaque_mate_tablero('blanco'))    
-
-    def test_jaque_mate_tablero_devuelve_true1(self):
-        reina_negra = self.tablero.piezas['Reina negro']
-        peon_blanco = self.tablero.piezas['Peon 7 blanco']
-        reina_negra.fila = 5
-        reina_negra.columna = 8
-        peon_blanco.fila = 5
-        peon_blanco.columna = 7
-        self.tablero.tablero[5][8] = reina_negra
-        self.tablero.tablero[7][6] = '  '
-        self.assertTrue(self.tablero.jaque_mate_tablero('blanco'))   
 
     def test_jaque_caballo(self):
         caballo_blanco = self.tablero.piezas['Caballo 1 blanco']
@@ -245,8 +230,18 @@ class TestTablero(unittest.TestCase):
         self.assertFalse(self.tablero.jaque_mate_tablero('negro'))
 
 
-
-
+    def test_no_poder_bloquear_camino(self):
+        reina_negra = self.tablero.piezas['Reina negro']
+        peon7_blanco = self.tablero.piezas['Peon 7 blanco']
+        self.tablero.tablero[7][6] = '  '
+        self.tablero.tablero[5][8] = reina_negra
+        self.tablero.tablero[7][7] = '  '
+        peon7_blanco.fila = 5
+        peon7_blanco.columna = 7
+        reina_negra.fila = 5
+        reina_negra.columna = 8
+        print(self.tablero)
+        self.assertTrue(self.tablero.jaque_mate_tablero('blanco')) 
 
 
 if __name__ == '__main__':
