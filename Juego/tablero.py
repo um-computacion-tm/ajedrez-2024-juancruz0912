@@ -104,7 +104,7 @@ class Tablero:
             return None
               
 
-    #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover, Ej: 'TN1')
+    #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover, Ej: 'Torre')
     def mover_pieza_tablero(self, x, y, pieza):
         if not (1 <= x <= 8):
             raise ValueError (f'La fila {x} no existe')

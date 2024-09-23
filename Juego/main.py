@@ -7,34 +7,33 @@ def jugar(juego):
             print(f'\nAhora es el turno de {juego.__turno__}')
             mover(juego)            
         except Exception as e:
-            print("error", e)
+            print(e)
 
 def mover(juego):
-    pieza = input('Que pieza quieres mover?: ')
+    pieza = input('Que pieza quieres mover? (o 0 para terminar: ')
     pieza = pieza.capitalize()
     if pieza == '0':
         juego.terminar_juego()
     else:
         try:
+            pieza = juego.existe_pieza(pieza)
             mover_pieza_valida(juego, pieza)
         except Exception as e:
             print(e)
             mover(juego)
 
 def mover_pieza_valida(juego, pieza):
+    entrada = (input('Posicion donde quieres mover la pieza (o 0 para cancelar): '))
+    if entrada == 0:
+        mover(juego)
+        return
     try:
-        fila = int(input('Fila donde quieres mover la pieza (o 0 para cancelar): '))
-        if fila == 0:
-            mover(juego)  
-            return 
+        fila = juego.verificar_fila(entrada[1])
     except ValueError:
         print('La fila no es un número válido.')
         mover_pieza_valida(juego, pieza)  
         return
-    columna = input('Columna donde quieres mover la pieza (o 0 para cancelar): ')
-    if columna == '0':
-        mover(juego) 
-        return  
+    columna = entrada[0]
     mensaje = juego.mover_pieza(fila, columna, pieza)
     if mensaje:
         print(juego.tablero)

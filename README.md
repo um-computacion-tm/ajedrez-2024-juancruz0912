@@ -10,15 +10,13 @@ El juego se desarrolla de la siguiente manera:
 2. **Movimiento de Piezas:**
    Durante su turno, cada jugador puede mover una de sus piezas. El formato para ingresar el movimiento es el siguiente:
    - **Tipo de Pieza:** El nombre de la pieza a mover, por ejemplo, 'Peon 1'.
-   - **Fila:** El número entero que representa la fila en la que se encuentra la pieza.
-   - **Columna:** La letra que representa la columna de destino, por ejemplo, 'A', 'B', 'C', etc.
+   - **Columna y Fila:** El número entero que representa la fila en la que se encuentra la pieza y la letra que representa la columna de destino, por ejemplo, 'a2' (fila 2, columna a)
 
    Por ejemplo, para mover un peón a la fila 3 y columna 'D', el jugador debe ingresar: 
    - Peon 4
-   - 3
-   - D
+   - d3
    
-    En cualquier caso en el que se quiera elegir otra ficha, se ingresa **0 (cero)** al ingresar la fila o la columna
+    En cualquier caso en el que se quiera elegir otra ficha, se ingresa **0 (cero)** en vez de ingresar la fila y la columna
 
 3. **Validación de Movimiento:**
 El juego valida que el movimiento sea legal según las reglas del ajedrez. Si el movimiento es inválido, se solicitará al jugador que ingrese un nuevo movimiento.
