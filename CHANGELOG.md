@@ -1,5 +1,12 @@
 # CHANGELOG
 
+
+## [1.2.0] -06-09-2024
+
+### Modificados:
+- Se modifca el input del la fila y la columna y se unifica en uno solo
+- Se simplifican lineas de codigo en el archivo tablero
+
 ## [1.2.0] -06-09-2024
 
 ### Modificados:

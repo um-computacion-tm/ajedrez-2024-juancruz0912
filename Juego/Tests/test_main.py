@@ -1,12 +1,17 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from Juego.juego import Juego 
-from Juego.main import main, jugar
+from Juego.main import main, jugar, mover, mover_pieza_valida, limpiar_pantalla 
+import os
 
 class TestJuegoAjedrez(unittest.TestCase):
 
     def setUp(self):
         self.juego = Juego("Jugador1", "Jugador2")
+        self.juego = MagicMock(spec=Juego)
+        self.juego.tablero = "Tablero de prueba"
+        self.juego.__turno__ = "Jugador 1"
+        self.juego.estado = True
 
     @patch('builtins.input', return_value='0')
     def test_jugar_terminar_juego(self, mock_input):
@@ -24,6 +29,5 @@ class TestJuegoAjedrez(unittest.TestCase):
             main()
             mock_print.assert_any_call('Se termino el juego')
 
-    
 if __name__ == '__main__':
     unittest.main()

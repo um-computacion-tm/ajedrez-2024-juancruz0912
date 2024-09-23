@@ -54,7 +54,6 @@ class Juego:
             return pieza_original
         
     def verificar_fila(self, x):
-        print(type(x), x)
         x = int(x)
         if not (1 <= x <= 8):
             raise ValueError (f'La fila {x} no existe')
