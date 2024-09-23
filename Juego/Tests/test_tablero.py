@@ -240,7 +240,6 @@ class TestTablero(unittest.TestCase):
         peon7_blanco.columna = 7
         reina_negra.fila = 5
         reina_negra.columna = 8
-        print(self.tablero)
         self.assertTrue(self.tablero.jaque_mate_tablero('blanco')) 
 
 

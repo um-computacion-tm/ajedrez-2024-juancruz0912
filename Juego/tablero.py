@@ -9,29 +9,20 @@ class Tablero:
     
     def __init__(self):
         self.__tablero__ = [['  ' for i in range(9)] for i in range(9)]
-        self.__piezas__ = {
-                'Torre 1 negro': Torre('negro', id = 1), 
-                'Caballo 1 negro': Caballo('negro', id = 1),
-                'Alfil 1 negro': Alfil('negro', id = 1), 
-                'Rey negro': Rey('negro'), 
-                'Reina negro': Reina('negro'), 
-                'Alfil 2 negro': Alfil('negro', id = 2), 
-                'Caballo 2 negro': Caballo('negro', id = 2),
-                'Torre 2 negro': Torre('negro', id = 2),
-                'Torre 1 blanco': Torre('blanco', id = 1), 
-                'Caballo 1 blanco': Caballo('blanco', id = 1),
-                'Alfil 1 blanco': Alfil('blanco', id = 1), 
-                'Rey blanco': Rey('blanco'), 
-                'Reina blanco': Reina('blanco'), 
-                'Alfil 2 blanco': Alfil('blanco', id = 2), 
-                'Caballo 2 blanco': Caballo('blanco', id = 2),
-                'Torre 2 blanco': Torre('blanco', id = 2)
-        }
-        for i in range(1, 9):
-            self.__piezas__[f'Peon {i} negro'] = Peon('negro', id = i) 
-            self.__piezas__[f'Peon {i} blanco'] = Peon('blanco', id = i)
+        self.__piezas__ = {}
+        
+        colores = ['negro', 'blanco'] #Inicializar todas las piezas
+        for color in colores:
+            for i in range(1, 3):
+                self.__piezas__[f'Torre {i} {color}'] = Torre(color, id=i)
+                self.__piezas__[f'Caballo {i} {color}'] = Caballo(color, id=i)
+                self.__piezas__[f'Alfil {i} {color}'] = Alfil(color, id=i)
+            self.__piezas__[f'Rey {color}'] = Rey(color)
+            self.__piezas__[f'Reina {color}'] = Reina(color)
+            for i in range(1, 9):
+                self.__piezas__[f'Peon {i} {color}'] = Peon(color, id=i)
 
-        self.__fila1__ = {
+            self.__fila1__ = {
             'A': 1,
             'B': 2,  
             'C': 3,
