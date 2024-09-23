@@ -29,11 +29,13 @@ def mover_pieza_valida(juego, pieza):
         return
     try:
         fila = juego.verificar_fila(entrada[1])
+        print(fila, type(fila))
     except ValueError:
         print('La fila no es un número válido.')
         mover_pieza_valida(juego, pieza)  
         return
     columna = entrada[0]
+    print(fila, columna, type(fila), type(columna))
     mensaje = juego.mover_pieza(fila, columna, pieza)
     if mensaje:
         print(juego.tablero)

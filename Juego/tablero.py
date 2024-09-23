@@ -9,28 +9,6 @@ class Tablero:
     
     def __init__(self):
         self.__tablero__ = [['  ' for i in range(9)] for i in range(9)]
-        self.__piezas__ = {}
-        self.__fila1__ = {
-            'A': 1,
-            'B': 2,  
-            'C': 3,
-            'D': 4,
-            'E': 5,
-            'F': 6,
-            'G': 7,
-            'H': 8 }
-        self.crear_piezas()
-        self.colocar_piezas()
-        self.primer_fila()
-
-    #Metodo para la primer fila
-    def primer_fila(self):
-        for letra, numero in self.__fila1__.items():
-            self.__tablero__[0][numero] = f' {letra} ' 
-
-
-    #Metodo para crear las piezas y asignarles la posicion inicial
-    def crear_piezas(self):
         self.__piezas__ = {
                 'Torre 1 negro': Torre('negro', id = 1), 
                 'Caballo 1 negro': Caballo('negro', id = 1),
@@ -52,7 +30,22 @@ class Tablero:
         for i in range(1, 9):
             self.__piezas__[f'Peon {i} negro'] = Peon('negro', id = i) 
             self.__piezas__[f'Peon {i} blanco'] = Peon('blanco', id = i)
+
+        self.__fila1__ = {
+            'A': 1,
+            'B': 2,  
+            'C': 3,
+            'D': 4,
+            'E': 5,
+            'F': 6,
+            'G': 7,
+            'H': 8 }
         
+        for letra, numero in self.__fila1__.items(): # Se coloca las letras en la parte superior del tablero
+            self.__tablero__[0][numero] = f' {letra} ' 
+
+        self.colocar_piezas()
+
     def __str__(self):
         filas = []
         encabezado = "\n  |" + "| ".join(self.__tablero__[0][1:]) + " |"

@@ -67,17 +67,18 @@ class TestJuego(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             self.juego.existe_pieza('Peon 90') 
         
-    
     def test_mover_pieza(self):
         self.juego.tablero.colocar_piezas()
-        self.juego.mover_pieza(6, 'A', 'Peon 1')  
+        self.juego.mover_pieza(6, 'A', 'Peon 1 blanco')  
         self.assertIsInstance(self.juego.tablero.tablero[6][1], Peon)
-
 
     def test_buscar_pieza_no_existente(self):
         with self.assertRaises(ValueError) as context:
             self.juego.existe_pieza('Torre X')
         self.assertIn(str(context.exception), 'Torre X no existe')
+
+    def test_buscar_pieza_existente(self):
+        self.assertEqual(str(self.juego.existe_pieza('Peon 1'),), 'Peon 1 blanco')
 
     def test_verificar_fila_correcta(self):
         self.assertCountEqual(str(self.juego.verificar_fila(3)), '3')
