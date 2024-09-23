@@ -41,15 +41,24 @@ class Juego:
     def mover_pieza(self, x, y, pieza): 
         turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
         pieza_original = pieza + ' ' + turno
-        if not self.__tablero__.pieza_existente(pieza_original):
-            raise ValueError(f'{pieza} no existe')
-        else:
-            y = y.upper()
-            if self.__tablero__.mover_pieza_tablero(x, y, pieza_original):
-                color = 'blanco' if turno == 'negro' else 'negro' # Si el movimiento de la pieza es correcto, cambia el turno
-                return self.ganar_juego(color)
+        y = y.upper()
+        if self.__tablero__.mover_pieza_tablero(x, y, pieza_original):
+            color = 'blanco' if self.__turno__ == self.__negro__ else 'negro' 
+            return self.ganar_juego(color)
   
-    
+    #Metodo que verifica si la pieza existe
+    def existe_pieza(self, pieza):
+        turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
+        pieza_original = pieza + ' ' + turno
+        if not self.tablero.pieza_existente(pieza_original):
+            raise ValueError(f'{pieza} no existe')
+        
+    def verificar_fila(self, x):
+        x = int(x)
+        if not (1 <= x <= 8):
+            raise ValueError (f'La fila {x} no existe')
+        else:
+            return x
     
     #Metodo para poder ver el estado del juego (encapsulamiento)
     @property
