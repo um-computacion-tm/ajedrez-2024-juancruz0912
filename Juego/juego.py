@@ -39,10 +39,8 @@ class Juego:
     #lo que hace este metodo es llamar al metodo de mover_pieza_tablero para que la pieza
     #se mueva en el tablero
     def mover_pieza(self, x, y, pieza): 
-        turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
-        pieza_original = pieza + ' ' + turno
         y = y.upper()
-        if self.__tablero__.mover_pieza_tablero(x, y, pieza_original):
+        if self.__tablero__.mover_pieza_tablero(x, y, pieza):
             color = 'blanco' if self.__turno__ == self.__negro__ else 'negro' 
             return self.ganar_juego(color)
   
@@ -52,8 +50,11 @@ class Juego:
         pieza_original = pieza + ' ' + turno
         if not self.tablero.pieza_existente(pieza_original):
             raise ValueError(f'{pieza} no existe')
+        else:
+            return pieza_original
         
     def verificar_fila(self, x):
+        print(type(x), x)
         x = int(x)
         if not (1 <= x <= 8):
             raise ValueError (f'La fila {x} no existe')
