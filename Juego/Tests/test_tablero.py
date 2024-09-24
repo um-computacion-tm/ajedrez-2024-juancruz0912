@@ -93,7 +93,7 @@ class TestTablero(unittest.TestCase):
     def test_movimiento_recto_final_no_valido_horizontal(self):
         with self.assertRaises(ValueError) as context:
             self.tablero.movimiento_tablero_valido(8, 2, self.torre_blanca)
-        self.assertEqual(str(context.exception), 'La casilla 8 2 esta ocupada por una pieza de su mismo color')
+        self.assertEqual(str(context.exception), 'La casilla 8 2 esta ocupada por una pieza')
 
 
     def test_movimiento_peon_invalido2(self):

@@ -30,13 +30,19 @@ El juego continúa hasta que se detecta un jaque mate o uno de los dos jugadores
 ```
  $ sudo apt install docker
 ```
-2. Luego, ejecutar los siguientes comandos:
+
+2. Clonar el repositorio
+```
+$ git clone https://github.com/um-computacion-tm/ajedrez-2024-juancruz0912
+```
+
+3. Luego, ejecutar los siguientes comandos:
  ```
  2. Crear imagen de Docker
-$ docker buildx build -t ajedrez /ruta/al/directorio
+$ docker buildx build -t ajedrez-2024-juancruz0912 .
 
 3. Ejecutar tests y jugar.
-$ docker run -i ajedrez
+$ docker run -i ajedrez-2024-juancruz0912
  ```
 
 # Pruebas
