@@ -28,9 +28,6 @@ class Juego:
             return f'{self.__negro__} es el ganador'
         elif self.tablero.quedan_piezas() == 'Negro': # si no quedan piezas negras gana blanco
             return f'{self.__blanco__} es el ganador'
-        elif self.tablero.jaque_mate_tablero(color): # caso en el que algun jugador haga jaque mate
-            jugador = self.__negro__ if color == 'blanco' else self.__blanco__
-            return f'---  El rey {color} esta en jaque mate, por lo tanto {jugador} es el ganador!! ---'
         else:
             pass
         
@@ -53,13 +50,16 @@ class Juego:
         else:
             return pieza_original
         
+    # Metodo que verifica si la fila es correcta
     def verificar_fila(self, x):
         x = int(x)
         if not (1 <= x <= 8):
             raise ValueError (f'La fila {x} no existe')
         else:
             return x
-    
+
+
+
     #Metodo para poder ver el estado del juego (encapsulamiento)
     @property
     def estado(self):

@@ -44,11 +44,6 @@ class TestJuego(unittest.TestCase):
         resultado = self.juego.ganar_juego('negro')
         self.assertEqual(resultado, 'Pedro es el ganador')
 
-    def test_ganar_juego_jaque_mate(self):
-        self.juego2.tablero.jaque_mate_tablero.return_value = True #se simula que el rey blanco está en jaque mate
-        resultado = self.juego2.ganar_juego('blanco')
-        self.assertEqual(resultado, '---  El rey blanco esta en jaque mate, por lo tanto Jugador Negro es el ganador!! ---')
-
 
     # Simula que el tablero indica que aún hay piezas de ambos colores
     def test_ganar_juego_sin_ganador(self):

@@ -10,7 +10,7 @@ def jugar(juego):
             print(e)
 
 def mover(juego):
-    pieza = input('Que pieza quieres mover? (o 0 para terminar: ')
+    pieza = input('Que pieza quieres mover? (0 para terminar): ')
     pieza = pieza.capitalize()
     if pieza == '0':
         juego.terminar_juego()
@@ -23,7 +23,7 @@ def mover(juego):
             mover(juego)
 
 def mover_pieza_valida(juego, pieza):
-    entrada = (input('Posicion donde quieres mover la pieza (o 0 para cancelar): '))
+    entrada = (input('Posicion donde quieres mover la pieza (Ej: "c6" o 0 para cancelar): '))
     if entrada == 0:
         mover(juego)
         return
