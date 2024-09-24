@@ -10,10 +10,12 @@ def jugar(juego):
             print(e)
 
 def mover(juego):
-    pieza = input('Que pieza quieres mover? (o 0 para terminar: ')
+    pieza = input('Que pieza quieres mover? (0 para terminar, 1 para ver la notacion): ')
     pieza = pieza.capitalize()
     if pieza == '0':
         juego.terminar_juego()
+    elif pieza == '1':
+        print(juego.__notacion__)
     else:
         try:
             pieza = juego.existe_pieza(pieza)
@@ -40,7 +42,7 @@ def mover_pieza_valida(juego, pieza):
         print(mensaje)
         juego.terminar_juego() 
     else:
-        juego.cambiar_turno()
+        juego.agregar_notacion(fila, columna, pieza)
 
 
 

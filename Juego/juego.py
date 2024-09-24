@@ -8,6 +8,7 @@ class Juego:
         self.__blanco__ = jugador1
         self.__negro__ = jugador2
         self.__turno__ = self.__blanco__
+        self.__notacion__ = []
 
     # Metodo para cambiar los turnos luego de cada jugada
     def cambiar_turno(self):
@@ -53,13 +54,25 @@ class Juego:
         else:
             return pieza_original
         
+    # Metodo que verifica si la fila es correcta
     def verificar_fila(self, x):
         x = int(x)
         if not (1 <= x <= 8):
             raise ValueError (f'La fila {x} no existe')
         else:
             return x
-    
+
+    def agregar_notacion(self, x, y, pieza):
+        movimiento = f'{pieza}{y}{x}'
+        if self.__turno__ == self.__blanco__:
+            self.__notacion__.append([movimiento])
+        else:
+            self.__notacion__[-1].append(movimiento)
+        self.cambiar_turno()
+
+
+
+
     #Metodo para poder ver el estado del juego (encapsulamiento)
     @property
     def estado(self):
