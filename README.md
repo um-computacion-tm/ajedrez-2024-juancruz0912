@@ -10,7 +10,7 @@ El juego se desarrolla de la siguiente manera:
 2. **Movimiento de Piezas:**
    Durante su turno, cada jugador puede mover una de sus piezas. El formato para ingresar el movimiento es el siguiente:
    - **Tipo de Pieza:** El nombre de la pieza a mover, por ejemplo, 'Peon 1'.
-   - **Columna y Fila:** El número entero que representa la fila en la que se encuentra la pieza y la letra que representa la columna de destino, por ejemplo, 'a2' (fila 2, columna a)
+   - **Columna y Fila:** La letra que representa la columna de destino y el número entero que representa la fila en la que se encuentra la pieza, por ejemplo, 'a2' (columna "a", fila 2)
 
    Por ejemplo, para mover un peón a la fila 3 y columna 'D', el jugador debe ingresar: 
    - Peon 4

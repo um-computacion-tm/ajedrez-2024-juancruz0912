@@ -8,7 +8,6 @@ class Juego:
         self.__blanco__ = jugador1
         self.__negro__ = jugador2
         self.__turno__ = self.__blanco__
-        self.__notacion__ = []
 
     # Metodo para cambiar los turnos luego de cada jugada
     def cambiar_turno(self):
@@ -29,9 +28,6 @@ class Juego:
             return f'{self.__negro__} es el ganador'
         elif self.tablero.quedan_piezas() == 'Negro': # si no quedan piezas negras gana blanco
             return f'{self.__blanco__} es el ganador'
-        elif self.tablero.jaque_mate_tablero(color): # caso en el que algun jugador haga jaque mate
-            jugador = self.__negro__ if color == 'blanco' else self.__blanco__
-            return f'---  El rey {color} esta en jaque mate, por lo tanto {jugador} es el ganador!! ---'
         else:
             pass
         
@@ -61,15 +57,6 @@ class Juego:
             raise ValueError (f'La fila {x} no existe')
         else:
             return x
-
-    def agregar_notacion(self, x, y, pieza):
-        movimiento = f'{pieza}{y}{x}'
-        if self.__turno__ == self.__blanco__:
-            self.__notacion__.append([movimiento])
-        else:
-            self.__notacion__[-1].append(movimiento)
-        self.cambiar_turno()
-
 
 
 
