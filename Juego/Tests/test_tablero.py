@@ -95,10 +95,11 @@ class TestTablero(unittest.TestCase):
             self.tablero.movimiento_tablero_valido(8, 2, self.torre_blanca)
         self.assertEqual(str(context.exception), 'La casilla 8 2 esta ocupada por una pieza')
 
-
     def test_movimiento_peon_invalido2(self):
         peon = self.tablero.piezas['Peon 7 blanco']
-        self.assertFalse(self.tablero.movimiento_peon_comer(3, 8, peon))
+        with self.assertRaises(ValueError) as context:
+            self.tablero.movimiento_peon_comer(3, 8, peon)
+        self.assertEqual(str(context.exception), 'El peon solo se mueve en diagonal para comer')
 
     # Verificando el movimiento diagonal válido
     def test_mover_pieza_tablero_diagonal(self):
