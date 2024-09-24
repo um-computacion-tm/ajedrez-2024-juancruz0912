@@ -146,7 +146,7 @@ class Tablero:
             if self.__tablero__[x][y].color != pieza.color and not isinstance(pieza, Peon): #Porque el peon no puede comer de frente
                 return self.comer_pieza(x, y, pieza)
             else:
-                raise ValueError(f'La casilla {x} {y} esta ocupada por una pieza de su mismo color')
+                raise ValueError(f'La casilla {x} {y} esta ocupada por una pieza')
         else:
             return self.mover_pieza_valida(x, y, pieza)   
         

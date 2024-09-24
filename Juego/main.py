@@ -3,6 +3,7 @@ import os
 
 def jugar(juego):
         try:
+            limpiar_pantalla()
             print(juego.tablero)
             print(f'\nAhora es el turno de {juego.__turno__}')
             mover(juego)            
@@ -48,11 +49,9 @@ def limpiar_pantalla():
     if os.name == 'posix':  
         os.system('clear')
 
-
-
 def main():
     
-    limpiar_pantalla()
+    
     print('------ Bienvenidos al juego del ajedrez -------- \n')
     print('- En todo momento que quieras terminar el juego, escribe 0 en vez de ingresar el nombre de la pieza - \n')
     print(' - Ingresar los nombres de los jugadores -\n')
