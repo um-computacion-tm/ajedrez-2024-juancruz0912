@@ -129,7 +129,7 @@ class Tablero:
             if self.__tablero__[x][y].color != pieza.color:
                 return self.comer_pieza(x, y, pieza)
         else:
-            return False
+            raise ValueError(f'El peon solo se mueve en diagonal para comer')
         
 
     # Metodo que verifica si hay alguna pieza en el medio de la trayectoria (Movimientos rectos y diagonales)
