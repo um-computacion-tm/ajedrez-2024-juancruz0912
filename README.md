@@ -38,10 +38,10 @@ $ git clone https://github.com/um-computacion-tm/ajedrez-2024-juancruz0912
 
 3. Luego, ejecutar los siguientes comandos:
  ```
- 2. Crear imagen de Docker
+1. Crear imagen de Docker
 $ docker buildx build -t ajedrez-2024-juancruz0912 .
 
-3. Ejecutar tests y jugar.
+2. Ejecutar tests y jugar.
 $ docker run -i ajedrez-2024-juancruz0912
  ```
 
