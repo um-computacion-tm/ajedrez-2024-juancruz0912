@@ -67,23 +67,6 @@ class Tablero:
         for i in range(1, 9):
             self.__tablero__[i][0] = str(9-i)
 
-    
-    #Metodo para verificar si quedan piezas de un color, para ver si el juego se termina o sigue
-    def quedan_piezas(self):
-        contador_blanco = 0
-        contador_negro = 0
-        for pieza in self.__piezas__.values():
-            if pieza.color == 'blanco':
-                contador_blanco += 1 
-            else:
-                contador_negro += 1
-        if contador_blanco == 0: 
-            return 'Blanco'
-        elif contador_negro == 0:
-            return 'Negro'
-        else:
-            return None
-              
 
     #Metodo para mover una pieza, donde se ingresan las variables x(fila), y(columna) y pieza(pieza a mover, Ej: 'Torre')
     def mover_pieza_tablero(self, x, y, pieza):
