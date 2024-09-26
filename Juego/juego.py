@@ -24,13 +24,12 @@ class Juego:
     
     #Metodo para ver si algun jugador gano la partida, o porque comio todas las piezas del rival o porque hay jaque mate
     def ganar_juego(self, color):
-        if self.tablero.quedan_piezas() == 'Blanco': # si no quedan piezas blancas gana negro
-            return f'{self.__negro__} es el ganador'
-        elif self.tablero.quedan_piezas() == 'Negro': # si no quedan piezas negras gana blanco
-            return f'{self.__blanco__} es el ganador'
+        if self.__tablero__.jaque_mate_tablero(color): # caso en el que algun jugador haga jaque mate
+            jugador = self.__negro__ if color == 'blanco' else self.__blanco__
+            return f'---  El rey {color} esta en jaque mate, por lo tanto {jugador} es el ganador!! ---'
         else:
             pass
-        
+
 
     # Metodo para mover pieza, donde se ingresa la posicion donde se desea mover y que pieza,
     #lo que hace este metodo es llamar al metodo de mover_pieza_tablero para que la pieza
@@ -45,21 +44,29 @@ class Juego:
     def existe_pieza(self, pieza):
         turno = 'blanco' if self.__turno__ == self.__blanco__ else 'negro'
         pieza_original = pieza + ' ' + turno
-        if not self.tablero.pieza_existente(pieza_original):
+        if pieza_original not in self.__tablero__.piezas:  # Se verifica si la pieza existe
             raise ValueError(f'{pieza} no existe')
         else:
             return pieza_original
         
-    # Metodo que verifica si la fila es correcta
+    
+    def verificar_entrada(self, x, y):
+        return self.verificar_fila(x) and self.verificar_columna(y)
+    
     def verificar_fila(self, x):
         x = int(x)
-        if not (1 <= x <= 8):
-            raise ValueError (f'La fila {x} no existe')
+        if (1 <= x <= 8):
+            return True
         else:
-            return x
-
-
-
+            return False
+        
+    def verificar_columna(self, y):
+        y = y.upper()
+        if y in self.tablero.fila1:
+            return True
+        else:
+            return False
+    
     #Metodo para poder ver el estado del juego (encapsulamiento)
     @property
     def estado(self):
