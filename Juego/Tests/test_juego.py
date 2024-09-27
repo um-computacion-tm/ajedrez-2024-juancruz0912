@@ -26,23 +26,13 @@ class TestJuego(unittest.TestCase):
         self.juego.terminar_juego()
         self.assertEqual(self.juego.__estado__, False)
 
-    # Simula que el tablero indica que solo quedan piezas blancas
-    def test_ganar_juego_blanco(self):
-        self.juego.tablero.colocar_piezas() 
-        piezas_a_remover = [nombre for nombre, pieza in self.juego.tablero.piezas.items() if pieza.color == 'negro']  # Remover todas las piezas negras
-        for pieza in piezas_a_remover:
-            del self.juego.tablero.piezas[pieza]
-        resultado = self.juego.ganar_juego('negro')
-        self.assertEqual(resultado, 'Juan es el ganador')
 
-    # Simula que el tablero indica que solo quedan piezas negras
-    def test_ganar_juego_negro(self):   
-        self.juego.tablero.colocar_piezas() 
-        piezas_a_remover = [nombre for nombre, pieza in self.juego.tablero.piezas.items() if pieza.color == 'blanco']  # Remover todas las piezas blancas
-        for pieza in piezas_a_remover:
-            del self.juego.tablero.piezas[pieza]
-        resultado = self.juego.ganar_juego('negro')
-        self.assertEqual(resultado, 'Pedro es el ganador')
+    # Se simula que el rey blanco está en jaque mate
+    def test_ganar_juego_jaque_mate(self):
+        self.juego2.quedan_reyes = MagicMock(return_value=None) # Simula que el tablero tiene reyes de ambos colores
+        self.juego2.__tablero__.jaque_mate_tablero.return_value = True # Simula que el rey blanco está en jaque mate
+        resultado = self.juego2.ganar_juego('blanco')
+        self.assertEqual(resultado, '---  El rey blanco esta en jaque mate, por lo tanto Jugador Negro es el ganador!! ---')
 
 
     # Simula que el tablero indica que aún hay piezas de ambos colores
@@ -76,12 +66,19 @@ class TestJuego(unittest.TestCase):
         self.assertEqual(str(self.juego.existe_pieza('Peon 1'),), 'Peon 1 blanco')
 
     def test_verificar_fila_correcta(self):
-        self.assertCountEqual(str(self.juego.verificar_fila(3)), '3')
+        self.assertTrue(self.juego.verificar_fila(3))
     
     def test_verificar_fila_incorrecta(self):
-        with self.assertRaises(ValueError) as context:
-            self.juego.verificar_fila(9)
-        self.assertIn(str(context.exception), 'La fila 9 no existe' )
+        self.assertFalse(self.juego.verificar_fila(9))
+
+    def test_verificar_columna_correcta(self):
+        self.assertTrue(self.juego.verificar_columna('A'))
+    
+    def test_verificar_columna_incorrecta(self):
+        self.assertFalse(self.juego.verificar_columna('Z'))
+
+    def test_verificar_entrada_correcta(self):
+        self.assertTrue(self.juego.verificar_entrada(3, 'A'))
 
 
 if __name__ == '__main__':
