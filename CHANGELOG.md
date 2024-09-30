@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## [1.2.4] -30-09-2024
+
+### Modificados:
+
+- Se realizaron las ultimas correciones al codigo, simplificando metodos, verificaciones, etc. 
+
+
 ## [1.2.3] -22-09-2024
 
 ### Modificados:
