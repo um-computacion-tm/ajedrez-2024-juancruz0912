@@ -2,12 +2,11 @@ from abc import ABC, abstractmethod
 
 class Pieza(ABC):
     
-    def __init__(self, nombre, color, columna, fila, movimiento = None):
+    def __init__(self, nombre, color, columna, fila):
         self.__nombre__ = nombre
         self.__color__ = color
         self.__fila__ = fila
         self.__columna__ = columna
-        self.__movimiento__ = movimiento
     
     def __str__(self):
         if self.__color__ == 'blanco':
@@ -15,9 +14,6 @@ class Pieza(ABC):
         else:
             return self.pieza_negra 
 
-    @property
-    def movimiento(self):
-        return self.__movimiento__
 
     @property
     def fila(self):
@@ -49,15 +45,13 @@ class Pieza(ABC):
 
     def es_movimiento_recto(self, fila, columna):
         if self.__fila__ == fila or self.__columna__ == columna:
-            self.__movimiento__ = 'Recto'
             return True
         else:
             return False
         
 
-    def es_movimiento_diagonal(self, fila, columna, mensaje):
+    def es_movimiento_diagonal(self, fila, columna):
         if abs(self.__fila__ - fila) == abs(self.__columna__ - columna):
-            self.__movimiento__ = mensaje 
             return True
         else:
             return False
@@ -68,7 +62,7 @@ class Pieza(ABC):
     def reyes(self, fila, columna):
         if self.es_movimiento_recto(fila, columna):
             return True
-        elif self.es_movimiento_diagonal(fila, columna, 'Diagonal'):
+        elif self.es_movimiento_diagonal(fila, columna):
             return True
         else:  
             return False
