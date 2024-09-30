@@ -1,6 +1,42 @@
 # CHANGELOG
 
 
+## [1.2.4] -30-09-2024
+
+### Modificados:
+
+- Se realizaron las ultimas correciones al codigo, simplificando metodos, verificaciones, etc. 
+
+
+## [1.2.3] -22-09-2024
+
+### Modificados:
+
+- Se modifca el input del la fila y la columna y se unifica en uno solo
+- Se simplifican lineas de codigo en el archivo tablero
+
+
+## [1.2.2] -18-09-2024
+
+### Modificados:
+
+- se eliminan repeticiones del codigo y se modifica el archivo main.py para mejorar la interfaz
+
+
+## [1.2.1] -12-09-2024
+
+### Modificados:
+
+- se finaliza el metodo del jaque y jaque mate
+
+
+## [1.2.0] -06-09-2024
+
+### Modificados:
+
+- se empieza a trabajar en el metodo Jaque()
+
+
 ## [1.1.9] - 24-09-2024
 
 ### Finaliza la base del proyecto

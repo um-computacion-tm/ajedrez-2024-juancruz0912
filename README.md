@@ -22,7 +22,7 @@ El juego se desarrolla de la siguiente manera:
 El juego valida que el movimiento sea legal según las reglas del ajedrez. Si el movimiento es inválido, se solicitará al jugador que ingrese un nuevo movimiento.
 
 4. **Finalización del Juego:**
-El juego continúa hasta que se detecta un jaque mate o uno de los dos jugadores se quede sin fichas o en el caso en el que los jugadores ya no quieran jugar se ingresa **0 (cero)** en vez de ingresar la proxima pieza a mover
+El juego continúa hasta que se detecta un jaque mate o o en el caso en el que los jugadores ya no quieran jugar se ingresa **0 (cero)** en vez de ingresar la proxima pieza a mover
 
 ## Como empezar a Jugar
 1. Tener instalado docker en el dispositivo
