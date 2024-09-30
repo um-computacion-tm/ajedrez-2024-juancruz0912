@@ -9,6 +9,7 @@ class Alfil(PiezaId):
 
     def __init__(self, color, **kwargs):
         super().__init__('Alfil', color, id=kwargs['id'])
+        self.__movimiento__ = 'Alfil'
 
 
     def movimiento_especifico(self, fila, columna):
