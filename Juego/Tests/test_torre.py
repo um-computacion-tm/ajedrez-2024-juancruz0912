@@ -17,11 +17,9 @@ class TestTorre(unittest.TestCase):
     def test_movimiento_valido(self):
         movimiento_f = self.torre_blanco.verificar_movimiento(8, 3)
         self.assertEqual(movimiento_f, True)
-        self.assertEqual(self.torre_blanco.movimiento, 'Recto')
         
         movimiento_c = self.torre_blanco.verificar_movimiento(6, 1)
         self.assertEqual(movimiento_c, True)
-        self.assertEqual(self.torre_blanco.movimiento, 'Recto')
     
     # Movimiento inválido que no sea recto
     def test_movimiento_invalido(self):

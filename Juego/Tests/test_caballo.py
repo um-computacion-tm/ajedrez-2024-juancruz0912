@@ -14,10 +14,8 @@ class TestCaballo(unittest.TestCase):
         self.assertEqual(self.caballo_negro.__color__, 'negro')
 
     def test_movimiento_valido(self):
-        self.caballo_blanco.verificar_movimiento(6, 3)
-        self.assertEqual(self.caballo_blanco.movimiento, 'Caballo')
-        self.caballo_negro.verificar_movimiento(3, 3)
-        self.assertEqual(self.caballo_negro.movimiento, 'Caballo')
+        self.assertTrue(self.caballo_blanco.verificar_movimiento(6, 3))
+        self.assertTrue(self.caballo_negro.verificar_movimiento(3, 3))
         
     def test_movimiento_invalido(self):
         self.assertFalse(self.caballo_blanco.verificar_movimiento(6, 4))

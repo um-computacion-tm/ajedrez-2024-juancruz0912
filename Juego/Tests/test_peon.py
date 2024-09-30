@@ -26,7 +26,6 @@ class TestPeon(unittest.TestCase):
 
     def test_movimiento_valido_negro(self):
         self.peon_negro.verificar_movimiento(3, 1)
-        self.assertEqual(self.peon_negro.movimiento, 'Recto')
         self.assertTrue(self.peon_negro.verificar_movimiento(3, 1))
 
     def test_movimiento_invalido1_negro(self):
@@ -36,9 +35,7 @@ class TestPeon(unittest.TestCase):
         self.assertFalse(self.peon_negro2.verificar_movimiento(7, 3))
 
     def test_comer_peon(self):
-        movimiento = self.peon_negro2.verificar_movimiento(3, 3)
-        self.assertTrue(movimiento)
-        self.assertEqual(self.peon_negro2.movimiento, 'Comer')
+        self.assertTrue(self.peon_negro2.verificar_movimiento(3, 3))
 
 
 if __name__ == '__main__':

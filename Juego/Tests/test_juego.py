@@ -54,8 +54,13 @@ class TestJuego(unittest.TestCase):
         
     def test_mover_pieza(self):
         self.juego.tablero.colocar_piezas()
-        self.juego.mover_pieza(6, 'A', 'Peon 1 blanco')  
-        self.assertIsInstance(self.juego.tablero.tablero[6][1], Peon)
+        self.assertEqual(self.juego.mover_pieza(6, 'A', 'Peon 1 blanco'), None)  
+
+    def test_mover_pieza_invalida(self):
+        self.juego.tablero.colocar_piezas()
+        with self.assertRaises(ValueError) as context:
+            self.juego.mover_pieza(4, 'A', 'Peon 1 blanco')  
+        self.assertEqual(str(context.exception), 'Movimiento no valido')
 
     def test_buscar_pieza_no_existente(self):
         with self.assertRaises(ValueError) as context:
