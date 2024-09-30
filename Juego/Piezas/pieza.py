@@ -50,7 +50,7 @@ class Pieza(ABC):
             return False
         
 
-    def es_movimiento_diagonal(self, fila, columna):
+    def es_movimiento_diagonal(self, fila, columna, mensaje):
         if abs(self.__fila__ - fila) == abs(self.__columna__ - columna):
             return True
         else:
@@ -62,7 +62,7 @@ class Pieza(ABC):
     def reyes(self, fila, columna):
         if self.es_movimiento_recto(fila, columna):
             return True
-        elif self.es_movimiento_diagonal(fila, columna):
+        elif self.es_movimiento_diagonal(fila, columna, False):
             return True
         else:  
             return False

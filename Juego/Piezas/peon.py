@@ -15,7 +15,7 @@ class Peon(PiezaPeon):
         if self.columna == columna: # caso en el que el peon se mueve recto
             return self.movimiento_normal(fila)
         elif self.un_paso(fila, columna): # caso donde el peon quiere comer una pieza
-            return self.es_movimiento_diagonal(fila, columna)
+            return self.es_movimiento_diagonal(fila, columna, False)
         else:
             return False
         

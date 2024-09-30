@@ -12,6 +12,6 @@ class Alfil(PiezaId):
 
 
     def movimiento_especifico(self, fila, columna):
-        return self.es_movimiento_diagonal(fila, columna)
+        return self.es_movimiento_diagonal(fila, columna, False)
 
  
