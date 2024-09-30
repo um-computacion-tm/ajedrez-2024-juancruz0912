@@ -73,7 +73,7 @@ class Tablero:
         y = self.__fila1__[y]
         pieza = self.__piezas__[pieza]
         if self.validar_movimiento(x, y, pieza): # si la casilla destino esta ocupada
-            return self.comer_pieza(x, y, pieza)
+            return self.mover_pieza(x, y, pieza)
         else:
             return False
             
@@ -118,22 +118,24 @@ class Tablero:
         return paso
         
     # Metodo para comer una pieza
-    def comer_pieza(self, x, y, pieza):
+    def mover_pieza(self, x, y, pieza):
         if self.__tablero__[x][y] != '  ':
             if self.__tablero__[x][y].color == pieza.color: # caso donde la casilla esta ocupada
                 return False
-            else:
-                if self.__tablero__[x][y].color != pieza.color: # caso donde la casilla esta ocupada por una pieza del otro equipo
-                    pieza_comida = self.__tablero__[x][y]
-                    clave_a_eliminar = None
-                    for clave, obj in self.__piezas__.items():
-                        if obj == pieza_comida:
-                            clave_a_eliminar = clave
-                            break
-                    if clave_a_eliminar:
-                        self.__piezas__.pop(clave_a_eliminar)  # Elimina la pieza comida del diccionario
+            else: # caso donde la casilla esta ocupada por una pieza del otro equipo
+                 self.comer_pieza(x, y, pieza)
         return self.mover_pieza_valida(x, y, pieza) # caso donde la casilla esta vacia o sea del otro color
 
+    def comer_pieza(self, x, y, pieza):
+        if self.__tablero__[x][y].color != pieza.color: 
+            pieza_comida = self.__tablero__[x][y]
+            clave_a_eliminar = None
+            for clave, obj in self.__piezas__.items():
+                if obj == pieza_comida:
+                    clave_a_eliminar = clave
+                    break
+            if clave_a_eliminar:
+                self.__piezas__.pop(clave_a_eliminar) 
 
     # Metodo en el cual se mueve la pieza una vez que ya esta verificado que puede hacer el movimiento
     def mover_pieza_valida(self, x, y, pieza):
@@ -241,7 +243,6 @@ class Tablero:
                 return True
         return False
     
-2
     @property
     def piezas(self):
         return self.__piezas__
