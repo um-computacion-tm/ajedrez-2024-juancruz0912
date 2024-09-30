@@ -125,7 +125,7 @@ class TestTablero(unittest.TestCase):
         self.tablero.__tablero__[5][4] = self.peon_negro
         self.torre_blanca.fila = 4
         self.torre_blanca.columna = 4
-        self.tablero.comer_pieza(5, 4, self.torre_blanca)        
+        self.tablero.mover_pieza(5, 4, self.torre_blanca)        
         self.assertIsInstance(self.tablero.__tablero__[5][4], Torre)
         self.assertEqual(self.tablero.__tablero__[4][4], '  ')
         self.assertNotIn('Peon 5 negro', self.tablero.__piezas__)
