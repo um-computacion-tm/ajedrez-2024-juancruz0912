@@ -9,6 +9,7 @@ class Juego:
         self.__negro__ = jugador2
         self.__turno__ = self.__blanco__
 
+
     # Metodo para cambiar los turnos luego de cada jugada
     def cambiar_turno(self):
         if self.__turno__ == self.__blanco__:
@@ -39,6 +40,8 @@ class Juego:
         if self.__tablero__.mover_pieza_tablero(x, y, pieza):
             color = 'blanco' if self.__turno__ == self.__negro__ else 'negro' 
             return self.ganar_juego(color)
+        else:
+            raise ValueError('Movimiento no valido')
   
     #Metodo que verifica si la pieza existe
     def existe_pieza(self, pieza):
@@ -62,7 +65,8 @@ class Juego:
         
     def verificar_columna(self, y):
         y = y.upper()
-        if y in self.tablero.fila1:
+        fila1 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+        if y in fila1:
             return True
         else:
             return False

@@ -11,7 +11,7 @@ def jugar(juego):
             print(e)
 
 def mover(juego):
-    pieza = input('Que pieza quieres mover? (o 0 para terminar: ')
+    pieza = input('Que pieza quieres mover? (o 0 para terminar): ')
     pieza = pieza.capitalize()
     if pieza == '0':
         juego.terminar_juego()
