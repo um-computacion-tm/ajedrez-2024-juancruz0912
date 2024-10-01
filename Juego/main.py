@@ -25,19 +25,23 @@ def mover(juego):
 
 def verificar_entrada(juego, pieza):
     entrada_valida = True
-    while entrada_valida:
-        entrada = (input('Posicion donde quieres mover la pieza (o 0 para cancelar): '))
-        if entrada == 0:
-            mover(juego)
-        elif len(entrada) != 2:
-            print('La posición no es válida.')
-            verificar_entrada(juego, pieza)
-        elif not juego.verificar_fila(entrada[1]):
-            print('La fila no es válida.')
-        elif not juego.verificar_columna(entrada[0]):
-            print('La columna no es válida.')
-        else:
-            entrada_valida = False
+    try:
+        while entrada_valida:
+            entrada = (input('Posicion donde quieres mover la pieza (o 0 para cancelar): '))
+            if entrada == 0:
+                mover(juego)
+            elif len(entrada) != 2:
+                print('La posición no es válida.')
+                verificar_entrada(juego, pieza)
+            elif not juego.verificar_fila(entrada[1]):
+                print('La fila no es válida.')
+            elif not juego.verificar_columna(entrada[0]):
+                print('La columna no es válida.')
+            else:
+                entrada_valida = False
+    except Exception:
+        print('La entrada no es valida')
+        verificar_entrada(juego, pieza)
     fila = int(entrada[1])
     columna = entrada[0]
     mover_pieza_valida(juego, pieza, fila, columna)
