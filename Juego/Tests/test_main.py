@@ -1,8 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from Juego.juego import Juego 
-from Juego.main import main, jugar, mover, mover_pieza_valida, limpiar_pantalla 
-import os
+from Juego.main import main, jugar
 
 class TestJuegoAjedrez(unittest.TestCase):
 
