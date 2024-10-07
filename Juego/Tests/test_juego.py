@@ -2,7 +2,6 @@ import unittest
 from Juego.juego import Juego 
 from unittest.mock import MagicMock
 from Juego.tablero import Tablero
-from Juego.Piezas.peon import Peon
 
 class TestJuego(unittest.TestCase):
 
