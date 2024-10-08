@@ -7,10 +7,11 @@ WORKDIR /ajedrez-2024-juancruz0912
 
 RUN pip install -r requirements.txt
 
-# Crear un script de shell para ejecutar los comandos y hacer depuración
+# Crear un script de shell para ejecutar los comandos
 RUN echo '#!/bin/sh' > /run_tests_and_game.sh && \
     echo 'coverage run -m unittest' >> /run_tests_and_game.sh && \
     echo 'coverage report -m' >> /run_tests_and_game.sh && \
     echo 'python -m Juego.main' >> /run_tests_and_game.sh && \
+    chmod +x /run_tests_and_game.sh
 
 CMD ["/run_tests_and_game.sh"]
